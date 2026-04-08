@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Saint Leo's Mart</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <span class="menu-btn" onclick="toggleMenu()">☰</span>
+  <h2>Saint Leo's Mart</h2>
+</header>
+
+<div id="sidebar" class="sidebar">
+  <p onclick="scrollToSection('home')">🏠 Home</p>
+  <p onclick="scrollToSection('food')">🍲 Food</p>
+  <p onclick="openFAQ()">❓ FAQ</p>
+  <p onclick="contactUs()">📞 Contact Us</p>
+</div>
+
+<section id="home" class="hero">
+  <h1>Fresh groceries delivered to your hostel</h1>
+  <button onclick="scrollToSection('food')">Order Now</button>
+</section>
+
+<section id="food">
+
+<!-- VEGETABLES -->
+<h2>Vegetables</h2>
+<div class="grid">
+
+<div class="item" onclick="toggleItem(this,'Tomatoes x1',700)">
+<img src="https://images.pexels.com/photos/533280/pexels-photo-533280.jpeg" alt="Tomato">
+<p>Tomatoes x1</p>
+<span class="price">₦700</span>
+</div>
+
+<div class="item" onclick="toggleItem(this,'Tomatoes x2',1200)">
+<img src="https://images.pexels.com/photos/533280/pexels-photo-533280.jpeg" alt="Tomato">
+<p>Tomatoes x2</p>
+<span class="price">₦1200</span>
+</div>
+
+<div class="item" onclick="toggleItem(this,'Onions x1',400)">
+<img src="https://images.pexels.com/photos/4197445/pexels-photo-4197445.jpeg" alt="Onion">
+<p>Onions x1</p>
+<span class="price">₦400</span>
+</div>
+
+<div class="item" onclick="toggleItem(this,'Onions x2',700)">
+<img src="https://images.pexels.com/photos/4197445/pexels-photo-4197445.jpeg" alt="Onion">
+<p>Onions x2</p>
+<span class="price">₦700</span>
+</div>
+
+</div>
+
+<button class="see-all" onclick="toggleCategory(this)">See All</button>
+
+<div class="hidden-items grid">
+
+<div class="item" onclick="toggleItem(this,'Lettuce x1',500)">
+<img src="https://images.pexels.com/photos/1656666/pexels-photo-1656666.jpeg" alt="Fresh Lettuce">
+<p>Lettuce x1</p>
+<span class="price">₦500</span>
+</div>
+
+<div class="item" onclick="toggleItem(this,'Lettuce x2',900)">
+<img src="https://images.pexels.com/photos/1656666/pexels-photo-1656666.jpeg" alt="Fresh Lettuce">
+<p>Lettuce x2</p>
+<span class="price">₦900</span>
+</div>
+
+<div class="item" onclick="toggleItem(this,'Cabbage x1',500)">
+<img src="https://images.pexels.com/photos/2518893/pexels-photo-2518893.jpeg" alt="Fresh Cabbage">
+<p>Cabbage x1</p>
+<span class="price">₦500</span>
+</div>
+
+<div class="item" onclick="toggleItem(this,'Cabbage x2',1000)">
+<img src="https://images.pexels.com/photos/2518893/pexels-photo-2518893.jpeg" alt="Fresh Cabbage">
+<p>Cabbage x2</p>
+<span class="price">₦1000</span>
+</div>
+
+<div class="item" onclick="toggleItem(this,'Green bell pepper x1',500)">
+<img src="https://images.pexels.com/photos/5825814/pexels-photo-5825814.jpeg" alt="Green Bell Pepper">
+<p>Green bell pepper x1</p>
+<span class="price">₦500</span>
+</div>
+
+<div class="item" onclick="toggleItem(this,'Green bell pepper x2',900)">
+<img src="https://images.pexels.com/photos/5825814/pexels-photo-5825814.jpeg" alt="Green Bell Pepper">
+<p>Green bell pepper x2</p>
+<span class="price">₦900</span>
+</div>
+
+<div class="item" onclick="toggleItem(this,'Red bell pepper x1',500)">
+<img src="https://images.pexels.com/photos/33968567/pexels-photo-33968567.jpeg" alt="Red Bell Pepper">
+<p>Red bell pepper x1</p>
+<span class="price">₦500</span>
+</div>
+
+<div class="item" onclick="toggleItem(this,'Red bell pepper x2',900)">
+<img src="https://images.pexels.com/photos/33968567/pexels-photo-33968567.jpeg" alt="Red Bell Pepper">
+<p>Red bell pepper x2</p>
+<span class="price">₦900</span>
+</div>
+
+<div class="item" onclick="toggleItem(this,'Yellow bell pepper/scotch bonnet x1',500)">
+<img src="https://images.pexels.com/photos/14466704/pexels-photo-14466704.jpeg" alt="Scotch Bonnet">
+<p>Yellow bell pepper/scotch bonnet x1</p>
+<span class="price">₦500</span>
+</div>
+
+<div class="item" onclick="toggleItem(this,'Yellow bell pepper/scotch bonnet x2',900)">
+<img src="https://images.pexels.com/photos/14466704/pexels-photo-14466704.jpeg" alt="Scotch Bonnet">
+<p>Yellow bell pepper/scotch bonnet x2</p>
+<span class="price">₦900</span>
+</div>
+
+<div class="item" onclick="toggleItem(this,'Fresh pepper x1',500)">
+<img src="https://images.pexels.com/photos/16267404/pexels-photo-16267404.jpeg" alt="Fresh pepper">
+<p>Fresh pepper x1</p>
+<span class="price">₦500</span>
+</div>
+
+<div class="item" onclick="toggleItem(this,'Fresh pepper x2',900)">
+<img src="https://images.pexels.com/photos/16267404/pexels-photo-16267404.jpeg" alt="Fresh pepper">
+<p>Fresh pepper x2</p>
+<span class="price">₦900</span>
+</div>
+
+<div class="item" onclick="toggleItem(this,'Cucumber x1',500)">
+<img src="https://images.pexels.com/photos/17975573/pexels-photo-17975573.jpeg" alt="Cucumber">
+<p>Cucumber x1</p>
+<span class="price">₦500</span>
+</div>
+
+<div class="item" onclick="toggleItem(this,'Cucumber x2',900)">
+<img src="https://images.pexels.com/photos/17975573/pexels-photo-17975573.jpeg" alt="Cucumber">
+<p>Cucumber x2</p>
+<span class="price">₦900</span>
+</div>
+
+<div class="item" onclick="toggleItem(this,'Carrot x1',500)">
+<img src="https://images.pexels.com/photos/6631952/pexels-photo-6631952.jpeg" alt="Carrot">
+<p>Carrot x1</p>
+<span class="price">₦500</span>
+</div>
+
+<div class="item" onclick="toggleItem(this,'Carrot x2',900)">
+<img src="https://images.pexels.com/photos/6631952/pexels-photo-6631952.jpeg" alt="Carrot">
+<p>Carrot x2</p>
+<span class="price">₦900</span>
+</div>
+
+</div>
+
+<!-- SOFT DRINKS -->
+<h2>Soft Drinks & Malt</h2>
+<div class="grid">
+
+<div class="item" onclick="toggleItem(this,'Coke pack',5000)">
+<img src="https://images.pexels.com/photos/27798034/pexels-photo-27798034.jpeg" alt="Coke">
+<p>Coke (Pack)</p>
+<span class="price">₦5000</span>
+</div>
+
+<div class="item" onclick="toggleItem(this,'Pepsi pack',4800)">
+<img src="https://images.pexels.com/photos/9513105/pexels-photo-9513105.jpeg" alt="Pepsi">
+<p>Pepsi (Pack)</p>
+<span class="price">₦4800</span>
+</div>
+
+</div>
+
+<button class="see-all" onclick="toggleCategory(this)">See All</button>
+
+<div class="hidden-items grid">
+<!-- hidden items -->
+  <div class="item" onclick="toggleItem(this,'Plastic malt pack',5000)">
+<img src="https://images.pexels.com/photos/18041730/pexels-photo-18041730.jpeg" alt="Plastic Malt">
+<p>Plastic malt (Pack)</p>
+<span class="price">₦5000</span>
+</div>
+
+<div class="item" onclick="toggleItem(this,'Can malt carton',5000)">
+<img src="https://images.pexels.com/photos/18041730/pexels-photo-18041730.jpeg" alt="Can Malt">
+<p>Can malt (Carton)</p>
+<span class="price">₦5000</span>
+</div>
+
+<div class="item" onclick="toggleItem(this,'Fanta pack',5000)">
+<img src="https://images.pexels.com/photos/18041730/pexels-photo-18041730.jpeg" alt="Fanta"> 
+<p>Fanta (Pack)</p>
+<span class="price">₦5000</span>
+</div>
+
+<div class="item" onclick="toggleItem(this,'L@casera pack',5000)">
+<img src="https://images.pexels.com/photos/18041730/pexels-photo-18041730.jpeg" alt="L@casera">
+<p>L@casera (Pack)</p>
+<span class="price">₦5000</span>
+</div>
+
+<div class="item" onclick="toggleItem(this,'Bottled water pack',5000)">
+<img src="https://images.pexels.com/photos/15524063/pexels-photo-15524063.jpeg" alt="Bottled water">
+<p>Bottled water (Pack)</p>
+<span class="price">₦5000</span>
+</div>
+
+</div>
+ 
+
+  
+<!-- MEAT -->
+<h2>Meat & Poultry</h2>
+<div class="grid">
+<div class="item" onclick="toggleItem(this,'Full chicken 1kg',3000)">
+<img src="https://images.pexels.com/photos/10886018/pexels-photo-10886018.jpeg" alt="Full chicken">
+<p>Full chicken (1kg)</p>
+<span class="price">₦3000</span>
+</div>
+
+<div class="item" onclick="toggleItem(this,'Chicken wings 1kg',3000)">
+<img src="https://images.pexels.com/photos/9016550/pexels-photo-9016550.jpeg" alt="Chicken wings">
+<p>Chicken wings(1kg)</p>
+<span class="price">₦3000</span>
+</div>
+
+<div class="item" onclick="toggleItem(this,'Turkey 1kg',3000)">
+<img src="https://images.pexels.com/photos/5848152/pexels-photo-5848152.jpeg" alt="Turkey">
+<p>Turkey (1kg)</p>
+<span class="price">₦3000</span>
+</div>
+
+<div class="item" onclick="toggleItem(this,'Beef 1kg',2800)">
+<img src="https://images.pexels.com/photos/20187067/pexels-photo-20187067.jpeg" alt="Beef">
+<p>Beef (1kg)</p>
+<span class="price">₦2800</span>
+</div>
+
+<div class="item" onclick="toggleItem(this,'Pomo x1',3000)">
+<img src="https://images.pexels.com/photos/6646207/pexels-photo-6646207.jpeg" alt="Pomo">
+<p>Pomo x1</p>
+<span class="price">₦3000</span>
+</div>
+
+<div class="item" onclick="toggleItem(this,'Ponmo x2',3000)">
+<img src="https://images.pexels.com/photos/6646207/pexels-photo-6646207.jpeg" alt="Pomo">
+<p>Ponmo x2</p>
+<span class="price">₦3000</span>
+</div>
+
+</div>
+
+<!-- ADD MORE CATEGORIES SAME FORMAT -->
+<!-- FISH & SEAFOOD -->
+<h2>FISH & SEAFOOD</h2>
+<div class="grid">
+  <div class="item" onclick="toggleItem(this,'Titus',3000)">
+<img src="https://images.pexels.com/photos/20121102/pexels-photo-20121102.jpeg" alt="Titus">
+<p>Titus</p>
+<span class="price">₦3000</span>
+</div>
+
+<div class="item" onclick="toggleItem(this,'Panla',3000)">
+<img src="https://images.pexels.com/photos/23885137/pexels-photo-23885137.jpeg" alt="Panla">
+<p>Panla</p>
+<span class="price">₦3000</span>
+</div>
+
+<div class="item" onclick="toggleItem(this,'Croaker',3000)">
+<img src="https://images.pexels.com/photos/12151716/pexels-photo-12151716.jpeg" alt="Croaker">
+<p>Croaker</p>
+<span class="price">₦3000</span>
+</div>
+
+<div class="item" onclick="toggleItem(this,'Shawa',3000)">
+<img src="https://images.pexels.com/photos/36832375/pexels-photo-36832375.jpeg" alt="Shawa">
+<p>Shawa</p>
+<span class="price">₦3000</span>
+</div>
+
+  </div>
+
+  <!-- CEREALS, MEASUREMENTS & GRAINS -->
+<h2>CEREALS, MEASUREMENTS & GRAINS</h2>
+<div class="grid">
+<div class="item" onclick="toggleItem(this,'Rice (one derica)',900)">
+<img src="https://images.pexels.com/photos/36008677/pexels-photo-36008677.jpeg" alt="Rice">
+<p>Rice (one derica)</p>
+<span class="price">₦900</span>
+</div>
+
+<div class="item" onclick="toggleItem(this,'Rice (two derica)',1800)">
+<img src="https://images.pexels.com/photos/36008677/pexels-photo-36008677.jpeg" alt="Rice">
+<p>Rice (two derica)</p>
+<span class="price">₦1800</span>
+</div>
+
+<div class="item" onclick="toggleItem(this,'Rice (half paint)',3600)">
+<img src="https://images.pexels.com/photos/36008677/pexels-photo-36008677.jpeg" alt="Rice">
+<p>Rice (half paint)</p>
+<span class="price">₦3600</span>
+</div>
+
+<div class="item" onclick="toggleItem(this,'Rice (one paint)',7000)">
+<img src="https://images.pexels.com/photos/36008677/pexels-photo-36008677.jpeg" alt="Rice">
+<p>Rice (one paint)</p>
+<span class="price">₦7000</span>
+</div>
+
+</div>
+
+ <button class="see-all" onclick="toggleCategory(this)">See All</button>
+
+<div class="hidden-items grid">
+
+<div class="item" onclick="toggleItem(this,'Cornflakes (one paint)',7000)">
+<img src="https://images.pexels.com/photos/4089036/pexels-photo-4089036.jpeg" alt="Cornflakes">
+<p>Cornflakes (one paint)</p>
+<span class="price">₦7000</span>
+</div>
+
+<div class="item" onclick="toggleItem(this,'Cocopops (one paint)',7000)">
+<img src="https://images.pexels.com/photos/7418776/pexels-photo-7418776.png" alt="Cocopops">
+<p>Cocopops (one paint)</p>
+<span class="price">₦7000</span>
+</div>
+
+<div class="item" onclick="toggleItem(this,'Golden morn (one paint)',7000)">
+<img src="https://i.pinimg.com/1200x/90/cd/06/90cd064d729d164e2036bec3866df384.jpg" alt="Golden Morn">
+<p>Golden morn (one paint)</p>
+<span class="price">₦7000</span>
+</div>
+
+<div class="item" onclick="toggleItem(this,'Oats (one paint)',7000)">
+<img src="https://images.pexels.com/photos/4725736/pexels-photo-4725736.jpeg" alt="Oats">
+<p>Oats (one paint)</p>
+<span class="price">₦7000</span>
+</div>
+
+<div class="item" onclick="toggleItem(this,'Custard (one paint)',7000)">
+<img src="https://i.pinimg.com/1200x/9c/a5/31/9ca5312570cf01f618ec1aabc8b022c0.jpg" alt="Custard">
+<p>Custard (one paint)</p>
+<span class="price">₦7000</span>
+</div>
+
+<div class="item" onclick="toggleItem(this,'Powdered milk (one paint)',7000)">
+<img src="https://images.pexels.com/photos/12625114/pexels-photo-12625114.jpeg" alt="Milk">
+<p>Powdered milk (one paint)</p>
+<span class="price">₦7000</span>
+</div>
+
+<div class="item" onclick="toggleItem(this,'Sugar (one paint)',7000)">
+<img src="https://images.pexels.com/photos/11477544/pexels-photo-11477544.jpeg" alt="Sugar">
+<p>Sugar (one paint)</p>
+<span class="price">₦7000</span>
+</div>
+
+    </div>
+
+<!-- LEGUMES -->
+<h2>LEGUMES</h2>
+<div class="grid">
+
+<div class="item" onclick="toggleItem(this,'Beans (one derica)',7000)">
+<img src="https://images.pexels.com/photos/10111852/pexels-photo-10111852.jpeg" alt="Beans">
+<p>Beans (one derica)</p>
+<span class="price">₦7000</span>
+</div>
+
+<div class="item" onclick="toggleItem(this,'Beans (two derica)',7000)">
+<img src="https://images.pexels.com/photos/10111852/pexels-photo-10111852.jpeg" alt="Beans">
+<p>Beans (two derica)</p>
+<span class="price">₦7000</span>
+</div>
+
+<div class="item" onclick="toggleItem(this,'Beans (half paint)',7000)">
+<img src="https://images.pexels.com/photos/10111852/pexels-photo-10111852.jpeg" alt="Beans">
+<p>Beans (half paint)</p>
+<span class="price">₦7000</span>
+</div>
+
+<div class="item" onclick="toggleItem(this,'Beans (one paint)',7000)">
+<img src="https://images.pexels.com/photos/10111852/pexels-photo-10111852.jpeg" alt="Beans">
+<p>Beans (one paint)</p>
+<span class="price">₦7000</span>
+</div>
+
+<div class="item" onclick="toggleItem(this,'Green peas (tin)',2000)">
+<img src="https://images.pexels.com/photos/32766465/pexels-photo-32766465.jpeg" alt="Green peas">
+<p>Green peas (tin)</p>
+<span class="price">₦2000</span>
+</div>
+
+</div>
+<!-- VEGETABLE FRUITS -->
+<h2>VEGETABLE FRUITS</h2>
+<div class="grid">
+
+  <div class="item" onclick="toggleItem(this,'Sweet corn tin',5000)">
+<img src="https://images.pexels.com/photos/1359315/pexels-photo-1359315.jpeg" alt="Sweet corn">
+<p>Sweet corn(tin)</p>
+<span class="price">₦2000</span>
+</div>
+</div>
+
+<!-- TUBERS -->
+<h2>TUBERS</h2>
+<div class="grid">
+<div class="item" onclick="toggleItem(this,'Yam tuber',5000)">
+<img src="https://images.pexels.com/photos/7543155/pexels-photo-7543155.jpeg" alt="Yam">
+<p>Yam(tuber)</p>
+<span class="price">₦2000</span>
+</div>
+
+<div class="item" onclick="toggleItem(this,'Sweet potato x1',5000)">
+<img src="https://images.pexels.com/photos/7543164/pexels-photo-7543164.jpeg" alt="Sweet potato">
+<p>Sweet potato x1</p>
+<span class="price">₦2000</span>
+</div>
+
+<div class="item" onclick="toggleItem(this,'Sweet potato x2',5000)">
+<img src="https://images.pexels.com/photos/7543164/pexels-photo-7543164.jpeg" alt="Sweet potato">
+<p>Sweet potato x2</p>
+<span class="price">₦2000</span>
+</div>
+
+<div class="item" onclick="toggleItem(this,'Irish potato x1',5000)">
+<img src="https://images.pexels.com/photos/29509701/pexels-photo-29509701.jpeg" alt="Irish potato">
+<p>irish potato x1</p>
+<span class="price">₦2000</span>
+</div>
+
+<div class="item" onclick="toggleItem(this,'Irish potato x2',5000)">
+<img src="https://images.pexels.com/photos/29509701/pexels-photo-29509701.jpeg" alt="Irish potato">
+<p>Irish potato x2</p>
+<span class="price">₦2000</span>
+</div>
+
+  </div>
+
+
+<!-- FLOUR & SWALLOWS -->
+<h2>FLOUR & SWALLOWS</h2>
+<div class="grid">
+<div class="item" onclick="toggleItem(this,'Garri one paint',7000)">
+<img src="https://i.pinimg.com/736x/71/00/99/710099cdfb9c46883a768833ced07438.jpg" alt="Garri">
+<p>Garri (one paint)</p>
+<span class="price">₦7000</span>
+</div>
+
+<div class="item" onclick="toggleItem(this,'Semo',4500)">
+<img src="https://i.pinimg.com/1200x/52/63/bd/5263bd861c616c06efb71b994cdc6b93.jpg" alt="Semo">
+<p>Semo</p>
+<span class="price">₦4500</span>
+</div>
+
+<div class="item" onclick="toggleItem(this,'Wheat',4500)">
+<img src="https://i.pinimg.com/1200x/29/b0/db/29b0db379a3469006b6834a2a58ad0a5.jpg" alt="Wheat">
+<p>Wheat</p>
+<span class="price">₦4500</span>
+</div>
+
+<div class="item" onclick="toggleItem(this,'Poundo yam',4500)">
+<img src="https://i.pinimg.com/1200x/b3/7c/1a/b37c1aebb08cc91c31cf40d05b5fc4fe.jpg" alt="Poundo Yam">
+<p>Poundo yam</p>
+<span class="price">₦4500</span>
+</div>
+
+<div class="item" onclick="toggleItem(this,'Poundo potato',4500)">
+<img src="https://i.pinimg.com/736x/b5/e0/e6/b5e0e623ecc0118677359951a3aa6b10.jpg" alt="Poundo Potato">
+<p>Poundo potato</p>
+<span class="price">₦4500</span>
+</div>
+
+<div class="item" onclick="toggleItem(this,'Flour half paint',4500)">
+<img src="images/flour.jpg" alt="Flour">
+<img src="https://i.pinimg.com/1200x/b0/01/c3/b001c3feba5952a01afc6e3c2b863f86.jpg" alt="Flour">
+<span class="price">₦4500</span>
+</div>
+
+<div class="item" onclick="toggleItem(this,'Flour one paint',5000)">
+<img src="https://i.pinimg.com/1200x/b0/01/c3/b001c3feba5952a01afc6e3c2b863f86.jpg" alt="Flour">
+<p>Flour (one paint)</p>
+<span class="price">₦5000</span>
+</div>
+
+</div>
+
+<!-- OILS & FATS -->
+<h2>OILS & FATS</h2>
+<div class="grid">
+<div class="item" onclick="toggleItem(this,'Palm oil small bottle',1200)">
+<img src="https://images.pexels.com/photos/31448423/pexels-photo-31448423.jpeg" alt="Palm oil">
+<p>Palm oil (small bottle)</p>
+<span class="price">₦1200</span>
+</div>
+
+<div class="item" onclick="toggleItem(this,'Palm oil big bottle',3000)">
+<img src="https://images.pexels.com/photos/31448423/pexels-photo-31448423.jpeg" alt="Palm oil">
+<p>Palm oil (big bottle)</p>
+<span class="price">₦3000</span>
+</div>
+
+<div class="item" onclick="toggleItem(this,'Vegetable oil small bottle',1200)">
+<img src="https://images.pexels.com/photos/12284682/pexels-photo-12284682.jpeg" alt="Vegetable oil">
+<p>Vegetable oil (small bottle)</p>
+<span class="price">₦1200</span>
+</div>
+
+<div class="item" onclick="toggleItem(this,'Vegetable oil big bottle',3000)">
+<img src="https://images.pexels.com/photos/12284682/pexels-photo-12284682.jpeg" alt="Vegetable oil">
+<p>Vegetable oil (big bottle)</p>
+<span class="price">₦3000</span>
+</div>
+
+</div>
+
+<!-- DAIRY PRODUCTS -->
+<h2>DAIRY PRODUCTS</h2>
+<div class="grid">
+
+<div class="item" onclick="toggleItem(this,'Egg dozen',3600)">
+<img src="https://images.pexels.com/photos/6845651/pexels-photo-6845651.jpeg" alt="Egg">
+<p>Egg (dozen)</p>
+<span class="price">₦3600</span>
+</div>
+
+<div class="item" onclick="toggleItem(this,'Egg half crate',4000)">
+<img src="https://i.pinimg.com/736x/0d/f1/97/0df19786325c36bea3397c630778123b.jpg" alt="Egg">
+<p>Egg (half crate)</p>
+<span class="price">₦4000</span>
+</div>
+
+<div class="item" onclick="toggleItem(this,'Egg crate',8000)">
+<img src="https://images.pexels.com/photos/11750605/pexels-photo-11750605.jpeg" alt="Egg">
+<p>Egg (crate)</p>
+<span class="price">₦8000</span>
+</div>
+
+<div class="item" onclick="toggleItem(this,'Peak milk tin',1200)">
+<img src="https://i.pinimg.com/736x/d0/fe/1a/d0fe1a9e156e4f516bad078349c7209a.jpg" alt="Peak milk tin">
+<p>Peak milk (tin)</p>
+<span class="price">₦1200</span>
+</div>
+
+<div class="item" onclick="toggleItem(this,'Peak milk roll',3000)">
+<img src="https://i.pinimg.com/1200x/9d/cc/56/9dcc56c17010235893de08f8e3901198.jpg" alt="Peak milk roll">
+<p>Peak milk</p>
+<span class="price">₦3000</span>
+</div>
+
+<div class="item" onclick="toggleItem(this,'Loya milk roll',3000)">
+<img src="https://i.pinimg.com/736x/e3/70/bc/e370bc9d572dba9aa39a293259dc8518.jpg" alt="Loya milk roll">
+<p>Loya milk (roll)</p>
+<span class="price">₦3000</span>
+</div>
+
+
+<div class="item" onclick="toggleItem(this,'Dano milk roll',2000)">
+<img src="https://i.pinimg.com/736x/e5/11/60/e511603e0b339b905bd18daddd93954e.jpg" alt="Dano milk roll">
+<p>Dano milk</p>
+<span class="price">₦2000</span>
+</div>
+
+</div>
+
+
+
+<!-- BEVERAGES -->
+<h2>BEVERAGES</h2>
+<div class="grid">
+
+  <div class="item" onclick="toggleItem(this,'Milo roll',3000)">
+<img src="https://i.pinimg.com/1200x/9d/24/e9/9d24e9cb6db48d17fd31ed7a18f2b998.jpg" alt="Milo">
+<p>Milo</p>
+<span class="price">₦3000</span>
+</div>
+
+<div class="item" onclick="toggleItem(this,'Cadbury hot chocolate roll',4000)">
+<img src="https://i.pinimg.com/736x/a0/fb/a3/a0fba3c6272c35ab42f63ac5278cad32.jpg" alt="Cadbury hot chocolate">
+<p>Cadbury hot chocolate (roll)</p>
+<span class="price">₦4000</span>
+</div>
+
+<div class="item" onclick="toggleItem(this,'Bournvita roll',3000)">
+<img src="https://i.pinimg.com/1200x/f1/58/79/f15879f4e8c8afb2c909531f42bb3d88.jpg" alt="Bournvita">
+<p>Bournvita</p>
+<span class="price">₦3000</span>
+</div>
+
+</div>
+
+<!-- SEASONINGS & SPICES -->
+<h2>SEASONINGS & SPICES</h2>
+<div class="grid">
+
+  <div class="item" onclick="toggleItem(this,'Ginger',500)">
+<img src="https://images.pexels.com/photos/33930747/pexels-photo-33930747.jpeg" alt="Ginger">
+<p>Ginger</p>
+<span class="price">₦500</span>
+</div>
+
+<div class="item" onclick="toggleItem(this,'Garlic',500)">
+<img src="https://images.pexels.com/photos/25315388/pexels-photo-25315388.jpeg" alt="Garlic">
+<p>Garlic</p>
+<span class="price">₦500</span>
+</div>
+
+<div class="item" onclick="toggleItem(this,'Knorr cubes',2000)">
+<img src="https://i.pinimg.com/1200x/1d/30/fa/1d30fa4cea9307df40f7e5decbac16cb.jpg" alt="Knorr cubes">
+<p>Knorr cubes</p>
+<span class="price">₦2000</span>
+</div>
+
+<div class="item" onclick="toggleItem(this,'Spicity roll',700)">
+<img src="https://i.pinimg.com/1200x/a8/16/8a/a8168ac9c2ad54b247b9dc839f3b6ba5.jpg" alt="Spicity">
+<p>Spicity (roll)</p>
+<span class="price">₦700</span>
+</div>
+
+<div class="item" onclick="toggleItem(this,'Curry roll',700)">
+<img src="https://i.pinimg.com/1200x/46/cd/12/46cd1298962b31abb7916cba96e4af2a.jpg" alt="Curry">
+<p>Curry (roll)</p>
+<span class="price">₦700</span>
+</div>
+
+<div class="item" onclick="toggleItem(this,'Thyme roll',700)">
+<img src="https://i.pinimg.com/736x/ff/39/cf/ff39cff2ba1d89a7a7dffc6f94580c26.jpg" alt="Thyme">
+<p>Thyme (roll)</p>
+<span class="price">₦700</span>
+</div>
+
+</div>
+
+
+<!-- PASTA & NOODLES -->
+<h2>PASTA & NOODLES</h2>
+<div class="grid">
+
+  <div class="item" onclick="toggleItem(this,'Spaghetti golden penny full pack',10000)">
+<img src="https://i.pinimg.com/1200x/14/7b/54/147b547bab659f1a122824be69de1ef5.jpg" alt="Spaghetti golden penny">
+<p>Spaghetti golden penny (full pack)</p>
+<span class="price">₦10000</span>
+</div>
+
+
+  <div class="item" onclick="toggleItem(this,'Spaghetti golden penny half pack',5000)">
+<img src="https://i.pinimg.com/1200x/14/7b/54/147b547bab659f1a122824be69de1ef5.jpg" alt="Spaghetti golden penny">
+<p>Spaghetti golden penny (half pack)</p>
+<span class="price">₦5000</span>
+</div>
+
+<div class="item" onclick="toggleItem(this,'Spaghetti crown full pack',10000)">
+<img src="https://i.pinimg.com/1200x/65/25/d3/6525d3f3640163b776c6f27cc72fca56.jpg" alt="Spaghetti crown">
+<p>Spaghetti crown (full pack)</p>
+<span class="price">₦10000</span>
+</div>
+
+
+  <div class="item" onclick="toggleItem(this,'Spaghetti crown half pack',5000)">
+<img src="https://i.pinimg.com/1200x/65/25/d3/6525d3f3640163b776c6f27cc72fca56.jpg" alt="Spaghetti crown">
+<p>Spaghetti crown (half pack)</p>
+<span class="price">₦5000</span>
+</div>
+
+
+<div class="item" onclick="toggleItem(this,'Macaroni full pack',10000)">
+<img src="https://i.pinimg.com/736x/1d/92/4b/1d924b24cadc6bfb209c0ea14c411538.jpg" alt="Macaroni">
+<p>Macaroni (full pack)</p>
+<span class="price">₦10000</span>
+</div>
+
+
+  <div class="item" onclick="toggleItem(this,'Macaroni half pack',5000)">
+<img src="https://i.pinimg.com/736x/1d/92/4b/1d924b24cadc6bfb209c0ea14c411538.jpg" alt="Macaroni">
+<p>Macaroni (half pack)</p>
+<span class="price">₦5000</span>
+</div>
+
+<div class="item" onclick="toggleItem(this,'Indomie tables carton',10000)">
+<img src="https://i.pinimg.com/736x/ac/5e/39/ac5e39bccdf6cd54cace05b2fe2c4c6a.jpg" alt="Indomie tables">
+<p>Indomie tables (carton)</p>
+<span class="price">₦10000</span>
+</div>
+
+
+  <div class="item" onclick="toggleItem(this,'Superpack indomie carton',15000)">
+<img src="https://i.pinimg.com/736x/ac/5e/39/ac5e39bccdf6cd54cace05b2fe2c4c6a.jpg" alt="Indomie tables">
+<p>Superpack indomie (carton)</p>
+<span class="price">₦15000</span>
+</div>
+
+</div>
+
+
+<!-- CONDIMENTS & SPREADS -->
+<h2>CONDIMENTS & SPREADS</h2>
+<div class="grid">
+
+<div class="item" onclick="toggleItem(this,'Mayonnaise',3500)">
+<img src="https://i.pinimg.com/736x/db/b4/ad/dbb4ad2111064241c183ad9f32809558.jpg" alt="Mayonnaise">
+<p>Mayonnaise</p>
+<span class="price">₦3500</span>
+</div>
+
+<div class="item" onclick="toggleItem(this,'Butter',3500)">
+<img src="https://i.pinimg.com/736x/2a/cc/21/2acc21b0ed6ef067ab8d0e897cdcb4e2.jpg" alt="Butter">
+<p>Butter</p>
+<span class="price">₦3500</span>
+</div>
+
+<div class="item" onclick="toggleItem(this,'Nutella',3500)">
+<img src="https://i.pinimg.com/736x/71/9b/a8/719ba8314664b033c36ba6007aa37805.jpg" alt="Nutella">
+<p>Nutella</p>
+<span class="price">₦3500</span>
+</div>
+
+<div class="item" onclick="toggleItem(this,'Peanut butter',3500)">
+<img src="https://i.pinimg.com/736x/6f/a0/54/6fa0540e056a65c620eb3a45971243e9.jpg" alt="Peanut butter">
+<p>Peanut butter</p>
+<span class="price">₦3500</span>
+</div>
+
+<div class="item" onclick="toggleItem(this,'Jam',3500)">
+<img src="https://i.pinimg.com/736x/a9/95/64/a99564249feb8e0c18154a3ef0a3a728.jpg" alt="Jam">
+<p>Jam</p>
+<span class="price">₦3500</span>
+</div>
+
+  </div>
+
+
+</section>
+<h3>Thanks for shopping with us</h3>
+
+<div id="formBox" class="form-box">
+<h3>Enter Details</h3>
+<input id="name" placeholder="Name">
+<input id="hostel" placeholder="Hostel">
+<input id="dept" placeholder="Department">
+
+<div id="summary"></div>
+
+<div id="paymentSection">
+
+  <h3>Total: ₦<span id="totalPrice">0</span></h3>
+
+  <p><b>Payment Details:</b></p>
+  <p>Bank: MONIEPOINT</p>
+  <p>Account Name: GREG-OKOJIE DANIEL</p>
+  <p>Account Number: 9031576717</p>
+
+</div>
+
+<button class="order-btn" onclick="openForm()">Proceed to Order</button>
+
+
+<button class="whatsapp-btn" onclick="sendOrder()">Place Order</button>
+</div>
+
+<script src="script.js"></script>
+<div id="overlay" onclick="closeMenu()"></div>
+</body>
+</html>
