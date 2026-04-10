@@ -10,6 +10,8 @@ function toggleItem(el, name, price) {
   } else {
     selectedItems.push({name, price}); // add
   }
+
+  document.getElementById("proceedBtn").style.display = "block";
 }
 
 function toggleCategory(btn) {
@@ -108,6 +110,8 @@ function openForm() {
   document.getElementById("formBox").scrollIntoView({
     behavior: "smooth"
   });
+
+  document.getElementById("proceedBtn").style.display = "none";
 }
 
 
@@ -121,7 +125,9 @@ window.onload = function () {
     // DO NOT remove onclick — we still want alert
     btn.style.cursor = "not-allowed";
   }
-  document.getElementById("formBox").scrollIntoView({ behavior: "smooth" });
+  window.scrollTo(0, 0); // always start from top
+
+  document.getElementById("formBox").style.display = "none"; // hide form on load
 };
 
 if (checkStoreStatus() === "closed") {
@@ -135,8 +141,6 @@ if (checkStoreStatus() === "closed") {
 
   document.body.prepend(banner);
 }
-
-  document.getElementById("formBox").style.display = "block";
 
   let total = 0;
   let text = "<h4>Order Summary</h4>";
@@ -172,5 +176,5 @@ function sendOrder() {
 
   message += `Total: ₦${total}`;
 
-  window.open(`https://wa.me/2349031576717?text=${message}`);
+  window.open(`https://api.whatsapp.com/send?phone=2349031576717&text=${message}`);
 }
