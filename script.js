@@ -1,14 +1,14 @@
 let selectedItems = [];
 
 function toggleItem(el, name, price) {
-  el.classList.toggle("selected");
-
   let index = selectedItems.findIndex(i => i.name === name);
 
   if (index > -1) {
-    selectedItems.splice(index, 1); // remove
+    selectedItems.splice(index, 1);
+    el.classList.remove("selected");
   } else {
-    selectedItems.push({name, price}); // add
+    selectedItems.push({name, price});
+    el.classList.add("selected");
   }
 
   document.getElementById("proceedBtn").style.display = "block";
@@ -24,7 +24,11 @@ function openFAQ() {
 }
 
 function contactUs() {
-  window.open("https://wa.me/2349031576717?text=Hello%20I%20need%20help");
+  window.open("https://wa.me/2349125366748?text=Hello%20I%20need%20help");
+}
+
+function closeNotice() {
+  document.getElementById("noticeBar").style.display = "none";
 }
 
 function toggleMenu() {
@@ -59,36 +63,7 @@ function scrollToSection(id) {
   document.getElementById(id).scrollIntoView({behavior:"smooth"});
 }
 
-function checkStoreStatus() {
-  let now = new Date();
-
-  // Get Nigerian time
-  let nigeriaTime = new Date(
-    now.toLocaleString("en-US", { timeZone: "Africa/Lagos" })
-  );
-
-  let hour = nigeriaTime.getHours();
-
-  if (hour >= 19 || hour < 6) {
-    return "closed";
-  } else {
-    return "open";
-  }
-}
-
 function openForm() {
-
-  let status = checkStoreStatus();
-
-  if (status === "closed") {
-    alert("🚫 We are currently CLOSED.\n\nOrders open from 6AM to 7PM.");
-    return;
-  }
-
-  if (selectedItems.length === 0) {
-    alert("Please select at least one item");
-    return;
-  }
 
   let total = 0;
   let text = "<h4>Order Summary</h4>";
@@ -98,15 +73,15 @@ function openForm() {
     text += `<p>${item.name} - ₦${item.price}</p>`;
   });
 
-  text += `<p>Delivery - ₦1000</p>`;
-  text += `<b>Total: ₦${total + 1000}</b>`;
+  text += `<p>Delivery+Service charge - ₦2750</p>`;
+  text += `<b>Total: ₦${total + 2750}</b>`;
 
   document.getElementById("summary").innerHTML = text;
-  document.getElementById("totalPrice").innerText = total + 1000;
+  document.getElementById("totalPrice").innerText = total + 2750;
 
   document.getElementById("formBox").style.display = "block";
 
-  // 👇 THIS SCROLLS USER TO FORM (VERY IMPORTANT UX FIX)
+  // THIS SCROLLS USER TO FORM (VERY IMPORTANT UX FIX)
   document.getElementById("formBox").scrollIntoView({
     behavior: "smooth"
   });
@@ -118,63 +93,43 @@ function openForm() {
 window.onload = function () {
   let btn = document.querySelector(".order-btn");
 
-  if (checkStoreStatus() === "closed") {
-    btn.innerText = "Closed (Opens 6AM)";
-    btn.style.background = "gray";
-
-    // DO NOT remove onclick — we still want alert
-    btn.style.cursor = "not-allowed";
-  }
   window.scrollTo(0, 0); // always start from top
 
   document.getElementById("formBox").style.display = "none"; // hide form on load
 };
 
-if (checkStoreStatus() === "closed") {
-  let banner = document.createElement("div");
-  banner.innerText = "🚫 We are currently closed. Opens 6AM.";
-  
-  banner.style.background = "red";
-  banner.style.color = "white";
-  banner.style.textAlign = "center";
-  banner.style.padding = "10px";
 
-  document.body.prepend(banner);
-}
-
-  let total = 0;
-  let text = "<h4>Order Summary</h4>";
-
-  selectedItems.forEach(item => {
-    total += item.price;
-    text += `<p>${item.name} - ₦${item.price}</p>`;
-  });
-
-  text += `<p>Delivery - ₦1000</p>`;
-  text += `<b>Total: ₦${total + 1000}</b>`;
-
-  document.getElementById("summary").innerHTML = text;
-
-
-document.getElementById("totalPrice").innerText = total;
 
 function sendOrder() {
-
-  alert("⚠️ Please pay the exact total amount to the account above and take a screenshot of your payment.\n You will be required to send it on WhatsApp after placing your order. Orders without proof of payment will not be processed.");
 
   let name = document.getElementById("name").value;
   let hostel = document.getElementById("hostel").value;
   let dept = document.getElementById("dept").value;
 
-  let total = 1000;
-  let message = `Hi Saint Leo's Mart 👋%0AName: ${name}%0AHostel: ${hostel}%0ADept: ${dept}%0AOrder:%0A`;
+  if (!name || !hostel || !dept) {
+    alert("Please fill in all details");
+    return;
+  }
+
+  let total = 2750;
+  let message = `Hi Saint Leo's Mart 👋
+
+Name: ${name}
+Hostel: ${hostel}
+Dept: ${dept}
+
+Order:
+`;
 
   selectedItems.forEach(item => {
     total += item.price;
-    message += `- ${item.name} ₦${item.price}%0A`;
+    message += `- ${item.name} ₦${item.price}\n`;
   });
 
-  message += `Total: ₦${total}`;
+  message += `\nTotal: ₦${total}`;
 
-  window.open(`https://api.whatsapp.com/send?phone=2349031576717&text=${message}`);
+  let url = "https://api.whatsapp.com/send?phone=2349125366748&text=" + encodeURIComponent(message);
+
+  // 🔥 THIS is the key fix
+  window.location.href = url;
 }
