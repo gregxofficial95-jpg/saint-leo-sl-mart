@@ -1,14 +1,14 @@
 body {
   font-family: Arial;
   margin: 0;
-  background: #f5f5f5;
+    background: #F9F6F2;
 }
 
 header {
   display: flex;
   align-items: center;
-  background: #8FAE5D;
-  color: white;
+  background: #2B0A02;
+  color: #D4A373;
   padding: 15px;
 }
 
@@ -21,8 +21,8 @@ header {
 .hero {
   background: linear-gradient(
 to right,
-rgba(143, 174, 93, 0.95),
-rgba(143, 174, 93, 0.85)
+rgba(43, 10, 2, 0.85),
+rgba(43, 10, 2, 0.9)
   ),
 url("https://i.pinimg.com/736x/de/f7/1a/def71a06ed9a2b43f2df9693045bbc13.jpg");
 
@@ -30,7 +30,7 @@ background-size: cover;
 background-position: right center;
 background-repeat: no-repeat;
 
-color: white;
+color: #F5F5F5;
 text-align: left;
 padding: 60px 20px;
 }
@@ -48,8 +48,8 @@ padding: 60px 20px;
   padding: 15px 25px;
   font-size: 16px;
   border: none;
-  background: white;
-  color: #8FAE5D;
+  background: #B87333;
+  color: #FFFFFF;
   border-radius: 8px;
 }
 
@@ -60,8 +60,32 @@ padding: 60px 20px;
   padding: 10px;
 }
 
+.out-of-stock {
+  color: red;
+  font-weight: bold;
+}
+
+.notice {
+  background: #2B0A02;
+  color: #D4A373;
+  padding: 10px 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+}
+
+.notice button {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+} 
 .item {
-  background: white;
+  background: #FFFFFF;
+  border: #E8DCD3;
+  box-shadow: rgba(43, 10, 2, 0.8);
   padding: 10px;
   border-radius: 12px;
   text-align: center;
@@ -77,12 +101,12 @@ padding: 60px 20px;
 }
 
 .item.selected {
-  border: 2px solid #27ae60;
+  border: 2px solid #2B0A02;
   background: #eafaf1;
 }
 
 .price {
-  color: #27ae60;
+  color: #2B0A02;
   font-weight: bold;
 }
 
@@ -90,6 +114,8 @@ padding: 60px 20px;
   margin: 10px;
   padding: 10px 20px;
   font-size: 14px;
+  background: #B87333;
+  color: #FFFFFF;
 }
 
 .hidden-items {
@@ -103,8 +129,8 @@ padding: 60px 20px;
   left: 5%;
   padding: 18px;
   font-size: 16px;
-  background: #27ae60;
-  color: white;
+  background: #B87333;
+  color: #FFFFFF;
   border: none;
   border-radius: 12px;
 }
@@ -126,8 +152,8 @@ padding: 60px 20px;
 .whatsapp-btn {
   padding: 15px;
   width: 100%;
-  background: #25D366;
-  color: white;
+ background: #B87333;
+  color: #FFFFFF;
   border: none;
   border-radius: 10px;
 }
@@ -138,7 +164,7 @@ padding: 60px 20px;
   left: 0;
   width: 150px;
   height: 100%;
-  background: white;
+ background: #B87333;
   padding: 20px;
 
   transform: translateX(-100%);
@@ -194,7 +220,7 @@ padding: 60px 20px;
 }
 
 .faq-item p {
-  color: #8FAE5D;
+  color: #2B0A02;
   font-size: 14px;
   line-height: 1.4;
 }
