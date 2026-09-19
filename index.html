@@ -4,44 +4,530 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Saint Leo's Mart</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+  <!-- SAINT LEO'S MART INTRO -->
+<div id="introScreen">
+  <img src="saint-leos-mart-logo.jpeg" alt="Saint Leo's Mart Logo">
+
+  <p>WELCOME TO</p>
+  <h1>SAINT LEO'S MART</h1>
+
+  <div class="intro-line"></div>
+</div>
 
 <header>
   <span class="menu-btn" onclick="toggleMenu()">☰</span>
   <h2>Saint Leo's Mart</h2>
 </header>
 
-<div id="noticeBar" class="notice">
-  <span>
-    Need something not listed? 
-     <a href="https://wa.me/2349125366748" target="_blank">
-    Chat us on WhatsApp
-  </a>
-    to place a special order.
-    We also offer full delivery service from vendors around the school for a delivery fee of ₦1500.
-  </span>
-  <button onclick="closeNotice()">✖</button>
-</div>
 
 <div id="sidebar" class="sidebar">
-  <p onclick="scrollToSection('home')">🏠 Home</p>
-  <p onclick="scrollToSection('food')">🍲 Food</p>
-  <p onclick="openFAQ()">❓ FAQ</p>
-  <p onclick="contactUs()">📞 Contact Us</p>
+  <p onclick="scrollToSection('home'); closeMenu()">🏠 Home</p>
+<p onclick="scrollToSection('categories'); closeMenu()">🛍 Categories</p>
+<p onclick="scrollToSection('food'); closeMenu()">🍲 Shop</p>
+<p onclick="openFAQ()">❓ FAQ</p>
+<p onclick="contactUs()">📞 Contact Us</p>
 </div>
 
 <section id="home" class="hero">
-  <h1>Fresh groceries delivered to your hostel</h1>
-  <button onclick="scrollToSection('food')">Order Now</button>
+
+  <div class="hero-content">
+
+    <p class="hero-eyebrow">SAINT LEO'S MART</p>
+
+    <h1>
+      Fresh groceries.
+      <br>
+      Delivered to your hostel.
+    </h1>
+
+    <p class="hero-description">
+      Groceries, snacks, drinks and everyday essentials —
+      conveniently brought to you on campus.
+    </p>
+
+    <div class="hero-actions">
+      <button onclick="scrollToSection('food')">
+        Shop Now
+      </button>
+
+      <button class="hero-secondary" onclick="scrollToSection('categories')">
+        Explore Categories
+      </button>
+    </div>
+
+  </div>
+
+</section>
+
+<section class="home-section featured-section">
+
+  <div class="section-heading">
+    <p class="section-eyebrow">WHAT'S POPULAR</p>
+
+    <h2>Customer Favourites</h2>
+
+    <p>
+      A few of the products students keep coming back for.
+    </p>
+  </div>
+
+  <div class="featured-products">
+
+  <div class="featured-product-card">
+
+    <img
+      src="https://i.pinimg.com/736x/2f/41/10/2f4110f9b4b50aa656429cda5db400d6.jpg"
+      alt="Granola"
+    >
+
+    <div class="featured-product-info">
+      <span class="featured-tag">01</span>
+
+      <h3>Granola</h3>
+
+      <span class="featured-product-price">₦6,000</span>
+
+      <p>
+        A simple favourite for breakfast and everyday provisions.
+      </p>
+
+      <button onclick="scrollToProduct('Granola (one kilo)')">
+        View Product →
+      </button>
+    </div>
+
+  </div>
+
+
+  <div class="featured-product-card">
+
+    <img
+      src="https://i.pinimg.com/736x/71/9b/a8/719ba8314664b033c36ba6007aa37805.jpg"
+      alt="Nutella"
+    >
+
+    <div class="featured-product-info">
+      <span class="featured-tag">02</span>
+
+      <h3>Nutella</h3>
+
+      <span class="featured-product-price">₦9,000</span>
+
+      <p>
+        A sweet favourite for breakfast, snacks and treats.
+      </p>
+
+      <button onclick="scrollToProduct('Nutella')">
+        View Product →
+      </button>
+    </div>
+
+  </div>
+
+
+  <div class="featured-product-card">
+
+    <img
+      src="https://i.pinimg.com/736x/a9/95/64/a99564249feb8e0c18154a3ef0a3a728.jpg"
+      alt="Jam"
+    >
+
+    <div class="featured-product-info">
+      <span class="featured-tag">03</span>
+
+      <h3>Jam</h3>
+
+      <span class="featured-product-price">₦4,000</span>
+
+      <p>
+        An easy addition to breakfast and everyday snacks.
+      </p>
+
+      <button onclick="scrollToProduct('Jam')">
+        View Product →
+      </button>
+    </div>
+
+  </div>
+
+
+  <div class="featured-product-card">
+
+    <img
+      src="https://i.pinimg.com/1200x/85/e0/b4/85e0b434a6ba60ff71261056c0c19426.jpg"
+      alt="Kilishi"
+    >
+
+    <div class="featured-product-info">
+      <span class="featured-tag">04</span>
+
+      <h3>Kilishi</h3>
+
+      <span class="featured-product-price">₦2,500</span>
+
+      <p>
+        A convenient favourite when you're looking for something savoury.
+      </p>
+
+      <button onclick="scrollToProduct('Kilishi')">
+        View Product →
+      </button>
+    </div>
+
+  </div>
+
+
+  <div class="featured-product-card">
+
+    <img
+      src="https://i.pinimg.com/736x/45/6a/36/456a36b511d29da34ce74f414bfe1da5.jpg"
+      alt="Riggs"
+    >
+
+    <div class="featured-product-info">
+      <span class="featured-tag">05</span>
+
+      <h3>Riggs</h3>
+
+      <span class="featured-product-price">₦4,500</span>
+
+      <p>
+        A personal care essential for your everyday routine.
+      </p>
+
+      <button onclick="scrollToProduct('Riggs')">
+        View Product →
+      </button>
+    </div>
+
+  </div>
+
+</div>
+
+</section>
+
+<section id="categories" class="home-section categories-section">
+
+  <div class="section-heading">
+    <p class="section-eyebrow">SHOP BY CATEGORY</p>
+
+    <h2>Find what you need</h2>
+
+    <p>
+      Browse our everyday groceries and essentials by category.
+    </p>
+  </div>
+
+  <div class="category-grid">
+
+<div class="category-card" onclick="openCategory('vegetables')">
+        <span>01</span>
+      <h3>Vegetables</h3>
+      <p>Fresh vegetables & produce</p>
+    </div>
+
+   <div class="category-card" onclick="openCategory('groceries')">
+      <span>02</span>
+      <h3>Groceries</h3>
+      <p>Everyday food essentials</p>
+    </div>
+
+  <div class="category-card" onclick="openCategory('beverages')">
+      <span>03</span>
+      <h3>Beverages</h3>
+      <p>Drinks, malt & more</p>
+    </div>
+
+   <div class="category-card" onclick="openCategory('snacks')">
+      <span>04</span>
+      <h3>Snacks</h3>
+      <p>Quick bites & treats</p>
+    </div>
+
+   <div class="category-card" onclick="openCategory('meat')">
+      <span>05</span>
+      <h3>Meat & Poultry</h3>
+      <p>Meat & chicken options</p>
+    </div>
+
+    <div class="category-card" onclick="openCategory('fish')">
+      <span>06</span>
+      <h3>Fish & Seafood</h3>
+      <p>Fish & seafood products</p>
+    </div>
+
+   <div class="category-card" onclick="openCategory('toiletries')">
+      <span>07</span>
+      <h3>Toiletries</h3>
+      <p>Personal & hostel essentials</p>
+    </div>
+
+<div class="category-card" onclick="openCategory('pasta')">
+      <span>08</span>
+      <h3>Pasta & Noodles</h3>
+      <p>Quick & easy meals</p>
+    </div>
+
+   <div class="category-card" onclick="openCategory('grains')">
+      <span>09</span>
+      <h3>Grains & Legumes</h3>
+      <p>Rice, beans & more</p>
+    </div>
+
+  <div class="category-card" onclick="openCategory('oils')">
+      <span>10</span>
+      <h3>Oils & Fats</h3>
+      <p>Cooking essentials</p>
+    </div>
+
+  <div class="category-card" onclick="openCategory('dairy')">
+      <span>11</span>
+      <h3>Dairy</h3>
+      <p>Milk & dairy products</p>
+    </div>
+
+    <div class="category-card" onclick="openCategory('seasonings')">
+      <span>12</span>
+      <h3>Seasonings</h3>
+      <p>Spices & cooking essentials</p>
+    </div>
+
+  </div>
+
+</section>
+
+<section id="categoryView" class="category-view">
+
+  <div class="category-view-top">
+
+    <button class="category-back" onclick="closeCategoryView()">
+      ← Back to Categories
+    </button>
+
+    <p class="section-eyebrow">SAINT LEO'S MART</p>
+
+    <h2 id="categoryViewTitle">Category</h2>
+
+    <p id="categoryViewDescription">
+      Browse products in this category.
+    </p>
+
+  </div>
+
+
+  <div id="categoryViewProducts" class="category-view-products">
+    <!-- Products will appear here -->
+  </div>
+
+</section>
+
+<section class="mystery-section">
+
+  <div class="mystery-content">
+
+    <p class="section-eyebrow">THE SAINT LEO'S SPECIAL</p>
+
+    <h2>The Mystery<br>Provision Basket</h2>
+
+    <p class="mystery-description">
+      A little bit of everything.
+      Everyday provisions carefully put together for you.
+      You won't know exactly what's inside until it arrives.
+    </p>
+
+    <div class="mystery-price">
+      <span>₦25,000</span>
+      <small>ONE BASKET</small>
+    </div>
+
+    <button class="mystery-btn" onclick="requestMysteryBasket()">
+  Get the Mystery Basket →
+</button>
+
+  </div>
+
+  <div class="mystery-mark">
+    <span>SL</span>
+    <small>SAINT LEO'S<br>MART</small>
+  </div>
+
+</section>
+
+<section class="special-order-section">
+
+  <div class="special-order-content">
+
+    <p class="section-eyebrow">SPECIAL ORDERS</p>
+
+    <h2>Can't find what you need?</h2>
+
+    <p>
+      If you don't see what you're looking for in the Mart,
+      let us know. We'll check if we can source it for you.
+    </p>
+
+    <div class="special-order-options">
+
+      <div class="special-order-option">
+        <span>01</span>
+        <p>A product that's not listed</p>
+      </div>
+
+      <div class="special-order-option">
+        <span>02</span>
+        <p>A specific brand or item</p>
+      </div>
+
+      <div class="special-order-option">
+        <span>03</span>
+        <p>Something you need urgently</p>
+      </div>
+
+    </div>
+
+    <a
+      href="https://wa.me/2349125366748?text=Hello%20Saint%20Leo's%20Mart%2C%20I%20want%20to%20make%20a%20special%20order."
+      target="_blank"
+      class="special-order-btn"
+    >
+      Request a Special Order →
+    </a>
+
+  </div>
+
+  <div class="special-order-label">
+    <span>SP</span>
+    <small>
+      SPECIAL<br>
+      ORDER
+    </small>
+  </div>
+
+</section>
+
+<section class="delivery-section">
+
+  <div class="delivery-heading">
+    <p class="section-eyebrow">DELIVERY</p>
+
+    <h2>We bring it to you.</h2>
+
+    <p>
+      Order your groceries from your hostel and let
+      Saint Leo's Mart handle the rest.
+    </p>
+  </div>
+
+
+  <div class="delivery-grid">
+
+    <div class="delivery-card">
+      <span>01</span>
+
+      <h3>Place Your Order</h3>
+
+      <p>
+        Select the products you need and submit
+        your order through the Mart.
+      </p>
+    </div>
+
+
+    <div class="delivery-card">
+      <span>02</span>
+
+      <h3>We Prepare It</h3>
+
+      <p>
+        We'll gather your selected items and
+        prepare everything for delivery.
+      </p>
+    </div>
+
+
+    <div class="delivery-card">
+      <span>03</span>
+
+      <h3>Receive Your Order</h3>
+
+      <p>
+        Your order is brought directly to your
+        hostel when it's ready.
+      </p>
+    </div>
+
+  </div>
+
+
+  <div class="delivery-info">
+
+    <div>
+      <span class="delivery-info-label">
+        ORDERING HOURS
+      </span>
+
+      <strong>
+        6:00 AM — 7:00 PM
+      </strong>
+    </div>
+
+
+    <div>
+      <span class="delivery-info-label">
+        DELIVERY
+      </span>
+
+      <strong>
+        HOSTEL DELIVERY
+      </strong>
+    </div>
+
+
+    <div>
+      <span class="delivery-info-label">
+        AVAILABILITY
+      </span>
+
+      <strong>
+        SAME-DAY DELIVERY
+      </strong>
+    </div>
+
+  </div>
+
 </section>
 
 <section id="food">
 
+  <div class="product-search">
+
+  <p class="section-eyebrow">FIND WHAT YOU NEED</p>
+
+  <h2>Search the Mart</h2>
+
+  <p>Search for groceries, drinks, snacks and everyday essentials.</p>
+
+  <input
+    type="text"
+    id="productSearch"
+    placeholder="Search for a product..."
+    autocomplete="off"
+  >
+
+  <div id="searchResultCount"></div>
+
+</div>
+
 <!-- VEGETABLES -->
-<h2>Vegetables</h2>
-<div class="grid">
+<h2 class="product-category" data-category="vegetables">Vegetables</h2>
+<div class="grid category-products" data-category="vegetables">
 
 <div class="item" onclick="toggleItem(this,'Tomatoes x1',1500)">
 <img src="https://images.pexels.com/photos/533280/pexels-photo-533280.jpeg" alt="Tomato">
@@ -140,8 +626,8 @@
 </div>
 
 <!-- CEREALS & MEASUREMENTS-->
-<h2>CEREALS & MEASUREMENTS</h2>
-<div class="grid">
+<h2 class="product-category" data-category="cereals">CEREALS & MEASUREMENTS</h2>
+<div class="grid category-products" data-category="cereals">
 <div class="item" onclick="toggleItem(this,'Cornflakes (one paint)',7000)">
 <img src="https://i.pinimg.com/736x/2f/1e/98/2f1e982a768128529e12184b0826ced0.jpg" alt="Cornflakes">
 <p>Cornflakes (one paint)</p>
@@ -217,8 +703,8 @@
 </div>
 
 <!-- TOILETRIES & ESSENTIALS -->
-<h2>Toiletries & Essentials</h2>
-<div class="grid">
+<h2 class="product-category" data-category="toiletries">Toiletries & Essentials</h2>
+<div class="grid category-products" data-category="toiletries">
 
 <div class="item" onclick="toggleItem(this,'Dettol 250ml',5500)">
 <img src="https://i.pinimg.com/736x/c2/0c/2e/c20c2eba8bbba0d0c9e7e513fea84f58.jpg" alt="Dettol">
@@ -297,8 +783,8 @@
 
 
 <!-- SOFT DRINKS -->
-<h2>Soft Drinks & Malt</h2>
-<div class="grid">
+<h2 class="product-category" data-category="drinks">Soft Drinks & Malt</h2>
+<div class="grid category-products" data-category="drinks">
 
 <div class="item" onclick="toggleItem(this,'Coke pack',6000)">
 <img src="https://i.pinimg.com/1200x/f1/47/27/f147271d7a5991d451fb3dd5312bd1c0.jpg" alt="Coke">
@@ -359,8 +845,8 @@
 
   
 <!-- MEAT -->
-<h2>Meat & Poultry</h2>
-<div class="grid">
+<h2 class="product-category" data-category="meat">Meat & Poultry</h2>
+<div class="grid category-products" data-category="meat">
 <div class="item" onclick="toggleItem(this,'Chicken 1kg',7000)">
 <img src="https://images.pexels.com/photos/10886018/pexels-photo-10886018.jpeg" alt="Chicken">
 <p>Chicken (1kg)</p>
@@ -394,10 +880,10 @@
 
 </div>
 
-<!-- ADD MORE CATEGORIES SAME FORMAT -->
+
 <!-- FISH & SEAFOOD -->
-<h2>FISH & SEAFOOD</h2>
-<div class="grid">
+<h2 class="product-category" data-category="fish">FISH & SEAFOOD</h2>
+<div class="grid category-products" data-category="fish">
   <div class="item" onclick="toggleItem(this,'Titus',0)">
 <img src="https://images.pexels.com/photos/20121102/pexels-photo-20121102.jpeg" alt="Titus">
 <p>Titus</p>
@@ -426,8 +912,8 @@
   </div>
 
   <!--GRAINS -->
-<h2>GRAINS</h2>
-<div class="grid">
+<h2 class="product-category" data-category="grains">GRAINS</h2>
+<div class="grid category-products" data-category="grains">
 <div class="item" onclick="toggleItem(this,'Rice (foreign)',5500)">
 <img src="https://images.pexels.com/photos/36008677/pexels-photo-36008677.jpeg" alt="Rice">
 <p>Rice (foreign)</p>
@@ -446,8 +932,8 @@
  
 
 <!-- LEGUMES -->
-<h2>LEGUMES</h2>
-<div class="grid">
+<h2 class="product-category" data-category="legumes">LEGUMES</h2>
+<div class="grid category-products" data-category="legumes">
 
 <div class="item" onclick="toggleItem(this,'Beans (one paint)',6200)">
 <img src="https://images.pexels.com/photos/10111852/pexels-photo-10111852.jpeg" alt="Beans">
@@ -470,8 +956,8 @@
 
 </div>
 <!-- VEGETABLE FRUITS -->
-<h2>VEGETABLE FRUITS</h2>
-<div class="grid">
+<h2 class="product-category" data-category="vegetable-fruits">VEGETABLE FRUITS</h2>
+<div class="grid category-products" data-category="vegetable-fruits">
 
   <div class="item" onclick="toggleItem(this,'Sweet corn tin',2000)">
 <img src="https://images.pexels.com/photos/1359315/pexels-photo-1359315.jpeg" alt="Sweet corn">
@@ -481,8 +967,8 @@
 </div>
 
 <!-- TUBERS -->
-<h2>TUBERS</h2>
-<div class="grid">
+<h2 class="product-category" data-category="tubers">TUBERS</h2>
+<div class="grid category-products" data-category="tubers">
 <div class="item" onclick="toggleItem(this,'Yam tuber',3000)">
 <img src="https://images.pexels.com/photos/7543155/pexels-photo-7543155.jpeg" alt="Yam">
 <p>Yam(tuber)</p>
@@ -504,9 +990,8 @@
   </div>
 
 <!-- SNACKS -->
-<h2>Snacks</h2>
-<div class="grid">
-
+<h2 class="product-category" data-category="snacks">Snacks</h2>
+<div class="grid category-products" data-category="snacks">
 <div class="item" onclick="toggleItem(this,'Cabin biscuit',2000)">
 <img src="https://i.pinimg.com/736x/e5/16/b0/e516b0ec83370f9e1d705e601575a714.jpg" alt="Cabin">
 <p>Cabin biscuit</p>
@@ -543,8 +1028,8 @@
 
 
 <!-- FLOUR & SWALLOWS -->
-<h2>FLOUR & SWALLOWS</h2>
-<div class="grid">
+<h2 class="product-category" data-category="flour">FLOUR & SWALLOWS</h2>
+<div class="grid category-products" data-category="flour">
 <div class="item" onclick="toggleItem(this,'Garri white',2000)">
 <img src="https://i.pinimg.com/1200x/f7/03/15/f703153d6f30f8f2519a78448a6a5dee.jpg" alt="Garri">
 <p>Garri (white)</p>
@@ -585,8 +1070,8 @@
 </div>
 
 <!-- OILS & FATS -->
-<h2>OILS & FATS</h2>
-<div class="grid">
+<h2 class="product-category" data-category="oils">OILS & FATS</h2>
+<div class="grid category-products" data-category="oils">
 <div class="item" onclick="toggleItem(this,'Palm oil small bottle',2200)">
 <img src="https://i.pinimg.com/736x/e8/69/12/e86912c5a976762068b3b9b9645c07b9.jpg" alt="Palm oil">
 <p>Palm oil (small bottle)</p>
@@ -614,9 +1099,8 @@
 </div>
 
 <!-- DAIRY PRODUCTS -->
-<h2>DAIRY PRODUCTS</h2>
-<div class="grid">
-
+<h2 class="product-category" data-category="dairy">DAIRY PRODUCTS</h2>
+<div class="grid category-products" data-category="dairy">
 <div class="item" onclick="toggleItem(this,'Egg dozen',3350)">
 <img src="https://images.pexels.com/photos/6845651/pexels-photo-6845651.jpeg" alt="Egg">
 <p>Egg (dozen)</p>
@@ -652,9 +1136,8 @@
 
 
 <!-- BEVERAGES -->
-<h2>BEVERAGES</h2>
-<div class="grid">
-
+<h2 class="product-category" data-category="beverages">BEVERAGES</h2>
+<div class="grid category-products" data-category="beverages">
   <div class="item" onclick="toggleItem(this,'Milo',4400)">
 <img src="https://i.pinimg.com/736x/61/d6/2a/61d62a49f9600ebbdedeadee14d583a1.jpg" alt="Milo">
 <p>Milo</p>
@@ -676,8 +1159,8 @@
 </div>
 
 <!-- SEASONINGS & SPICES -->
-<h2>SEASONINGS & SPICES</h2>
-<div class="grid">
+<h2 class="product-category" data-category="seasonings">SEASONINGS & SPICES</h2>
+<div class="grid category-products" data-category="seasonings">
 
   <div class="item" onclick="toggleItem(this,'Ginger & Garlic',700)">
 <img src="https://i.pinimg.com/736x/cf/24/14/cf241438f4924706128b50cad3c58d58.jpg" alt="Ginger & Garlic">
@@ -725,9 +1208,8 @@
 
 
 <!-- PASTA & NOODLES -->
-<h2>PASTA & NOODLES</h2>
-<div class="grid">
-
+<h2 class="product-category" data-category="pasta">PASTA & NOODLES</h2>
+<div class="grid category-products" data-category="pasta">
   <div class="item" onclick="toggleItem(this,'Spaghetti golden penny three',3600)">
 <img src="https://i.pinimg.com/1200x/14/7b/54/147b547bab659f1a122824be69de1ef5.jpg" alt="Spaghetti golden penny">
 <p>Spaghetti golden penny (three)</p>
@@ -772,8 +1254,8 @@
 
 
 <!-- CONDIMENTS & SPREADS -->
-<h2>CONDIMENTS & SPREADS</h2>
-<div class="grid">
+<h2 class="product-category" data-category="condiments">CONDIMENTS & SPREADS</h2>
+<div class="grid category-products" data-category="condiments">
 
 <div class="item" onclick="toggleItem(this,'Mayonnaise',2300)">
 <img src="https://i.pinimg.com/736x/db/b4/ad/dbb4ad2111064241c183ad9f32809558.jpg" alt="Mayonnaise">
@@ -814,29 +1296,209 @@
 <button id="proceedBtn" class="order-btn" onclick="openForm()">Proceed to Order</button>
 
 <div id="formBox" class="form-box">
-<h3>Enter Details</h3>
-<input id="name" placeholder="Name">
-<input id="hostel" placeholder="Hostel">
-<input id="dept" placeholder="Department">
 
-<div id="summary"></div>
+  <h3>Enter Details</h3>
 
-<div id="paymentSection">
+  <form id="orderForm">
 
-  <h3>Total: ₦<span id="totalPrice">0</span></h3>
+    <input
+      type="hidden"
+      name="access_key"
+      value="90c384ea-9fb4-45bb-abce-760167d63736"
+    >
 
-  <p><b>Payment Details:</b></p>
+    <input
+      type="hidden"
+      name="subject"
+      value="New Saint Leo's Mart Order"
+    >
+
+    <input
+      type="hidden"
+      name="from_name"
+      value="Saint Leo's Mart"
+    >
+
+    <input
+      type="hidden"
+      name="order_details"
+      id="orderDetails"
+    >
+
+    <input
+      type="text"
+      id="name"
+      name="name"
+      placeholder="Name"
+      required
+    >
+
+    <input
+      type="text"
+      id="hostel"
+      name="hostel"
+      placeholder="Hostel"
+      required
+    >
+
+    <input
+      type="text"
+      id="dept"
+      name="department"
+      placeholder="Department"
+      required
+    >
+
+    <div id="summary"></div>
+
+
+   <div id="paymentSection">
+
+  <h3>
+    Total: ₦<span id="totalPrice">0</span>
+  </h3>
+
+  <p><b>Payment Details</b></p>
+
   <p>Bank: MONIEPOINT</p>
-  <p>Account Name: ANAYOCHUKWU ERNEST CHIDIRIM</p>
-  <p>Account Number: 6717596608</p>
+
+  <p>
+    Account Name: ANAYOCHUKWU ERNEST CHIDIRIM
+  </p>
+
+  <p>
+    Account Number: 6717596608
+  </p>
+
+  <div class="payment-warning">
+
+    <strong>IMPORTANT</strong>
+
+    <p>
+      Please pay the exact total shown above.
+      After payment, keep your payment screenshot
+      and send it to us on WhatsApp for confirmation
+      and order tracking.
+    </p>
+
+    <p>
+      No proof of payment, no order processing.
+    </p>
+
+  </div>
 
 </div>
 
 
-<button class="whatsapp-btn" onclick="sendOrder()">Place Order</button>
+    <button
+      type="submit"
+      class="whatsapp-btn"
+    >
+      Place Order
+    </button>
+
+  </form>
+
+</div>
+
+<div id="orderConfirmation" class="order-confirmation">
+
+  <span class="confirmation-check">✓</span>
+
+  <p class="section-eyebrow">ORDER RECEIVED</p>
+
+  <h2>Your order has been received.</h2>
+
+  <p>
+    We've received your order details successfully.
+    You can contact us on WhatsApp to track your order
+    or ask about its progress.
+  </p>
+
+  <a
+    href="https://wa.me/2349125366748?text=Hello%20Saint%20Leo's%20Mart%2C%20I%20just%20placed%20an%20order%20and%20I'd%20like%20to%20track%20it."
+    target="_blank"
+    class="tracking-btn"
+  >
+    Track Your Order on WhatsApp →
+  </a>
+
 </div>
 
 <script src="script.js"></script>
 <div id="overlay" onclick="closeMenu()"></div>
+
+<footer class="site-footer">
+
+  <div class="footer-main">
+
+    <div class="footer-brand">
+
+      <h2>Saint Leo's Mart</h2>
+
+      <p>
+        Everyday groceries and essentials,
+        delivered conveniently to your hostel.
+      </p>
+
+    </div>
+
+
+    <div class="footer-links">
+
+      <div>
+        <span class="footer-title">EXPLORE</span>
+
+        <a href="#home">Home</a>
+        <a href="#categories">Categories</a>
+        <a href="#food">Shop</a>
+        <a href="faq.html">FAQ</a>
+      </div>
+
+
+      <div>
+  <span class="footer-title">CONNECT</span>
+
+  <a
+    href="https://wa.me/2349125366748"
+    target="_blank"
+  >
+    WhatsApp
+  </a>
+
+  <a
+    href="https://www.tiktok.com/@saint.leos.mart"
+    target="_blank"
+  >
+    TikTok
+  </a>
+
+  <a
+    href="https://www.snapchat.com/add/saintleosmart01"
+    target="_blank"
+  >
+    Snapchat
+  </a>
+</div>
+
+    </div>
+
+  </div>
+
+
+  <div class="footer-bottom">
+
+    <p>
+      © 2026 Saint Leo's Mart. All rights reserved.
+    </p>
+
+    <span>
+      CAMPUS GROCERY • SAINT LEO'S MART
+    </span>
+
+  </div>
+
+</footer>
+
 </body>
 </html>
