@@ -403,6 +403,16 @@ function openCategory(category) {
 
 }
 
+function openFullCatalogue() {
+  const foodSection = document.getElementById("food");
+
+  foodSection.style.display = "block";
+
+  foodSection.scrollIntoView({
+    behavior: "smooth"
+  });
+}
+
 function closeCategoryView() {
 
   document.getElementById("categoryView").style.display = "none";
@@ -490,6 +500,72 @@ productSearch.addEventListener("input", function () {
   }
 
 });
+
+function handleProductSearchEnter(event) {
+  if (event.key !== "Enter") return;
+
+  event.preventDefault();
+
+  const searchTerm = event.target.value.trim().toLowerCase();
+
+  if (!searchTerm) return;
+
+  const foodSection = document.getElementById("food");
+
+  // Reveal the full catalogue first
+  foodSection.style.display = "block";
+
+  const allItems = document.querySelectorAll("#food .item");
+
+  let targetProduct = null;
+
+  allItems.forEach(item => {
+    if (targetProduct) return;
+
+    const productName = item.querySelector("p");
+
+    if (!productName) return;
+
+    const name = productName.innerText.trim().toLowerCase();
+
+    if (name.includes(searchTerm)) {
+      targetProduct = item;
+    }
+  });
+
+  if (!targetProduct) {
+    alert("Product not found. Please try another search.");
+    return;
+  }
+
+  // Open the hidden product section if necessary
+  const hiddenSection = targetProduct.closest(".hidden-items");
+
+  if (hiddenSection) {
+    hiddenSection.style.display = "grid";
+  }
+
+  // Close category view if it is open
+  const categoryView = document.getElementById("categoryView");
+
+  if (categoryView) {
+    categoryView.style.display = "none";
+  }
+
+  // Scroll directly to the product
+  setTimeout(() => {
+    targetProduct.scrollIntoView({
+      behavior: "smooth",
+      block: "center"
+    });
+
+    targetProduct.style.outline = "3px solid var(--gold)";
+
+    setTimeout(() => {
+      targetProduct.style.outline = "";
+    }, 2500);
+  }, 100);
+}
 
 function scrollToProduct(productName) {
 
