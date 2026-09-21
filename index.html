@@ -21,10 +21,16 @@
   <div class="intro-line"></div>
 </div>
 
+
 <header>
+
   <span class="menu-btn" onclick="toggleMenu()">☰</span>
+
   <h2>Saint Leo's Mart</h2>
+
 </header>
+
+
 
 
 <div id="sidebar" class="sidebar">
@@ -38,8 +44,6 @@
 <section id="home" class="hero">
 
   <div class="hero-content">
-
-    <p class="hero-eyebrow">SAINT LEO'S MART</p>
 
     <h1>
       Fresh groceries.
@@ -65,6 +69,22 @@
   </div>
 
 </section>
+
+<!-- PRODUCT SEARCH -->
+
+<div class="hero-search">
+
+<input
+  type="text"
+  id="productSearch"
+  placeholder="Search products..."
+  autocomplete="off"
+  onkeydown="handleProductSearchEnter(event)"
+>
+
+  <span id="searchResultCount"></span>
+
+</div>
 
 <section class="home-section featured-section">
 
@@ -328,6 +348,24 @@
 
 </section>
 
+<!-- SHOP THE MART CTA -->
+<section class="shop-mart-cta">
+
+  <p class="section-eyebrow">YOUR CAMPUS GROCERY STORE</p>
+
+  <h2>Everything you need, all in one place.</h2>
+
+  <p>
+    Browse our complete collection of groceries, drinks,
+    snacks and everyday essentials.
+  </p>
+
+  <button onclick="openFullCatalogue()">
+    Explore All Products
+  </button>
+
+</section>
+
 <section class="mystery-section">
 
   <div class="mystery-content">
@@ -358,6 +396,45 @@
     <small>SAINT LEO'S<br>MART</small>
   </div>
 
+</section>
+
+<section class="brands-section">
+  <h2>More to discover</h2>
+
+  <p>
+    Meet the brands available at Saint Leo’s Mart.
+  </p>
+
+  <div class="brands-grid">
+
+    <div class="brand-item">
+      <div class="brand-logo-box">
+        <img src="estees-nail-haven.jpeg" alt="Estees Nail Haven">
+      </div>
+      <div class="brand-name">
+        Estees Nail Haven
+      </div>
+    </div>
+
+    <div class="brand-item">
+      <div class="brand-logo-box">
+        <img src="b-accessories-and-wears.jpeg" alt="B Accessories and Wears">
+      </div>
+      <div class="brand-name">
+        B Accessories and Wears
+      </div>
+    </div>
+
+        <div class="brand-item">
+      <div class="brand-logo-box">
+        <img src="ntb-clothing-enterprise.jpeg" alt="NTB Clothing Enterprise">
+      </div>
+      <div class="brand-name">
+        NTB Clothing Enterprise
+      </div>
+    </div>
+
+  </div>
 </section>
 
 <section class="special-order-section">
@@ -504,7 +581,7 @@
 
 </section>
 
-<section id="food">
+<section id="food" style="display: none;">
 
   <div class="product-search">
 
@@ -519,6 +596,7 @@
     id="productSearch"
     placeholder="Search for a product..."
     autocomplete="off"
+    onkeydown="handleProductSearchEnter(event)"
   >
 
   <div id="searchResultCount"></div>
