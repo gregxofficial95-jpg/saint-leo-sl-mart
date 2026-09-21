@@ -146,6 +146,7 @@ body {
 
 header {
   display: flex;
+  position: relative;
   align-items: center;
   background: var(--black);
   color: var(--gold);
@@ -1071,7 +1072,7 @@ button:active {
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 16px;
   padding: 15px;
 }
@@ -1099,7 +1100,8 @@ button:active {
 
 .item img {
   width: 100%;
-  height: 110px;
+  aspect-ratio: 1 / 1;
+  height: auto;
   object-fit: cover;
   border-radius: 9px;
   display: block;
@@ -1385,7 +1387,7 @@ color: var(--gold);
   z-index: 9999;
 
   animation: introFadeOut 1s ease forwards;
-  animation-delay: 3s;
+  animation-delay: 4s;
 }
 
 #introScreen img {
@@ -1393,7 +1395,7 @@ color: var(--gold);
   max-width: 60%;
   margin-bottom: 25px;
 
-  animation: logoReveal 1.2s ease;
+  animation: logoReveal 3s ease;
 }
 
 #introScreen p {
@@ -1417,10 +1419,9 @@ color: var(--gold);
 }
 
 .intro-line {
-  width: 50px;
+  width: 200px;
   height: 1px;
   background: var(--gold);
-
   transform: scaleX(0);
   animation: lineReveal 1s ease forwards;
   animation-delay: 1.2s;
@@ -1994,6 +1995,10 @@ color: var(--gold);
     grid-template-columns: 1fr;
   }
 
+  .grid {
+  grid-template-columns: repeat(2, 1fr);
+}
+y
   .hero h1 {
     font-size: 28px;
   }
@@ -2012,3 +2017,177 @@ color: var(--gold);
   }
 
 }
+
+
+.shop-mart-cta {
+  max-width: 850px;
+  margin: 60px auto;
+  padding: 50px 30px;
+  text-align: center;
+
+  background: var(--soft-cream);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+
+  box-shadow: 0 8px 30px rgba(23, 21, 18, 0.08);
+}
+
+.shop-mart-cta .section-eyebrow {
+  margin-bottom: 10px;
+}
+
+.shop-mart-cta h2 {
+  margin: 0 0 12px;
+  font-size: 30px;
+  color: var(--black);
+}
+
+.shop-mart-cta p:not(.section-eyebrow) {
+  max-width: 550px;
+  margin: 0 auto 25px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.shop-mart-cta button {
+  border: none;
+  padding: 13px 24px;
+  border-radius: 8px;
+
+  background: var(--deep-brown);
+  color: var(--white);
+
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.shop-mart-cta button:hover {
+  background: var(--bronze);
+  transform: translateY(-2px);
+}
+
+.hero-search {
+  max-width: 600px;
+  margin: 28px auto 35px;
+  padding: 0 20px;
+}
+
+.hero-search input {
+  width: 100%;
+  padding: 15px 18px;
+
+  background: var(--white);
+  color: var(--black);
+
+  border: 1px solid var(--border);
+  border-radius: 8px;
+
+  font-family: inherit;
+  font-size: 14px;
+  outline: none;
+
+  box-shadow: 0 4px 15px rgba(23, 21, 18, 0.06);
+}
+
+.hero-search input:focus {
+  border-color: var(--gold);
+}
+
+#searchResultCount {
+  display: block;
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.brands-section {
+  background: var(--soft-cream);
+  padding: 80px 24px;
+  text-align: center;
+}
+
+.brands-section h2 {
+  color: var(--black);
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  margin-bottom: 12px;
+}
+
+.brands-section > p {
+  color: var(--muted);
+  max-width: 600px;
+  margin: 0 auto 48px;
+}
+
+.brands-grid {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.brand-item {
+  width: 150px;
+  text-align: center;
+}
+
+.brand-logo-box {
+  width: 150px;
+  height: 150px;
+
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+
+  overflow: hidden;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-shadow: 0 5px 16px rgba(43, 33, 24, 0.05);
+
+  transition: transform 0.25s ease,
+              box-shadow 0.25s ease,
+              border-color 0.25s ease;
+}
+
+
+.brand-logo-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+
+.brand-item:hover .brand-logo-box {
+  transform: translateY(-5px);
+  border-color: var(--gold);
+  box-shadow: 0 14px 32px rgba(43, 33, 24, 0.10);
+}
+
+.brand-name {
+  margin-top: 10px;
+  color: var(--black);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+@media (max-width: 600px) {
+  .brand-item {
+    width: 120px;
+  }
+
+  .brand-logo-box {
+    width: 120px;
+    height: 120px;
+  }
+
+  .brands-grid {
+    gap: 18px;
+  }
+}
+
