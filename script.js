@@ -78,7 +78,19 @@ window.onpopstate = function () {
 };
 
 function scrollToSection(id) {
-  document.getElementById(id).scrollIntoView({behavior:"smooth"});
+
+  const section = document.getElementById(id);
+
+  if (!section) return;
+
+  if (id === "food") {
+    section.style.display = "block";
+  }
+
+  section.scrollIntoView({
+    behavior: "smooth"
+  });
+
 }
 
 function openForm() {
@@ -569,6 +581,8 @@ function handleProductSearchEnter(event) {
 
 function scrollToProduct(productName) {
 
+  document.getElementById("food").style.display = "block";
+  
   let allProducts = document.querySelectorAll("#food .item");
 
   let targetProduct = null;
