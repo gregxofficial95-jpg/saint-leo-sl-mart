@@ -292,10 +292,10 @@ p {
 
 .brands-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 25px;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 18px;
+  align-items: start;
 }
-
 
 /* =========================
    BRAND CARDS
@@ -318,7 +318,8 @@ p {
 
 .brand-image,
 .brand-placeholder {
-  height: 260px;
+  aspect-ratio: 1.5 / 1;
+  height: auto;
   overflow: hidden;
 }
 
@@ -360,10 +361,9 @@ p {
 
 .brand-card-content {
   display: flex;
-  flex: 1;
   flex-direction: column;
   align-items: flex-start;
-  padding: 28px;
+  padding: 10px;
 }
 
 .brand-category {
@@ -375,15 +375,16 @@ p {
 }
 
 .brand-card h3 {
-  margin-bottom: 13px;
-  font-size: 32px;
-  line-height: 1;
+  margin-bottom: 6px;
+  font-size: 18px;
+  line-height: 1.05;
 }
 
 .brand-card p {
-  margin-bottom: 28px;
+  margin-bottom: 10px;
   color: #776e65;
-  font-size: 12px;
+  font-size: 9px;
+  line-height: 1.4;
 }
 
 .brand-btn {
@@ -505,10 +506,13 @@ p {
    RESPONSIVE DESIGN
 ========================= */
 
-@media (max-width: 950px) {
+/* TABLET */
+
+@media (max-width: 1100px) {
 
   .brands-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
   }
 
   .brands-hero {
@@ -527,6 +531,8 @@ p {
 
 }
 
+
+/* MOBILE */
 
 @media (max-width: 650px) {
 
@@ -570,14 +576,46 @@ p {
     padding: 70px 7% 80px;
   }
 
+  /* TWO BRAND CARDS PER ROW */
+
   .brands-grid {
-    grid-template-columns: 1fr;
-    gap: 25px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
   }
 
   .brand-image,
   .brand-placeholder {
-    height: 280px;
+    aspect-ratio: 1.5 / 1;
+    height: auto;
+  }
+
+  .brand-card-content {
+    padding: 13px;
+  }
+
+  .brand-category {
+    margin-bottom: 8px;
+    font-size: 8px;
+    letter-spacing: 1px;
+  }
+
+  .brand-card h3 {
+    font-size: 21px;
+    line-height: 1.05;
+  }
+
+  .brand-card p {
+    font-size: 10px;
+    line-height: 1.6;
+  }
+
+  .brand-btn {
+    font-size: 8px;
+    gap: 8px;
+  }
+
+  .brand-btn span {
+    font-size: 14px;
   }
 
   .partner-section {
