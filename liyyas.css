@@ -1,0 +1,742 @@
+:root {
+  --black: #121110;
+  --charcoal: #201d1a;
+  --white: #faf8f4;
+  --paper: #ffffff;
+  --gold: #b8935a;
+  --gold-bright: #d9b876;
+  --ink-soft: #6b655c;
+
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+html {
+  scroll-padding-top: env(safe-area-inset-top, 0px);
+  scroll-behavior: smooth;
+}
+
+* {
+  box-sizing: inherit;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--white);
+  color: var(--black);
+  font-family: "Manrope", sans-serif;
+  line-height: 1.5;
+  overflow-x: hidden;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+h1,
+h2,
+h3 {
+  font-family: "Fraunces", serif;
+}
+
+
+/* ==================================================
+   HEADER
+================================================== */
+
+header {
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  z-index: 50;
+
+  background: var(--black);
+  color: var(--white);
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 18px 6vw;
+
+  border-bottom: 1px solid rgba(184, 147, 90, 0.35);
+}
+
+.brand {
+  font-family: "Fraunces", serif;
+  font-weight: 600;
+  font-size: 1.4rem;
+  letter-spacing: 0.3px;
+  color: var(--white);
+}
+
+.brand span {
+  color: var(--gold-bright);
+}
+
+header a.cta-small {
+  border: 1px solid var(--gold);
+  color: var(--gold-bright);
+
+  padding: 8px 18px;
+
+  border-radius: 2px;
+
+  text-decoration: none;
+
+  font-size: 0.85rem;
+  font-weight: 600;
+
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+header a.cta-small:hover {
+  background: var(--gold);
+  color: var(--black);
+}
+
+
+/* ==================================================
+   HERO
+================================================== */
+
+.hero {
+  width: 100%;
+  max-width: none;
+
+  min-height: 70vh;
+
+  background: linear-gradient(
+    180deg,
+    var(--black) 0%,
+    var(--charcoal) 100%
+  );
+
+  color: var(--white);
+
+  padding: 9vh 6vw 8vh;
+
+  display: grid;
+  align-content: center;
+  gap: 20px;
+}
+
+.hero .eyebrow {
+  color: var(--gold-bright);
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.hero h1 {
+  font-size: clamp(2.4rem, 6vw, 4.2rem);
+  font-weight: 600;
+  line-height: 1.05;
+  max-width: 14ch;
+}
+
+.hero p {
+  font-size: 1.1rem;
+  color: #d8d2c8;
+  max-width: 55ch;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 6px;
+}
+
+.btn-gold {
+  background: var(--gold-bright);
+  color: var(--black);
+
+  padding: 14px 28px;
+
+  text-decoration: none;
+  font-weight: 700;
+
+  border-radius: 2px;
+
+  transition: transform 0.15s ease, background 0.2s ease;
+}
+
+.btn-gold:hover {
+  background: var(--gold);
+  transform: translateY(-1px);
+}
+
+.btn-outline {
+  border: 1px solid rgba(250, 248, 244, 0.4);
+  color: var(--white);
+
+  padding: 14px 28px;
+
+  text-decoration: none;
+  font-weight: 600;
+
+  border-radius: 2px;
+}
+
+.btn-outline:hover {
+  border-color: var(--gold-bright);
+  color: var(--gold-bright);
+}
+
+
+/* ==================================================
+   CATALOG
+================================================== */
+
+.catalog {
+  width: 100%;
+  padding: 7vh 6vw 10vh;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.catalog-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+
+  flex-wrap: wrap;
+  gap: 20px;
+
+  margin-bottom: 30px;
+}
+
+.catalog-head h2 {
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  font-weight: 600;
+}
+
+
+/* ==================================================
+   FILTERS
+================================================== */
+
+.filters {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  background: none;
+
+  border: 1px solid #ddd6c9;
+
+  color: var(--ink-soft);
+
+  padding: 9px 18px;
+
+  font-size: 0.85rem;
+  font-weight: 600;
+
+  border-radius: 2px;
+
+  cursor: pointer;
+
+  transition: all 0.15s ease;
+
+  font-family: "Manrope", sans-serif;
+}
+
+.filter-btn:hover {
+  border-color: var(--gold);
+  color: var(--black);
+}
+
+.filter-btn.active {
+  background: var(--black);
+  color: var(--gold-bright);
+  border-color: var(--black);
+}
+
+
+/* ==================================================
+   PRODUCT GRID
+================================================== */
+
+.grid {
+  display: grid;
+
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(250px, 1fr)
+  );
+
+  gap: 26px;
+}
+
+.card {
+  background: var(--paper);
+
+  border: 1px solid #ece7db;
+
+  display: flex;
+  flex-direction: column;
+
+  overflow: hidden;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.card:hover {
+  border-color: var(--gold);
+
+  box-shadow:
+    0 8px 24px rgba(18, 17, 16, 0.08);
+}
+
+
+/* ==================================================
+   PRODUCT IMAGE
+================================================== */
+
+.card-img {
+  aspect-ratio: 1 / 1;
+
+  overflow: hidden;
+
+  background: #f1ede4;
+}
+
+.card-img img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  transition: transform 0.3s ease;
+}
+
+.card:hover .card-img img {
+  transform: scale(1.03);
+}
+
+
+/* ==================================================
+   PRODUCT DETAILS
+================================================== */
+
+.card-body {
+  padding: 18px 18px 20px;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 8px;
+
+  flex: 1;
+}
+
+.card-cat {
+  font-size: 0.72rem;
+
+  letter-spacing: 0.03em;
+
+  color: var(--gold);
+
+  font-weight: 700;
+
+  text-transform: uppercase;
+}
+
+.card h3 {
+  font-size: 1.08rem;
+
+  font-weight: 600;
+
+  line-height: 1.25;
+}
+
+.card-desc {
+  font-size: 0.88rem;
+
+  color: var(--ink-soft);
+
+  flex: 1;
+}
+
+.card-foot {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 10px;
+
+  margin-top: 10px;
+
+  padding-top: 12px;
+
+  border-top: 1px solid #f0ece2;
+}
+
+.price {
+  font-family: "Fraunces", serif;
+
+  font-weight: 600;
+
+  font-size: 1.15rem;
+
+  white-space: nowrap;
+}
+
+.order-btn {
+  background: var(--black);
+
+  color: var(--white);
+
+  text-decoration: none;
+
+  font-size: 0.82rem;
+
+  font-weight: 700;
+
+  padding: 9px 16px;
+
+  border-radius: 2px;
+
+  white-space: nowrap;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.order-btn:hover {
+  background: var(--gold);
+
+  color: var(--black);
+}
+
+
+/* ==================================================
+   FOOTER
+================================================== */
+
+footer {
+  background: var(--black);
+
+  color: #cfc9bd;
+
+  padding: 6vh 6vw;
+
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 20px;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  border-top: 3px solid var(--gold);
+}
+
+footer .brand {
+  color: var(--white);
+}
+
+footer a {
+  color: var(--gold-bright);
+
+  text-decoration: none;
+
+  font-weight: 600;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
+.foot-note {
+  font-size: 0.82rem;
+
+  color: #8b8478;
+}
+
+
+/* ==================================================
+   MOBILE
+================================================== */
+
+@media (max-width: 640px) {
+
+  /* HEADER */
+
+  header {
+    padding: 16px 5vw;
+  }
+
+  .brand {
+    font-size: 1.15rem;
+  }
+
+  header a.cta-small {
+    padding: 7px 12px;
+    font-size: 0.75rem;
+  }
+
+
+  /* HERO */
+
+  .hero {
+    width: 100%;
+    max-width: none;
+
+    min-height: 78vh;
+
+    padding: 70px 5vw 60px;
+
+    gap: 18px;
+  }
+
+  .hero .eyebrow {
+    font-size: 0.78rem;
+    line-height: 1.5;
+  }
+
+  .hero h1 {
+    font-size: clamp(2.35rem, 11vw, 3.5rem);
+
+    line-height: 1.02;
+
+    max-width: 100%;
+  }
+
+  .hero p {
+    font-size: 0.95rem;
+
+    line-height: 1.7;
+
+    max-width: 100%;
+  }
+
+  .hero-actions {
+    width: 100%;
+
+    gap: 10px;
+  }
+
+  .btn-gold,
+  .btn-outline {
+    padding: 13px 16px;
+
+    font-size: 0.82rem;
+
+    text-align: center;
+  }
+
+
+  /* CATALOG */
+
+  .catalog {
+    width: 100%;
+
+    padding: 55px 5vw 70px;
+  }
+
+  .catalog-head {
+    align-items: flex-start;
+
+    margin-bottom: 25px;
+  }
+
+  .catalog-head h2 {
+    font-size: 2rem;
+  }
+
+
+  /* FILTERS */
+
+  .filters {
+    width: 100%;
+
+    display: flex;
+
+    flex-wrap: nowrap;
+
+    overflow-x: auto;
+
+    padding-bottom: 5px;
+
+    gap: 8px;
+
+    scrollbar-width: none;
+  }
+
+  .filters::-webkit-scrollbar {
+    display: none;
+  }
+
+  .filter-btn {
+    flex-shrink: 0;
+
+    padding: 8px 13px;
+
+    font-size: 0.72rem;
+  }
+
+
+  /* ==========================================
+     2 PRODUCTS PER ROW
+  ========================================== */
+
+  .grid {
+    width: 100%;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 16px 10px;
+  }
+
+
+  /* PRODUCT IMAGE */
+
+  .card-img {
+    width: 100%;
+
+    aspect-ratio: 1 / 1;
+  }
+
+
+  /* PRODUCT BODY */
+
+  .card-body {
+    padding: 12px 10px 14px;
+
+    gap: 6px;
+  }
+
+  .card-cat {
+    font-size: 0.58rem;
+
+    letter-spacing: 0.04em;
+
+    line-height: 1.3;
+  }
+
+  .card h3 {
+    font-size: 0.9rem;
+
+    line-height: 1.25;
+  }
+
+  .card-desc {
+    font-size: 0.72rem;
+
+    line-height: 1.5;
+  }
+
+  .card-foot {
+    align-items: center;
+
+    margin-top: 6px;
+
+    padding-top: 9px;
+
+    gap: 5px;
+  }
+
+  .price {
+    font-size: 0.9rem;
+  }
+
+  .order-btn {
+    padding: 7px 9px;
+
+    font-size: 0.65rem;
+  }
+
+
+  /* FOOTER */
+
+  footer {
+    padding: 45px 5vw;
+
+    align-items: flex-start;
+  }
+
+}
+
+
+/* ==================================================
+   VERY SMALL PHONES
+================================================== */
+
+@media (max-width: 380px) {
+
+  .brand {
+    font-size: 1rem;
+  }
+
+  header a.cta-small {
+    padding: 6px 9px;
+
+    font-size: 0.68rem;
+  }
+
+  .hero {
+    min-height: 75vh;
+
+    padding: 60px 5vw 50px;
+  }
+
+  .hero h1 {
+    font-size: 2.2rem;
+  }
+
+  .grid {
+    gap: 14px 8px;
+  }
+
+  .card-body {
+    padding: 10px 8px 12px;
+  }
+
+  .card h3 {
+    font-size: 0.82rem;
+  }
+
+  .card-desc {
+    font-size: 0.68rem;
+  }
+
+  .price {
+    font-size: 0.82rem;
+  }
+
+  .order-btn {
+    padding: 6px 7px;
+
+    font-size: 0.58rem;
+  }
+
+}
+
+
+/* ==================================================
+   REDUCED MOTION
+================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+  html {
+    scroll-behavior: auto;
+  }
+
+  * {
+    transition: none !important;
+  }
+
+}
