@@ -46,3 +46,49 @@ productOrderButtons.forEach((button) => {
   });
 });
 
+/* ================= MOBILE MENU ================= */
+
+const menuToggle = document.getElementById("menuToggle");
+const mobileMenu = document.getElementById("mobileMenu");
+const mobileClose = document.getElementById("mobileClose");
+const mobileMenuLinks = document.querySelectorAll(".mobile-menu nav a");
+
+function openMobileMenu() {
+  mobileMenu.classList.add("open");
+  document.body.classList.add("menu-open");
+}
+
+function closeMobileMenu() {
+  mobileMenu.classList.remove("open");
+  document.body.classList.remove("menu-open");
+}
+
+
+/* OPEN MENU */
+
+if (menuToggle && mobileMenu) {
+  menuToggle.addEventListener("click", openMobileMenu);
+}
+
+
+/* CLOSE MENU */
+
+if (mobileClose) {
+  mobileClose.addEventListener("click", closeMobileMenu);
+}
+
+
+/* CLOSE WHEN A MENU LINK IS CLICKED */
+
+mobileMenuLinks.forEach((link) => {
+  link.addEventListener("click", closeMobileMenu);
+});
+
+
+/* CLOSE WHEN ESCAPE IS PRESSED */
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") {
+    closeMobileMenu();
+  }
+});
