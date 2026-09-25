@@ -1992,7 +1992,7 @@ color: var(--gold);
 @media (max-width: 450px) {
 
   .category-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .grid {
@@ -2177,13 +2177,19 @@ color: var(--gold);
 
 @media (max-width: 600px) {
   .brand-item {
-    width: 80px;
+    width: 100%;
   }
 
   .brand-logo-box {
-    width: 80px;
-    height: 80px;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
   }
+
+    .brand-name {
+    font-size: 9px;
+  }
+
 
   .brands-grid {
     gap: 18px;
@@ -2428,10 +2434,10 @@ color: var(--gold);
 }
 
 @media (max-width: 600px) {
-
   .brands-grid {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 12px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
   }
 
   .brand-image {
