@@ -1245,76 +1245,98 @@ img {
 
 
 /* =========================================
-   MOBILE
+   MOBILE MENU
 ========================================= */
 
 @media (max-width: 900px) {
 
     .header {
-
         height: 68px;
-
     }
-
 
     .header-inner {
-
         width: 92%;
-
     }
 
+    /* LOGO */
 
     .logo {
-
         width: 130px;
-
     }
-
 
     .logo-main {
-
         font-size: 27px;
-
     }
-
 
     .logo-crown {
-
         font-size: 22px;
-
     }
-
 
     .logo-sub {
-
         font-size: 5px;
-
         letter-spacing: 3px;
-
     }
 
 
-    /*
-       KEEPING THE HEADER STYLE:
-       Navigation becomes a slide-down menu,
-       but retains the same black luxury appearance.
-    */
+    /* THREE-LINE MENU BUTTON */
+
+    .menu-button {
+        display: flex;
+
+        width: 42px;
+        height: 42px;
+
+        padding: 0;
+
+        border: none;
+        outline: none;
+
+        background: transparent;
+
+        align-items: center;
+        justify-content: center;
+
+        flex-direction: column;
+
+        gap: 5px;
+
+        cursor: pointer;
+
+        position: relative;
+        z-index: 1100;
+    }
+
+
+    .menu-button span {
+        display: block;
+
+        width: 24px;
+        height: 2px;
+
+        background: #ffffff;
+
+        transition: all 0.3s ease;
+    }
+
+
+    /* NAVIGATION */
 
     .nav {
 
         position: fixed;
 
         top: 68px;
-
         left: 0;
 
         width: 100%;
 
         height: auto;
 
-        background: rgba(7,7,7,0.98);
+        background: rgba(7, 7, 7, 0.98);
 
         backdrop-filter: blur(15px);
+
+        display: flex;
 
         flex-direction: column;
 
@@ -1324,277 +1346,88 @@ img {
 
         padding: 10px 5% 20px;
 
-        transform: translateY(-130%);
+        z-index: 1050;
 
-        transition: 0.35s ease;
+        /* Hidden */
 
+        opacity: 0;
+
+        visibility: hidden;
+
+        transform: translateY(-20px);
+
+        pointer-events: none;
+
+        transition:
+            opacity 0.3s ease,
+            transform 0.3s ease,
+            visibility 0.3s ease;
     }
 
+
+    /* OPEN MENU */
 
     .nav.open {
 
+        opacity: 1;
+
+        visibility: visible;
+
         transform: translateY(0);
 
+        pointer-events: auto;
     }
 
 
+    /* NAV LINKS */
+
     .nav-link {
 
-        height: 48px;
+        height: 52px;
+
+        display: flex;
+
+        align-items: center;
 
         justify-content: center;
 
-        border-bottom: 1px solid rgba(255,255,255,0.05);
+        color: #ffffff;
 
+        border-bottom: 1px solid rgba(255,255,255,0.06);
+
+        font-size: 13px;
+    }
+
+
+    .nav-link.active {
+
+        color: #f52278;
     }
 
 
     .nav-link.active::after {
 
         display: none;
-
     }
 
 
-    .menu-button {
+    /* HAMBURGER → X */
 
-        display: flex;
+    .menu-button.active span:nth-child(1) {
 
+        transform: translateY(7px) rotate(45deg);
     }
 
 
+    .menu-button.active span:nth-child(2) {
 
-    /* HERO */
-
-    .hero {
-
-        height: 680px;
-
+        opacity: 0;
     }
 
 
-    .hero-content {
+    .menu-button.active span:nth-child(3) {
 
-        padding-top: 145px;
-
-    }
-
-
-    .hero h1 {
-
-        font-size: clamp(45px, 13vw, 68px);
-
-    }
-
-
-    .hero-script {
-
-        right: 5%;
-
-        top: auto;
-
-        bottom: 50px;
-
-        font-size: 28px;
-
-    }
-
-
-    .hero-overlay {
-
-        background:
-            linear-gradient(
-                90deg,
-                rgba(0,0,0,0.95),
-                rgba(0,0,0,0.58)
-            );
-
-    }
-
-
-
-    /* CATALOG */
-
-    .catalog-section {
-
-        padding: 55px 5%;
-
-    }
-
-
-    .catalog-heading {
-
-        display: block;
-
-    }
-
-
-    .catalog-intro {
-
-        margin-top: 25px;
-
-    }
-
-
-    .product-grid {
-
-        grid-template-columns: repeat(2, 1fr);
-
-        gap: 10px;
-
-    }
-
-
-    .product-order {
-
-        padding: 7px;
-
-    }
-
-
-    .order-whatsapp {
-
-        height: 40px;
-
-        font-size: 8px;
-
-    }
-
-
-
-    /* COLLECTIONS */
-
-    .collections-section {
-
-        height: 530px;
-
-    }
-
-
-    .collections-content {
-
-        padding-top: 80px;
-
-    }
-
-
-    .collection-script {
-
-        top: auto;
-
-        bottom: 45px;
-
-        right: 7%;
-
-        font-size: 28px;
-
-    }
-
-
-
-    /* ABOUT */
-
-    .about-section {
-
-        grid-template-columns: 1fr;
-
-    }
-
-
-    .about-image {
-
-        height: 350px;
-
-    }
-
-
-    .about-content {
-
-        padding: 50px 8%;
-
-    }
-
-
-    .about-features {
-
-        padding: 45px 8%;
-
-    }
-
-
-
-    /* CONTACT */
-
-    .contact-strip {
-
-        flex-wrap: wrap;
-
-        justify-content: flex-start;
-
-        padding: 35px 7%;
-
-        gap: 15px 20px;
-
-    }
-
-
-    .contact-divider {
-
-        display: none;
-
-    }
-
-
-    .contact-text {
-
-        width: 100%;
-
-    }
-
-
-    .whatsapp-button {
-
-        width: 100%;
-
-    }
-
-
-
-    /* FOOTER */
-
-    .footer-top {
-
-        grid-template-columns: 1fr;
-
-        gap: 35px;
-
-    }
-
-
-    .footer-links {
-
-        justify-content: flex-start;
-
-        flex-wrap: wrap;
-
-    }
-
-
-    .footer-socials {
-
-        justify-content: flex-start;
-
-        padding-bottom: 40px;
-
-    }
-
-
-    .footer-script {
-
-        left: 0;
-
-        right: auto;
-
+        transform: translateY(-7px) rotate(-45deg);
     }
 
 }
