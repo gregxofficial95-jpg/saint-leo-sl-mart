@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Zandex Atelier — Fine Jewelry & Elevated Fashion</title>
+
+    <meta
+        name="description"
+        content="Zandex Atelier — Fine jewelry, elevated fashion and timeless pieces."
+    >
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap"
+        rel="stylesheet"
+    >
+
+    <link rel="stylesheet" href="zandex.css">
+</head>
+
+<body>
+
+    <!-- =========================================
+         HEADER
+    ========================================== -->
+
+    <header class="site-header">
+
+        <div class="header-search">
+            <button aria-label="Search">
+                <span class="search-icon"></span>
+            </button>
+        </div>
+
+        <div class="brand-logo">
+            <a href="#home">
+                <span class="brand-main">ZANDEX</span>
+                <span class="brand-sub">ATELIER</span>
+            </a>
+        </div>
+
+        <nav class="desktop-nav">
+            <a href="#home" class="active">HOME</a>
+            <a href="#shop">SHOP</a>
+            <a href="#about">ABOUT</a>
+            <a href="#" onclick="openWhatsApp(event, 'Hello Zandex Atelier, I would like to make an enquiry.')">
+                CONTACT
+            </a>
+        </nav>
+
+    </header>
+
+
+    <!-- =========================================
+         HERO
+    ========================================== -->
+
+    <main>
+
+        <section class="hero" id="home">
+
+            <div class="hero-image">
+                <img
+                    src="zandex-hero.png"
+                    alt="Zandex Atelier collection"
+                >
+            </div>
+
+            <div class="hero-content">
+
+                <p class="eyebrow">
+                    ZANDEX ATELIER
+                </p>
+
+                <h1>
+                    MAKE AN<br>
+                    IMPRESSION.
+                </h1>
+
+                <p class="hero-description">
+                    Fine jewelry. Elevated fashion.<br>
+                    Zandex Atelier.
+                </p>
+
+                <a href="#shop" class="silver-button">
+                    SHOP NOW
+                    <span>→</span>
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================================
+             SECTION 2
+        ========================================== -->
+
+        <section class="pieces-section" id="about">
+
+            <div class="pieces-image">
+                <img
+                    src="zandex-left.png"
+                    alt="Zandex Atelier jewelry"
+                >
+            </div>
+
+            <div class="pieces-content">
+
+                <p class="section-label">
+                    THE PIECES
+                </p>
+
+                <h2>
+                    THAT DEFINE YOU.
+                </h2>
+
+                <p>
+                    From bold jewelry to timeless clothing,
+                    every piece is a statement.
+                </p>
+
+                <span class="silver-line"></span>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================================
+             FEATURED COLLECTION
+        ========================================== -->
+
+        <section class="featured-section" id="shop">
+
+            <div class="section-heading">
+
+                <div>
+                    <p class="section-label">
+                        FEATURED COLLECTION
+                    </p>
+
+                    <span class="heading-line"></span>
+                </div>
+
+                <a href="#new-arrivals">
+                    VIEW ALL <span>→</span>
+                </a>
+
+            </div>
+
+
+            <div class="featured-grid">
+
+                <!-- PRODUCT 1 -->
+
+                <article class="product-card">
+
+                    <div class="product-image">
+                        <img
+                            src="zandex-image-2.jpeg"
+                            alt="Zandex Atelier Featured Piece"
+                        >
+
+                        <button
+                            class="order-arrow"
+                            onclick="orderProduct('Featured Piece 01', '13000', 'zandex-image-2.jpeg')"
+                            aria-label="Order Featured Piece 01"
+                        >
+                            →
+                        </button>
+                    </div>
+
+                    <div class="product-info">
+
+                        <div>
+                            <h3>Signature Piece 01</h3>
+                            <p>₦13,000</p>
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <!-- PRODUCT 2 -->
+
+                <article class="product-card">
+
+                    <div class="product-image">
+                        <img
+                            src="zandex-image-8.jpeg"
+                            alt="Zandex Atelier Featured Piece"
+                        >
+
+                        <button
+                            class="order-arrow"
+                            onclick="orderProduct('Featured Piece 02', '7000', 'zandex-image-8.jpeg')"
+                            aria-label="Order Featured Piece 02"
+                        >
+                            →
+                        </button>
+                    </div>
+
+                    <div class="product-info">
+
+                        <div>
+                            <h3>Signature Piece 02</h3>
+                            <p>₦7,000</p>
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <!-- PRODUCT 3 -->
+
+                <article class="product-card">
+
+                    <div class="product-image">
+                        <img
+                            src="zandex-image-13.jpeg"
+                            alt="Zandex Atelier Featured Piece"
+                        >
+
+                        <button
+                            class="order-arrow"
+                            onclick="orderProduct('Featured Piece 03', '5500', 'zandex-image-13.jpeg')"
+                            aria-label="Order Featured Piece 03"
+                        >
+                            →
+                        </button>
+                    </div>
+
+                    <div class="product-info">
+
+                        <div>
+                            <h3>Signature Piece 03</h3>
+                            <p>₦5,500</p>
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <!-- PRODUCT 4 -->
+
+                <article class="product-card">
+
+                    <div class="product-image">
+                        <img
+                            src="zandex-image-16.jpeg"
+                            alt="Zandex Atelier Featured Piece"
+                        >
+
+                        <button
+                            class="order-arrow"
+                            onclick="orderProduct('Featured Piece 04', '3500', 'zandex-image-16.jpeg')"
+                            aria-label="Order Featured Piece 04"
+                        >
+                            →
+                        </button>
+                    </div>
+
+                    <div class="product-info">
+
+                        <div>
+                            <h3>Signature Piece 04</h3>
+                            <p>₦3,500</p>
+                        </div>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================================
+             COMPLETE THE LOOK
+        ========================================== -->
+
+        <section class="look-section">
+
+            <div class="look-panel look-text">
+
+                <p class="section-label">
+                    COMPLETE
+                </p>
+
+                <h2>
+                    THE LOOK
+                </h2>
+
+                <p>
+                    Jewelry, clothing and accessories
+                    that work together.
+                </p>
+
+                <a
+                    href="#new-arrivals"
+                    class="text-link"
+                >
+                    SHOP THE LOOK
+                    <span>→</span>
+                </a>
+
+            </div>
+
+
+            <div class="look-panel">
+
+                <img
+                    src="zandex-fouri.avif"
+                    alt="Zandex Atelier fashion"
+                >
+
+            </div>
+
+
+            <div class="look-panel">
+
+                <img
+                    src="zandex-fourii.jpg"
+                    alt="Zandex Atelier collection"
+                >
+
+            </div>
+
+
+            <div class="look-panel look-message">
+
+                <div>
+
+                    <span class="small-mark">
+                        ✦
+                    </span>
+
+                    <p>
+                        Luxury isn't<br>
+                        about the price.<br>
+                        It's about the detail.
+                    </p>
+
+                    <span class="look-brand">
+                        ZANDEX
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================================
+             NEW ARRIVALS
+        ========================================== -->
+
+        <section class="new-arrivals-section" id="new-arrivals">
+
+            <div class="section-heading">
+
+                <div>
+
+                    <p class="section-label">
+                        NEW ARRIVALS
+                    </p>
+
+                    <span class="heading-line"></span>
+
+                </div>
+
+                <div class="scroll-indicator">
+                    DRAG TO EXPLORE
+                    <span>→</span>
+                </div>
+
+            </div>
+
+
+            <div class="products-scroll">
+
+
+                <!-- 1 -->
+
+                <article class="arrival-card">
+
+                    <div class="arrival-image">
+
+                        <img
+                            src="zandex-image-1.jpeg"
+                            alt="Zandex Image 1"
+                        >
+
+                        <button
+                            class="order-arrow"
+                            onclick="orderProduct('New Arrival 01', '13000', 'zandex-image-1.jpeg')"
+                        >
+                            →
+                        </button>
+
+                    </div>
+
+                    <h3>New Arrival 01</h3>
+                    <p>₦13,000</p>
+
+                </article>
+
+
+                <!-- 2 -->
+
+                <article class="arrival-card">
+
+                    <div class="arrival-image">
+
+                        <img
+                            src="zandex-image-2.jpeg"
+                            alt="Zandex Image 2"
+                        >
+
+                        <button
+                            class="order-arrow"
+                            onclick="orderProduct('New Arrival 02', '13000', 'zandex-image-2.jpeg')"
+                        >
+                            →
+                        </button>
+
+                    </div>
+
+                    <h3>New Arrival 02</h3>
+                    <p>₦13,000</p>
+
+                </article>
+
+
+                <!-- 3 -->
+
+                <article class="arrival-card">
+
+                    <div class="arrival-image">
+
+                        <img
+                            src="zandex-image-3.jpeg"
+                            alt="Zandex Image 3"
+                        >
+
+                        <button
+                            class="order-arrow"
+                            onclick="orderProduct('New Arrival 03', '3500', 'zandex-image-3.jpeg')"
+                        >
+                            →
+                        </button>
+
+                    </div>
+
+                    <h3>New Arrival 03</h3>
+                    <p>₦3,500</p>
+
+                </article>
+
+
+                <!-- 4 -->
+
+                <article class="arrival-card">
+
+                    <div class="arrival-image">
+
+                        <img
+                            src="zandex-image-4.jpeg"
+                            alt="Zandex Image 4"
+                        >
+
+                        <button
+                            class="order-arrow"
+                            onclick="orderProduct('New Arrival 04', '3500', 'zandex-image-4.jpeg')"
+                        >
+                            →
+                        </button>
+
+                    </div>
+
+                    <h3>New Arrival 04</h3>
+                    <p>₦3,500</p>
+
+                </article>
+
+
+                <!-- 5 -->
+
+                <article class="arrival-card">
+
+                    <div class="arrival-image">
+
+                        <img
+                            src="zandex-image-5.jpeg"
+                            alt="Zandex Image 5"
+                        >
+
+                        <button
+                            class="order-arrow"
+                            onclick="orderProduct('New Arrival 05', '7000', 'zandex-image-5.jpeg')"
+                        >
+                            →
+                        </button>
+
+                    </div>
+
+                    <h3>New Arrival 05</h3>
+                    <p>₦7,000</p>
+
+                </article>
+
+
+                <!-- 6 -->
+
+                <article class="arrival-card">
+
+                    <div class="arrival-image">
+
+                        <img
+                            src="zandex-image-6.jpeg"
+                            alt="Zandex Image 6"
+                        >
+
+                        <button
+                            class="order-arrow"
+                            onclick="orderProduct('New Arrival 06', '7000', 'zandex-image-6.jpeg')"
+                        >
+                            →
+                        </button>
+
+                    </div>
+
+                    <h3>New Arrival 06</h3>
+                    <p>₦7,000</p>
+
+                </article>
+
+
+                <!-- 7 -->
+
+                <article class="arrival-card">
+
+                    <div class="arrival-image">
+
+                        <img
+                            src="zandex-image-7.jpeg"
+                            alt="Zandex Image 7"
+                        >
+
+                        <button
+                            class="order-arrow"
+                            onclick="orderProduct('New Arrival 07', '7000', 'zandex-image-7.jpeg')"
+                        >
+                            →
+                        </button>
+
+                    </div>
+
+                    <h3>New Arrival 07</h3>
+                    <p>₦7,000</p>
+
+                </article>
+
+
+                <!-- 8 -->
+
+                <article class="arrival-card">
+
+                    <div class="arrival-image">
+
+                        <img
+                            src="zandex-image-8.jpeg"
+                            alt="Zandex Image 8"
+                        >
+
+                        <button
+                            class="order-arrow"
+                            onclick="orderProduct('New Arrival 08', '7000', 'zandex-image-8.jpeg')"
+                        >
+                            →
+                        </button>
+
+                    </div>
+
+                    <h3>New Arrival 08</h3>
+                    <p>₦7,000</p>
+
+                </article>
+
+
+                <!-- 9 -->
+
+                <article class="arrival-card">
+
+                    <div class="arrival-image">
+
+                        <img
+                            src="zandex-image-9.jpeg"
+                            alt="Zandex Image 9"
+                        >
+
+                        <button
+                            class="order-arrow"
+                            onclick="orderProduct('New Arrival 09', '15000', 'zandex-image-9.jpeg')"
+                        >
+                            →
+                        </button>
+
+                    </div>
+
+                    <h3>New Arrival 09</h3>
+                    <p>₦15,000</p>
+
+                </article>
+
+
+                <!-- 10 -->
+
+                <article class="arrival-card">
+
+                    <div class="arrival-image">
+
+                        <img
+                            src="zandex-image-10.jpeg"
+                            alt="Zandex Image 10"
+                        >
+
+                        <button
+                            class="order-arrow"
+                            onclick="orderProduct('New Arrival 10', '5500', 'zandex-image-10.jpeg')"
+                        >
+                            →
+                        </button>
+
+                    </div>
+
+                    <h3>New Arrival 10</h3>
+                    <p>₦5,500</p>
+
+                </article>
+
+
+                <!-- 11 -->
+
+                <article class="arrival-card">
+
+                    <div class="arrival-image">
+
+                        <img
+                            src="zandex-image-11.jpeg"
+                            alt="Zandex Image 11"
+                        >
+
+                        <button
+                            class="order-arrow"
+                            onclick="orderProduct('New Arrival 11', '5500', 'zandex-image-11.jpeg')"
+                        >
+                            →
+                        </button>
+
+                    </div>
+
+                    <h3>New Arrival 11</h3>
+                    <p>₦5,500</p>
+
+                </article>
+
+
+                <!-- 12 -->
+
+                <article class="arrival-card">
+
+                    <div class="arrival-image">
+
+                        <img
+                            src="zandex-image-12.jpeg"
+                            alt="Zandex Image 12"
+                        >
+
+                        <button
+                            class="order-arrow"
+                            onclick="orderProduct('New Arrival 12', '5500', 'zandex-image-12.jpeg')"
+                        >
+                            →
+                        </button>
+
+                    </div>
+
+                    <h3>New Arrival 12</h3>
+                    <p>₦5,500</p>
+
+                </article>
+
+
+                <!-- 13 -->
+
+                <article class="arrival-card">
+
+                    <div class="arrival-image">
+
+                        <img
+                            src="zandex-image-13.jpeg"
+                            alt="Zandex Image 13"
+                        >
+
+                        <button
+                            class="order-arrow"
+                            onclick="orderProduct('New Arrival 13', '5500', 'zandex-image-13.jpeg')"
+                        >
+                            →
+                        </button>
+
+                    </div>
+
+                    <h3>New Arrival 13</h3>
+                    <p>₦5,500</p>
+
+                </article>
+
+
+                <!-- 14 -->
+
+                <article class="arrival-card">
+
+                    <div class="arrival-image">
+
+                        <img
+                            src="zandex-image-14.jpeg"
+                            alt="Zandex Image 14"
+                        >
+
+                        <button
+                            class="order-arrow"
+                            onclick="orderProduct('New Arrival 14', '5500', 'zandex-image-14.jpeg')"
+                        >
+                            →
+                        </button>
+
+                    </div>
+
+                    <h3>New Arrival 14</h3>
+                    <p>₦5,500</p>
+
+                </article>
+
+
+                <!-- 15 -->
+
+                <article class="arrival-card">
+
+                    <div class="arrival-image">
+
+                        <img
+                            src="zandex-image-15.jpeg"
+                            alt="Zandex Image 15"
+                        >
+
+                        <button
+                            class="order-arrow"
+                            onclick="orderProduct('New Arrival 15', '4000', 'zandex-image-15.jpeg')"
+                        >
+                            →
+                        </button>
+
+                    </div>
+
+                    <h3>New Arrival 15</h3>
+                    <p>₦4,000</p>
+
+                </article>
+
+
+                <!-- 16 -->
+
+                <article class="arrival-card">
+
+                    <div class="arrival-image">
+
+                        <img
+                            src="zandex-image-16.jpeg"
+                            alt="Zandex Image 16"
+                        >
+
+                        <button
+                            class="order-arrow"
+                            onclick="orderProduct('New Arrival 16', '3500', 'zandex-image-16.jpeg')"
+                        >
+                            →
+                        </button>
+
+                    </div>
+
+                    <h3>New Arrival 16</h3>
+                    <p>₦3,500</p>
+
+                </article>
+
+
+                <!-- 17 -->
+
+                <article class="arrival-card">
+
+                    <div class="arrival-image">
+
+                        <img
+                            src="zandex-image-17.jpeg"
+                            alt="Zandex Image 17"
+                        >
+
+                        <button
+                            class="order-arrow"
+                            onclick="orderProduct('New Arrival 17', '2500', 'zandex-image-17.jpeg')"
+                        >
+                            →
+                        </button>
+
+                    </div>
+
+                    <h3>New Arrival 17</h3>
+                    <p>₦2,500</p>
+
+                </article>
+
+
+                <!-- 18 -->
+
+                <article class="arrival-card">
+
+                    <div class="arrival-image">
+
+                        <img
+                            src="zandex-image-18.jpeg"
+                            alt="Zandex Image 18"
+                        >
+
+                        <button
+                            class="order-arrow"
+                            onclick="orderProduct('New Arrival 18', '2500', 'zandex-image-18.jpeg')"
+                        >
+                            →
+                        </button>
+
+                    </div>
+
+                    <h3>New Arrival 18</h3>
+                    <p>₦2,500</p>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================================
+             FINAL IMAGE / BRAND STRIP
+        ========================================== -->
+
+        <section class="final-strip">
+
+            <div class="final-strip-image">
+                <img
+                    src="zandex-fouriii.webp"
+                    alt="Zandex Atelier"
+                >
+            </div>
+
+            <div class="final-strip-content">
+
+                <span class="section-label">
+                    EST. 2026
+                </span>
+
+                <h2>
+                    ZANDEX
+                </h2>
+
+                <p>
+                    Defined by detail.
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================================
+         FOOTER
+    ========================================== -->
+
+    <footer class="footer">
+
+        <div class="footer-top">
+
+            <div class="footer-brand">
+
+                <span class="brand-main">
+                    ZANDEX
+                </span>
+
+                <span class="brand-sub">
+                    ATELIER
+                </span>
+
+            </div>
+
+            <div class="footer-nav">
+
+                <a href="#shop">Shop</a>
+                <a href="#about">About</a>
+
+                <a
+                    href="#"
+                    onclick="openWhatsApp(event, 'Hello Zandex Atelier, I would like to contact you.')"
+                >
+                    Contact
+                </a>
+
+            </div>
+
+
+            <div class="newsletter">
+
+                <p>
+                    JOIN OUR LIST
+                </p>
+
+                <form onsubmit="subscribe(event)">
+
+                    <input
+                        type="email"
+                        placeholder="Your email address"
+                        required
+                    >
+
+                    <button type="submit">
+                        +
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+
+        <div class="footer-bottom">
+
+            <p>
+                © 2026 Zandex Atelier. All rights reserved.
+            </p>
+
+            <div class="socials">
+
+                <a href="#" aria-label="Instagram">
+                    IG
+                </a>
+
+                <a href="#" aria-label="TikTok">
+                    TK
+                </a>
+
+                <a href="#" aria-label="X">
+                    X
+                </a>
+
+            </div>
+
+            <div class="legal">
+
+                <a href="#">
+                    PRIVACY
+                </a>
+
+                <span>|</span>
+
+                <a href="#">
+                    TERMS
+                </a>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+    <script src="zandex.js"></script>
+
+</body>
+</html>
