@@ -9,33 +9,102 @@
 ========================================= */
 
 const IMAGE_EXTENSION = ".jpg";
-
-
-/*
-    IMPORTANT:
-
-    If your images are PNG instead of JPG,
-    change the line above to:
-
-    const IMAGE_EXTENSION = ".png";
-*/
-
-
-/*
-    PUT YOUR REAL WHATSAPP NUMBER HERE
-
-    Example:
-
-    08012345678
-
-    becomes:
-
-    2348012345678
-
-    Do NOT include the + sign.
-*/
-
 const WHATSAPP_NUMBER = "2349063613462";
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    const menuButton = document.getElementById("menuButton");
+    const nav = document.getElementById("nav");
+    const navLinks = document.querySelectorAll(".nav-link");
+
+
+    /* =========================
+       MOBILE MENU
+    ========================= */
+
+    if (menuButton && nav) {
+
+        menuButton.addEventListener("click", () => {
+
+            nav.classList.toggle("open");
+
+            menuButton.classList.toggle("active");
+
+        });
+
+    }
+
+
+    /* =========================
+       CLOSE MENU AFTER LINK CLICK
+    ========================= */
+
+    navLinks.forEach(link => {
+
+        link.addEventListener("click", () => {
+
+            nav.classList.remove("open");
+
+            menuButton.classList.remove("active");
+
+        });
+
+    });
+
+
+    /* =========================
+       ACTIVE NAVIGATION
+    ========================= */
+
+    const sections = document.querySelectorAll("section[id]");
+
+
+    window.addEventListener("scroll", () => {
+
+        let current = "";
+
+
+        sections.forEach(section => {
+
+            const sectionTop =
+                section.offsetTop - 120;
+
+            const sectionHeight =
+                section.offsetHeight;
+
+
+            if (
+                window.scrollY >= sectionTop &&
+                window.scrollY < sectionTop + sectionHeight
+            ) {
+
+                current = section.getAttribute("id");
+
+            }
+
+        });
+
+
+        navLinks.forEach(link => {
+
+            link.classList.remove("active");
+
+
+            if (
+                link.getAttribute("href") ===
+                `#${current}`
+            ) {
+
+                link.classList.add("active");
+
+            }
+
+        });
+
+    });
+
+});
+
 
 
 
