@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Keji's Luke | Soft Luxury</title>
+
+    <link rel="stylesheet" href="keji.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<!-- =====================================================
+     INTRO SCREEN
+===================================================== -->
+
+<div class="intro-screen" id="introScreen">
+
+    <div class="intro-content">
+
+        <div class="intro-logo">
+            <img src="kejis-luke.jpeg" alt="Keji's Luke">
+        </div>
+
+        <p class="intro-tagline">
+            SOFT LUXURY • EVERYDAY STYLE
+        </p>
+
+        <div class="intro-line"></div>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     MAIN WEBSITE
+===================================================== -->
+
+<div class="site-wrapper" id="siteWrapper">
+
+
+    <!-- =================================================
+         HEADER
+    ================================================== -->
+
+    <header class="header">
+
+        <div class="header-inner">
+
+            <button class="menu-btn" id="menuBtn" aria-label="Open menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+
+            <a href="#" class="brand-name">
+                KEJI'S LUKE
+            </a>
+
+
+            <div class="header-actions">
+
+                <button class="header-icon" id="searchToggle" aria-label="Search">
+                    <span>⌕</span>
+                </button>
+
+                <button class="header-icon cart-button" id="bagButton" aria-label="Open cart">
+    <span>♡</span>
+    <small id="savedCount">0</small>
+</button>
+
+            </div>
+
+        </div>
+
+
+        <!-- SEARCH -->
+
+        <div class="search-container" id="searchContainer">
+
+            <div class="search-box">
+
+                <span>⌕</span>
+
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Search slippers, sandals, bags..."
+                    autocomplete="off"
+                >
+
+                <button id="closeSearch">×</button>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- =================================================
+         MOBILE SIDE MENU
+    ================================================== -->
+
+    <div class="menu-overlay" id="menuOverlay"></div>
+
+    <aside class="side-menu" id="sideMenu">
+
+        <div class="side-menu-header">
+
+            <h3>KEJI'S LUKE</h3>
+
+            <button id="closeMenu">×</button>
+
+        </div>
+
+
+        <nav>
+
+            <a href="#home" class="menu-link">
+                Home
+            </a>
+
+            <a href="#products" class="menu-link">
+                Shop All
+            </a>
+
+            <a href="#products" class="menu-link" data-category-link="Slippers">
+                Slippers
+            </a>
+
+            <a href="#products" class="menu-link" data-category-link="Sandals">
+                Sandals
+            </a>
+
+            <a href="#products" class="menu-link" data-category-link="Slides">
+                Slides
+            </a>
+
+            <a href="#products" class="menu-link" data-category-link="Bags">
+                Bags
+            </a>
+
+        </nav>
+
+
+        <div class="side-menu-footer">
+
+            <p>Soft luxury for every step.</p>
+
+        </div>
+
+    </aside>
+
+
+    <!-- =================================================
+         HOME
+    ================================================== -->
+
+    <main id="home">
+
+
+        <!-- =================================================
+             HERO
+        ================================================== -->
+
+        <section class="hero">
+
+            <div class="hero-content">
+
+                <span class="eyebrow">
+                    THE KEJI'S LUKE EDIT
+                </span>
+
+                <h1>
+                    Soft luxury,<br>
+                    made for you.
+                </h1>
+
+                <p>
+                    Discover carefully selected slippers,
+                    sandals, slides and bags designed to
+                    elevate your everyday style.
+                </p>
+
+                <a href="#products" class="hero-btn">
+                    SHOP COLLECTION
+                    <span>→</span>
+                </a>
+
+            </div>
+
+            <div class="hero-decoration">
+                <img src="kejis-luke.jpeg" alt="Keji's Luke">
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             CATEGORIES
+        ================================================== -->
+
+        <section class="categories-section">
+
+            <div class="section-heading">
+
+                <span class="eyebrow">
+                    EXPLORE
+                </span>
+
+                <h2>
+                    Shop by category
+                </h2>
+
+            </div>
+
+
+            <div class="category-row">
+
+                <button class="category-card active" data-category="All">
+
+                    <div class="category-icon">
+                        ✦
+                    </div>
+
+                    <span>
+                        All
+                    </span>
+
+                </button>
+
+
+                <button class="category-card" data-category="Slippers">
+
+                    <div class="category-icon">
+                        ◇
+                    </div>
+
+                    <span>
+                        Slippers
+                    </span>
+
+                </button>
+
+
+                <button class="category-card" data-category="Sandals">
+
+                    <div class="category-icon">
+                        ♢
+                    </div>
+
+                    <span>
+                        Sandals
+                    </span>
+
+                </button>
+
+
+                <button class="category-card" data-category="Slides">
+
+                    <div class="category-icon">
+                        ◌
+                    </div>
+
+                    <span>
+                        Slides
+                    </span>
+
+                </button>
+
+
+                <button class="category-card" data-category="Bags">
+
+                    <div class="category-icon">
+                        ♡
+                    </div>
+
+                    <span>
+                        Bags
+                    </span>
+
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             PRODUCTS
+        ================================================== -->
+
+        <section class="products-section" id="products">
+
+            <div class="products-heading">
+
+                <div>
+
+                    <span class="eyebrow">
+                        OUR COLLECTION
+                    </span>
+
+                    <h2 id="productHeading">
+                        All pieces
+                    </h2>
+
+                </div>
+
+                <span class="product-count" id="productCount">
+                    12 pieces
+                </span>
+
+            </div>
+
+
+            <div class="products-grid" id="productsGrid">
+
+                <!-- JavaScript inserts products here -->
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             BRAND STATEMENT
+        ================================================== -->
+
+        <section class="brand-statement">
+
+            <span class="eyebrow">
+                KEJI'S LUKE
+            </span>
+
+            <h2>
+                Little details.<br>
+                Big difference.
+            </h2>
+
+            <p>
+                From everyday slides to statement bags,
+                every piece is selected to bring effortless
+                style into your wardrobe.
+            </p>
+
+        </section>
+
+
+    </main>
+
+
+    <!-- =================================================
+         FOOTER
+    ================================================== -->
+
+    <footer class="footer">
+
+        <div class="footer-brand">
+
+            <h2>
+                KEJI'S LUKE
+            </h2>
+
+            <p>
+                Soft luxury for every step.
+            </p>
+
+        </div>
+
+
+        <div class="footer-links">
+
+            <a href="#home">
+                Home
+            </a>
+
+            <a href="#products">
+                Shop
+            </a>
+
+            <a href="https://wa.me/2349031894460" target="_blank">
+                WhatsApp
+            </a>
+
+        </div>
+
+
+        <div class="footer-bottom">
+
+            <span>
+                © 2026 Keji's Luke
+            </span>
+
+            <span>
+                All rights reserved.
+            </span>
+
+        </div>
+
+    </footer>
+
+
+</div>
+
+
+
+<!-- =====================================================
+     PRODUCT MODAL
+===================================================== -->
+
+<div class="product-modal" id="productModal">
+
+    <div class="modal-overlay" id="modalOverlay"></div>
+
+
+    <div class="product-modal-content">
+
+        <button class="modal-close" id="modalClose">
+            ×
+        </button>
+
+
+        <div class="product-modal-grid">
+
+
+            <!-- IMAGE AREA -->
+
+            <div class="product-gallery">
+
+                <div class="main-product-image">
+
+                    <img
+                        id="mainProductImage"
+                        src=""
+                        alt=""
+                    >
+
+                    <button class="gallery-arrow gallery-prev" id="galleryPrev">
+                        ‹
+                    </button>
+
+                    <button class="gallery-arrow gallery-next" id="galleryNext">
+                        ›
+                    </button>
+
+                    <span class="gallery-counter" id="galleryCounter">
+                        1 / 1
+                    </span>
+
+                </div>
+
+
+                <div class="thumbnail-row" id="thumbnailRow">
+
+                    <!-- JavaScript -->
+
+                </div>
+
+            </div>
+
+
+
+            <!-- PRODUCT INFORMATION -->
+
+            <div class="product-details">
+
+                <span class="product-category" id="modalCategory">
+                    SLIPPERS
+                </span>
+
+                <h2 id="modalProductName">
+                    Product name
+                </h2>
+
+                <div class="modal-price" id="modalPrice">
+                    ₦0
+                </div>
+
+
+                <div class="detail-divider"></div>
+
+
+                <!-- DESCRIPTION -->
+
+                <div class="detail-section">
+
+                    <h4>
+                        About this piece
+                    </h4>
+
+                    <p id="modalDescription">
+                        Product description.
+                    </p>
+
+                </div>
+
+
+                <!-- COLORS -->
+
+                <div class="detail-section" id="colorSection">
+
+                    <div class="detail-title-row">
+
+                        <h4>
+                            Color
+                        </h4>
+
+                        <span id="selectedColor">
+                            Select color
+                        </span>
+
+                    </div>
+
+                    <div class="color-options" id="colorOptions">
+
+                        <!-- JavaScript -->
+
+                    </div>
+
+                </div>
+
+
+                <!-- SIZES -->
+
+                <div class="detail-section" id="sizeSection">
+
+                    <div class="detail-title-row">
+
+                        <h4>
+                            Size
+                        </h4>
+
+                        <span id="selectedSize">
+                            Select size
+                        </span>
+
+                    </div>
+
+                    <div class="size-options" id="sizeOptions">
+
+                        <!-- JavaScript -->
+
+                    </div>
+
+                </div>
+
+
+                <!-- QUANTITY -->
+
+                <div class="quantity-section">
+
+                    <h4>
+                        Quantity
+                    </h4>
+
+                    <div class="quantity-control">
+
+                        <button id="decreaseQty">
+                            −
+                        </button>
+
+                        <span id="quantity">
+                            1
+                        </span>
+
+                        <button id="increaseQty">
+                            +
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <button class="add-to-cart-btn" id="addToCart">
+
+    <span>
+        ADD TO CART
+    </span>
+
+    <span>
+        +
+    </span>
+
+</button>
+
+
+                <!-- WHATSAPP -->
+
+                <button class="whatsapp-order" id="whatsappOrder">
+
+                    <span>
+                        ORDER ON WHATSAPP
+                    </span>
+
+                    <span>
+                        →
+                    </span>
+
+                </button>
+
+
+                <p class="order-note">
+                    Add to cart if you want to continue shopping,
+    or order directly on WhatsApp.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             RELATED PRODUCTS
+        ================================================== -->
+
+        <div class="related-section">
+
+            <div class="related-heading">
+
+                <div>
+
+                    <span class="eyebrow">
+                        COMPLETE THE LOOK
+                    </span>
+
+                    <h3>
+                        You may also like
+                    </h3>
+
+                </div>
+
+            </div>
+
+
+            <div class="related-products" id="relatedProducts">
+
+                <!-- JavaScript -->
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- =====================================================
+     CART DRAWER
+===================================================== -->
+
+<div class="cart-drawer" id="cartDrawer">
+
+    <div class="cart-overlay" id="cartOverlay"></div>
+
+
+    <aside class="cart-panel">
+
+        <div class="cart-header">
+
+            <div>
+
+                <span class="eyebrow">
+                    YOUR SELECTION
+                </span>
+
+                <h2>
+                    Your Cart
+                </h2>
+
+            </div>
+
+            <button
+                class="cart-close"
+                id="cartClose"
+                aria-label="Close cart"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="cart-content" id="cartContent">
+
+            <!-- JavaScript inserts cart items -->
+
+        </div>
+
+
+        <div class="cart-footer" id="cartFooter">
+
+            <div class="cart-total-row">
+
+                <span>
+                    Total
+                </span>
+
+                <strong id="cartTotal">
+                    ₦0
+                </strong>
+
+            </div>
+
+
+            <button
+                class="cart-checkout"
+                id="cartCheckout"
+            >
+
+                <span>
+                    CHECKOUT ON WHATSAPP
+                </span>
+
+                <span>
+                    →
+                </span>
+
+            </button>
+
+
+            <p class="cart-note">
+                Your order will be prepared and sent
+                directly to Keji's Luke on WhatsApp.
+            </p>
+
+        </div>
+
+    </aside>
+
+</div>
+
+
+<!-- =====================================================
+     CART WARNING
+===================================================== -->
+
+<div class="cart-warning" id="cartWarning">
+
+    <div class="cart-warning-box">
+
+        <div class="cart-warning-icon">
+            ♡
+        </div>
+
+        <span class="eyebrow">
+            BEFORE YOU SHOP
+        </span>
+
+        <h3>
+            Your cart isn't permanent
+        </h3>
+
+        <p>
+            Your cart is saved only on this browser
+            and device. It is not connected to an account.
+            To make sure you don't lose your selections,
+            please checkout your cart before leaving the site.
+        </p>
+
+        <button id="cartWarningConfirm">
+            GOT IT — ADD TO CART
+        </button>
+
+    </div>
+
+</div>
+
+<script src="keji.js"></script>
+
+</body>
+</html>
