@@ -2099,34 +2099,77 @@ document
    MOBILE MENU
 ===================================================== */
 
-document
-  .getElementById(
+const mobileMenuToggle =
+  document.getElementById(
     "mobileMenuToggle"
-  )
-  ?.addEventListener(
-    "click",
-    event => {
-
-      const nav =
-        document.getElementById(
-          "mobileNav"
-        );
-
-
-      const open =
-        nav.classList.toggle(
-          "open"
-        );
-
-
-      event.currentTarget.setAttribute(
-        "aria-expanded",
-        String(open)
-      );
-
-    }
   );
 
+const mobileNav =
+  document.getElementById(
+    "mobileNav"
+  );
+
+
+function closeMobileMenu() {
+
+  mobileNav?.classList.remove(
+    "open"
+  );
+
+  mobileMenuToggle?.setAttribute(
+    "aria-expanded",
+    "false"
+  );
+
+  mobileMenuToggle?.setAttribute(
+    "aria-label",
+    "Open menu"
+  );
+
+}
+
+
+function toggleMobileMenu() {
+
+  if (
+    !mobileNav ||
+    !mobileMenuToggle
+  ) {
+    return;
+  }
+
+
+  const isOpen =
+    mobileNav.classList.toggle(
+      "open"
+    );
+
+
+  mobileMenuToggle.setAttribute(
+    "aria-expanded",
+    String(isOpen)
+  );
+
+
+  mobileMenuToggle.setAttribute(
+    "aria-label",
+    isOpen
+      ? "Close menu"
+      : "Open menu"
+  );
+
+}
+
+
+/* Open / close menu */
+
+mobileMenuToggle?.addEventListener(
+  "click",
+  toggleMobileMenu
+);
+
+
+/* Close menu after clicking a link */
 
 document
   .querySelectorAll(
@@ -2136,30 +2179,40 @@ document
 
     link.addEventListener(
       "click",
-      () => {
-
-        document
-          .getElementById(
-            "mobileNav"
-          )
-          ?.classList.remove(
-            "open"
-          );
-
-
-        document
-          .getElementById(
-            "mobileMenuToggle"
-          )
-          ?.setAttribute(
-            "aria-expanded",
-            "false"
-          );
-
-      }
+      closeMobileMenu
     );
 
   });
+
+
+/* Close menu when opening cart */
+
+document
+  .getElementById(
+    "mobileCartOpen"
+  )
+  ?.addEventListener(
+    "click",
+    closeMobileMenu
+  );
+
+
+/* Close mobile menu when returning to desktop */
+
+window.addEventListener(
+  "resize",
+  () => {
+
+    if (
+      window.innerWidth > 780
+    ) {
+
+      closeMobileMenu();
+
+    }
+
+  }
+);
 
 
 /* =====================================================
