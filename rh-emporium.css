@@ -1607,60 +1607,72 @@ img {
         transform: translateY(-6px) rotate(-45deg);
     }
 
+@media (max-width: 780px) {
 
-    /* -----------------------------------------
-       MOBILE NAVIGATION
-       
-       IMPORTANT:
-       The menu is completely hidden until
-       JavaScript adds the .open class.
-    ----------------------------------------- */
+  .desktop-nav,
+  .header-actions > .icon-button {
+    display: none;
+  }
 
-    .mobile-nav {
-        display: none;
+  .mobile-menu-toggle {
+    display: grid;
+  }
 
-        background: var(--burgundy);
 
-        padding: 0 15px;
-    }
+  /* ===============================
+     MOBILE NAV — CLOSED BY DEFAULT
+  =============================== */
 
-    .mobile-nav.open {
-        display: grid;
+  .mobile-nav {
+    display: none;
+    background: var(--burgundy);
+    padding: 0 15px;
+  }
 
-        padding: 8px 15px 14px;
-    }
 
-    .mobile-nav a,
-    .mobile-nav button {
-        display: block;
+  /* ===============================
+     MOBILE NAV — OPEN
+  =============================== */
 
-        width: 100%;
+  .mobile-nav.open {
+    display: grid;
+    padding: 8px 15px 14px;
+  }
 
-        padding: 14px 4px;
 
-        color: #fff;
+  .mobile-nav a,
+  .mobile-nav button {
+    display: block;
+    width: 100%;
+    padding: 14px 4px;
 
-        border: 0;
-        border-bottom: 1px solid rgba(229, 196, 119, 0.15);
+    color: #fff;
 
-        background: none;
+    border: 0;
+    border-bottom: 1px solid
+      rgba(229, 196, 119, 0.15);
 
-        text-align: left;
+    background: none;
 
-        font: 13px Arial, sans-serif;
+    text-align: left;
 
-        cursor: pointer;
-    }
+    font: 13px Arial, sans-serif;
 
-    .mobile-nav a:last-child,
-    .mobile-nav button:last-child {
-        border-bottom: none;
-    }
+    cursor: pointer;
+  }
 
-    .mobile-nav button span {
-        color: var(--gold-light);
-    }
 
+  .mobile-nav a:last-child,
+  .mobile-nav button:last-child {
+    border-bottom: none;
+  }
+
+
+  .mobile-nav button span {
+    color: var(--gold-light);
+  }
+
+}
 
     /* -----------------------------------------
        HERO
