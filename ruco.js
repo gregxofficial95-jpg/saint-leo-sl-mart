@@ -2,9 +2,11 @@
    RUCO TREATS INTRO
 ========================================= */
 
-window.addEventListener("load", () => {
+document.addEventListener("DOMContentLoaded", () => {
 
     const introScreen = document.getElementById("introScreen");
+
+    if (!introScreen) return;
 
     setTimeout(() => {
         introScreen.classList.add("hide");
@@ -157,7 +159,7 @@ const desserts = [
 
     price: 4500,
 
-    image: "ruco-chocolate.jpeg",
+    image: "./ruco-chocolate.jpeg",
 
     bestSeller: true
   },
@@ -171,7 +173,7 @@ const desserts = [
 
     price: 5000,
 
-    image: "ruco-velvet.jpeg"
+    image: "./ruco-velvet.jpeg"
   },
 
 
@@ -183,7 +185,7 @@ const desserts = [
 
     price: 5000,
 
-    image: "ruco-coconut.jpeg"
+    image: "./ruco-coconut.jpeg"
   },
 
 
@@ -195,7 +197,7 @@ const desserts = [
 
     price: 5000,
 
-    image: "ruco-dream.jpeg"
+    image: "./ruco-dream.jpeg"
   }
 
 ];
