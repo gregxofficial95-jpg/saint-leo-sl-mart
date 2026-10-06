@@ -1063,8 +1063,8 @@ img {
 @media (max-width: 700px) {
 
   .collection-grid {
-    grid-template-columns: 1fr;
-    gap: 45px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 35px 12px;
   }
 
   .product-card:nth-child(even) {
@@ -1073,11 +1073,39 @@ img {
 
   .product-image,
   .product-card:nth-child(3n) .product-image {
-    height: 200px;
+    height: 180px;
+  }
+
+  .product-info {
+    padding: 15px 0;
+  }
+
+  .product-category {
+    font-size: 8px;
+    letter-spacing: 1px;
   }
 
   .product-info h3 {
-    font-size: 27px;
+    font-size: 20px;
+    margin: 8px 0 14px;
+  }
+
+  .product-bottom {
+    gap: 8px;
+  }
+
+  .product-bottom strong {
+    font-size: 13px;
+  }
+
+  .product-order-btn {
+    padding: 9px 10px;
+    gap: 8px;
+    font-size: 8px;
+  }
+
+  .product-order-btn span {
+    font-size: 13px;
   }
 
 }
