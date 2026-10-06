@@ -119,7 +119,7 @@
     <div class="brands-grid">
 
       <!-- ESTEES -->
-      <article class="brand-card">
+      <article class="brand-card" id="estees-nail-haven">
 
         <div class="brand-image">
           <img
@@ -154,7 +154,7 @@
 
 
       <!-- B ACCESSORIES AND WEARS -->
-<article class="brand-card">
+<article class="brand-card" id="b-accessories-and-wears">
 
   <div class="brand-image">
     <img
@@ -189,7 +189,7 @@
 
 
 <!-- IGBAFE BAKES AND FRAMES -->
-<article class="brand-card">
+<article class="brand-card" id="igbafe-bakes-and-frames">
 
   <div class="brand-image">
     <img
@@ -223,7 +223,7 @@
 </article>
 
 <!-- MIMO'S COLLECTION -->
-<article class="brand-card">
+<article class="brand-card" id="mimos-collection">
 
   <div class="brand-image">
     <img
@@ -257,7 +257,7 @@
 </article>
 
 <!-- LIYYA'S APPAREL -->
-<article class="brand-card">
+<article class="brand-card" id="liyyas-apparel">
 
   <div class="brand-image">
     <img
@@ -291,7 +291,7 @@
 
 
 <!-- ORIFLAME -->
-<article class="brand-card">
+<article class="brand-card" id="oriflame">
 
   <div class="brand-image">
     <img
@@ -324,7 +324,7 @@
 </article>
 
    <!-- NTB CLOTHING ENTERPRISE -->
-<article class="brand-card">
+<article class="brand-card" id="ntb-clothing-enterprise">
 
   <div class="brand-image">
     <img
@@ -357,7 +357,7 @@
 </article>
 
  <!-- LEEYAH'S COLLECTION -->
-<article class="brand-card">
+<article class="brand-card" id="leeyahs-collection">
 
   <div class="brand-image">
     <img
@@ -390,7 +390,7 @@
 </article>
 
 <!-- ZANDEX ATELIER -->
-<article class="brand-card">
+<article class="brand-card" id="zandex-atelier">
 
   <div class="brand-image">
     <img
@@ -423,7 +423,7 @@
 </article>
 
 <!-- KEJI'S LUKE -->
-<article class="brand-card">
+<article class="brand-card" id="kejis-luke">
 
   <div class="brand-image">
     <img
@@ -457,7 +457,7 @@
 
 
 <!-- PRESHIE -->
-<article class="brand-card">
+<article class="brand-card" id="preshie-brand">
 
   <div class="brand-image">
     <img
@@ -490,7 +490,7 @@
 </article>
 
 <!-- RUCO TREATS -->
-<article class="brand-card">
+<article class="brand-card" id="ruco-treats">
 
   <div class="brand-image">
     <img
@@ -523,7 +523,7 @@
 </article>
 
 <!-- RH EMPORIUM -->
-<article class="brand-card">
+<article class="brand-card" id="rh-emporium">
 
   <div class="brand-image">
     <img
@@ -649,6 +649,59 @@
     </p>
 
   </footer>
+
+  <script>
+
+function highlightSearchedBrand() {
+
+  const hash =
+    window.location.hash;
+
+  if (!hash) return;
+
+
+  const target =
+    document.querySelector(hash);
+
+  if (!target) return;
+
+
+  setTimeout(() => {
+
+    target.scrollIntoView({
+      behavior: "smooth",
+      block: "center"
+    });
+
+
+    target.style.outline =
+      "3px solid #b98a3b";
+
+    target.style.outlineOffset =
+      "8px";
+
+    target.style.transition =
+      "outline 0.3s ease";
+
+
+    setTimeout(() => {
+
+      target.style.outline = "";
+      target.style.outlineOffset = "";
+
+    }, 4000);
+
+  }, 300);
+
+}
+
+
+window.addEventListener(
+  "load",
+  highlightSearchedBrand
+);
+
+</script>
 
 </body>
 </html>
