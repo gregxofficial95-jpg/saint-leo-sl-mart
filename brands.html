@@ -115,6 +115,17 @@
 
     </div>
 
+    <div class="brands-search">
+  <input
+    type="text"
+    id="brandSearch"
+    placeholder="Search for a brand..."
+    autocomplete="off"
+  >
+
+  <span id="brandSearchCount"></span>
+</div>
+
 
     <div class="brands-grid">
 
@@ -701,6 +712,62 @@ window.addEventListener(
   highlightSearchedBrand
 );
 
+
+const brandSearch = document.getElementById("brandSearch");
+const brandSearchCount = document.getElementById("brandSearchCount");
+const brandCards = document.querySelectorAll(
+  ".brands-grid .brand-card:not(.coming-soon)"
+);
+
+function normalizeBrandText(text) {
+  return text
+    .toLowerCase()
+    .replace(/[’']/g, "")
+    .trim();
+}
+
+function searchBrands() {
+  const searchTerm = normalizeBrandText(brandSearch.value);
+
+  let visibleCount = 0;
+
+  brandCards.forEach(card => {
+    const brandNameElement = card.querySelector("h3");
+
+    if (!brandNameElement) return;
+
+    const brandName = normalizeBrandText(
+      brandNameElement.innerText
+    );
+
+    if (
+      !searchTerm ||
+      brandName.includes(searchTerm)
+    ) {
+      card.style.display = "";
+      visibleCount++;
+    } else {
+      card.style.display = "none";
+    }
+  });
+
+  if (!searchTerm) {
+    brandSearchCount.innerText = "";
+    return;
+  }
+
+  if (visibleCount === 0) {
+    brandSearchCount.innerText = "No brand found.";
+  } else {
+    brandSearchCount.innerText =
+      visibleCount +
+      (visibleCount === 1 ? " brand found" : " brands found");
+  }
+}
+
+if (brandSearch) {
+  brandSearch.addEventListener("input", searchBrands);
+}
 </script>
 
 </body>
