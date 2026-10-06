@@ -440,6 +440,11 @@ function closeCategoryView() {
 const productSearch = document.getElementById("productSearch");
 const searchResultCount = document.getElementById("searchResultCount");
 
+
+/* =========================================
+   SEARCH PRODUCTS + BRANDS
+========================================= */
+
 productSearch.addEventListener("input", function () {
 
   let searchTerm = this.value.toLowerCase().trim();
@@ -447,6 +452,11 @@ productSearch.addEventListener("input", function () {
   let allItems = document.querySelectorAll("#food .item");
 
   let resultCount = 0;
+
+
+  /* =========================
+     SEARCH PRODUCTS
+  ========================= */
 
   allItems.forEach(item => {
 
@@ -470,7 +480,11 @@ productSearch.addEventListener("input", function () {
 
   });
 
-  // Show hidden product sections while searching
+
+  /* =========================
+     SHOW HIDDEN PRODUCTS
+  ========================= */
+
   let hiddenSections = document.querySelectorAll(
     "#food .hidden-items"
   );
@@ -488,14 +502,51 @@ productSearch.addEventListener("input", function () {
       );
 
       if (matchingItems.length > 0) {
+
         section.style.display = "grid";
+
       } else {
+
         section.style.display = "none";
+
       }
 
     }
 
   });
+
+
+  /* =========================
+     SEARCH BRANDS
+  ========================= */
+
+  let brandCards = document.querySelectorAll(".brand-card");
+
+  let matchingBrands = [];
+
+  brandCards.forEach(card => {
+
+    let brandName = card.querySelector("h3");
+
+    if (!brandName) return;
+
+    let name = brandName.innerText.toLowerCase();
+
+    if (
+      searchTerm !== "" &&
+      name.includes(searchTerm)
+    ) {
+
+      matchingBrands.push(card);
+
+    }
+
+  });
+
+
+  /* =========================
+     SEARCH RESULT MESSAGE
+  ========================= */
 
   if (searchTerm === "") {
 
@@ -503,15 +554,255 @@ productSearch.addEventListener("input", function () {
 
   } else {
 
-    searchResultCount.innerText =
+    let productText =
       resultCount +
       (resultCount === 1
-        ? " product found"
-        : " products found");
+        ? " product"
+        : " products");
+
+
+    let brandText =
+      matchingBrands.length +
+      (matchingBrands.length === 1
+        ? " brand"
+        : " brands");
+
+
+    searchResultCount.innerText =
+      productText +
+      " found • " +
+      brandText +
+      " found";
 
   }
 
 });
+
+
+/* =========================================
+   SEARCH ENTER
+========================================= */
+
+function handleProductSearchEnter(event) {
+
+  if (event.key !== "Enter") return;
+
+  event.preventDefault();
+
+
+  const searchTerm =
+    event.target.value.trim().toLowerCase();
+
+
+  if (!searchTerm) return;
+
+
+  /* =========================
+     FIRST: CHECK BRANDS
+  ========================= */
+
+  const brandCards =
+    document.querySelectorAll(".brand-card");
+
+
+  let targetBrand = null;
+
+
+  brandCards.forEach(card => {
+
+    if (targetBrand) return;
+
+
+    const brandName =
+      card.querySelector("h3");
+
+
+    if (!brandName) return;
+
+
+    const name =
+      brandName.innerText.trim().toLowerCase();
+
+
+    if (name.includes(searchTerm)) {
+
+      targetBrand = card;
+
+    }
+
+  });
+
+
+  /* =========================
+     IF BRAND WAS FOUND
+  ========================= */
+
+  if (targetBrand) {
+
+    /*
+      Find the section containing
+      the brand cards.
+    */
+
+    const brandSection =
+      targetBrand.closest(
+        ".brands-section, .brand-marketplace-section"
+      );
+
+
+    if (brandSection) {
+
+      brandSection.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+
+    } else {
+
+      targetBrand.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+      });
+
+    }
+
+
+    /* =========================
+       HIGHLIGHT BRAND
+    ========================= */
+
+    targetBrand.style.outline =
+      "3px solid var(--gold)";
+
+    targetBrand.style.outlineOffset =
+      "5px";
+
+
+    setTimeout(() => {
+
+      targetBrand.style.outline = "";
+
+      targetBrand.style.outlineOffset = "";
+
+    }, 3000);
+
+
+    return;
+
+  }
+
+
+  /* =========================
+     IF NO BRAND → SEARCH PRODUCT
+  ========================= */
+
+  const foodSection =
+    document.getElementById("food");
+
+
+  foodSection.style.display = "block";
+
+
+  const allItems =
+    document.querySelectorAll("#food .item");
+
+
+  let targetProduct = null;
+
+
+  allItems.forEach(item => {
+
+    if (targetProduct) return;
+
+
+    const productName =
+      item.querySelector("p");
+
+
+    if (!productName) return;
+
+
+    const name =
+      productName.innerText
+        .trim()
+        .toLowerCase();
+
+
+    if (name.includes(searchTerm)) {
+
+      targetProduct = item;
+
+    }
+
+  });
+
+
+  if (!targetProduct) {
+
+    alert(
+      "No product or brand found. Please try another search."
+    );
+
+    return;
+
+  }
+
+
+  /* =========================
+     OPEN HIDDEN PRODUCT SECTION
+  ========================= */
+
+  const hiddenSection =
+    targetProduct.closest(".hidden-items");
+
+
+  if (hiddenSection) {
+
+    hiddenSection.style.display = "grid";
+
+  }
+
+
+  /* =========================
+     CLOSE CATEGORY VIEW
+  ========================= */
+
+  const categoryView =
+    document.getElementById("categoryView");
+
+
+  if (categoryView) {
+
+    categoryView.style.display = "none";
+
+  }
+
+
+  /* =========================
+     SCROLL TO PRODUCT
+  ========================= */
+
+  setTimeout(() => {
+
+    targetProduct.scrollIntoView({
+      behavior: "smooth",
+      block: "center"
+    });
+
+
+    targetProduct.style.outline =
+      "3px solid var(--gold)";
+
+
+    setTimeout(() => {
+
+      targetProduct.style.outline = "";
+
+    }, 2500);
+
+  }, 100);
+
+}
 
 function handleProductSearchEnter(event) {
   if (event.key !== "Enter") return;
@@ -582,7 +873,7 @@ function handleProductSearchEnter(event) {
 function scrollToProduct(productName) {
 
   document.getElementById("food").style.display = "block";
-  
+
   let allProducts = document.querySelectorAll("#food .item");
 
   let targetProduct = null;
@@ -649,3 +940,4 @@ function requestMysteryBasket() {
   window.open(url, "_blank");
 
 }
+
