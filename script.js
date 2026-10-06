@@ -437,150 +437,369 @@ function closeCategoryView() {
 
 }
 
-const productSearch = document.getElementById("productSearch");
-const searchResultCount = document.getElementById("searchResultCount");
+/* =========================================
+   SAINT LEO'S MART SEARCH
+   PRODUCTS + PARTNER BRANDS
+========================================= */
 
 
 /* =========================================
-   SEARCH PRODUCTS + BRANDS
+   PARTNER BRAND SEARCH INDEX
 ========================================= */
 
-productSearch.addEventListener("input", function () {
+const partnerBrands = [
+  {
+    name: "Estees Nail Haven",
+    keywords: [
+      "estees",
+      "estees nail",
+      "estees nail haven"
+    ],
+    url: "brands.html#estees-nail-haven"
+  },
 
-  let searchTerm = this.value.toLowerCase().trim();
+  {
+    name: "B Accessories and Wears",
+    keywords: [
+      "b accessories",
+      "b accessories and wears",
+      "accessories and wears"
+    ],
+    url: "brands.html#b-accessories-and-wears"
+  },
 
-  let allItems = document.querySelectorAll("#food .item");
+  {
+    name: "Igbafe Bakes and Frames",
+    keywords: [
+      "igbafe",
+      "igbafe bakes",
+      "igbafe bakes and frames"
+    ],
+    url: "brands.html#igbafe-bakes-and-frames"
+  },
 
-  let resultCount = 0;
+  {
+    name: "Mimo's Collection",
+    keywords: [
+      "mimo",
+      "mimos",
+      "mimo's collection"
+    ],
+    url: "brands.html#mimos-collection"
+  },
+
+  {
+    name: "Liyya's Apparel",
+    keywords: [
+      "liyya",
+      "liyyas",
+      "liyyas apparel",
+      "liyya's apparel"
+    ],
+    url: "brands.html#liyyas-apparel"
+  },
+
+  {
+    name: "Oriflame",
+    keywords: [
+      "oriflame"
+    ],
+    url: "brands.html#oriflame"
+  },
+
+  {
+    name: "NTB Clothing Enterprise",
+    keywords: [
+      "ntb",
+      "ntb clothing",
+      "ntb clothing enterprise"
+    ],
+    url: "brands.html#ntb-clothing-enterprise"
+  },
+
+  {
+    name: "Leeyah's Collection",
+    keywords: [
+      "leeyah",
+      "leeyahs",
+      "leeyah's collection"
+    ],
+    url: "brands.html#leeyahs-collection"
+  },
+
+  {
+    name: "Zandex Atelier",
+    keywords: [
+      "zandex",
+      "zandex atelier"
+    ],
+    url: "brands.html#zandex-atelier"
+  },
+
+  {
+    name: "Keji's Luke",
+    keywords: [
+      "keji",
+      "kejis",
+      "keji's luke",
+      "keji luke"
+    ],
+    url: "brands.html#kejis-luke"
+  },
+
+  {
+    name: "Preshie Brand",
+    keywords: [
+      "preshie",
+      "preshie brand"
+    ],
+    url: "brands.html#preshie-brand"
+  },
+
+  {
+    name: "Ruco Treats",
+    keywords: [
+      "ruco",
+      "ruco treats"
+    ],
+    url: "brands.html#ruco-treats"
+  },
+
+  {
+    name: "RH Emporium",
+    keywords: [
+      "rh",
+      "rh emporium"
+    ],
+    url: "brands.html#rh-emporium"
+  }
+];
 
 
-  /* =========================
-     SEARCH PRODUCTS
-  ========================= */
+/* =========================================
+   NORMALIZE SEARCH TEXT
+========================================= */
+
+function normalizeSearchText(text) {
+
+  return text
+    .toLowerCase()
+    .replace(/[’']/g, "")
+    .trim();
+
+}
+
+
+/* =========================================
+   FIND BRAND
+========================================= */
+
+function findPartnerBrand(searchTerm) {
+
+  const normalizedSearch =
+    normalizeSearchText(searchTerm);
+
+  return partnerBrands.find(brand => {
+
+    return brand.keywords.some(keyword => {
+
+      const normalizedKeyword =
+        normalizeSearchText(keyword);
+
+      return (
+        normalizedKeyword.includes(normalizedSearch) ||
+        normalizedSearch.includes(normalizedKeyword)
+      );
+
+    });
+
+  });
+
+}
+
+
+/* =========================================
+   SEARCH PRODUCTS
+========================================= */
+
+function findProduct(searchTerm) {
+
+  const normalizedSearch =
+    normalizeSearchText(searchTerm);
+
+  const allItems =
+    document.querySelectorAll("#food .item");
+
+  let targetProduct = null;
 
   allItems.forEach(item => {
 
-    let productName = item.querySelector("p");
+    if (targetProduct) return;
+
+    const productName =
+      item.querySelector("p");
 
     if (!productName) return;
 
-    let name = productName.innerText.toLowerCase();
+    const name =
+      normalizeSearchText(productName.innerText);
 
-    if (searchTerm === "" || name.includes(searchTerm)) {
+    if (name.includes(normalizedSearch)) {
 
-      item.style.display = "";
-
-      resultCount++;
-
-    } else {
-
-      item.style.display = "none";
+      targetProduct = item;
 
     }
 
   });
 
+  return targetProduct;
 
-  /* =========================
-     SHOW HIDDEN PRODUCTS
-  ========================= */
-
-  let hiddenSections = document.querySelectorAll(
-    "#food .hidden-items"
-  );
-
-  hiddenSections.forEach(section => {
-
-    if (searchTerm === "") {
-
-      section.style.display = "";
-
-    } else {
-
-      let matchingItems = section.querySelectorAll(
-        '.item:not([style*="display: none"])'
-      );
-
-      if (matchingItems.length > 0) {
-
-        section.style.display = "grid";
-
-      } else {
-
-        section.style.display = "none";
-
-      }
-
-    }
-
-  });
-
-
-  /* =========================
-     SEARCH BRANDS
-  ========================= */
-
-  let brandCards = document.querySelectorAll(".brand-card");
-
-  let matchingBrands = [];
-
-  brandCards.forEach(card => {
-
-    let brandName = card.querySelector("h3");
-
-    if (!brandName) return;
-
-    let name = brandName.innerText.toLowerCase();
-
-    if (
-      searchTerm !== "" &&
-      name.includes(searchTerm)
-    ) {
-
-      matchingBrands.push(card);
-
-    }
-
-  });
-
-
-  /* =========================
-     SEARCH RESULT MESSAGE
-  ========================= */
-
-  if (searchTerm === "") {
-
-    searchResultCount.innerText = "";
-
-  } else {
-
-    let productText =
-      resultCount +
-      (resultCount === 1
-        ? " product"
-        : " products");
-
-
-    let brandText =
-      matchingBrands.length +
-      (matchingBrands.length === 1
-        ? " brand"
-        : " brands");
-
-
-    searchResultCount.innerText =
-      productText +
-      " found • " +
-      brandText +
-      " found";
-
-  }
-
-});
+}
 
 
 /* =========================================
-   SEARCH ENTER
+   SEARCH RESULT COUNT
+========================================= */
+
+function updateSearchResults(searchTerm) {
+
+  const normalizedSearch =
+    normalizeSearchText(searchTerm);
+
+  const resultBoxes = [
+    document.getElementById("heroSearchResultCount"),
+    document.getElementById("shopSearchResultCount")
+  ];
+
+  if (!normalizedSearch) {
+
+    resultBoxes.forEach(box => {
+
+      if (box) {
+        box.innerText = "";
+      }
+
+    });
+
+    return;
+
+  }
+
+
+  const allItems =
+    document.querySelectorAll("#food .item");
+
+  let productCount = 0;
+
+
+  allItems.forEach(item => {
+
+    const productName =
+      item.querySelector("p");
+
+    if (!productName) return;
+
+    const name =
+      normalizeSearchText(productName.innerText);
+
+    if (name.includes(normalizedSearch)) {
+
+      productCount++;
+
+    }
+
+  });
+
+
+  const brandMatches =
+    partnerBrands.filter(brand => {
+
+      return brand.keywords.some(keyword => {
+
+        const normalizedKeyword =
+          normalizeSearchText(keyword);
+
+        return (
+          normalizedKeyword.includes(normalizedSearch) ||
+          normalizedSearch.includes(normalizedKeyword)
+        );
+
+      });
+
+    });
+
+
+  let message =
+    productCount +
+    (productCount === 1
+      ? " product"
+      : " products");
+
+
+  message +=
+    " found • " +
+    brandMatches.length +
+    (brandMatches.length === 1
+      ? " brand"
+      : " brands") +
+    " found";
+
+
+  resultBoxes.forEach(box => {
+
+    if (box) {
+      box.innerText = message;
+    }
+
+  });
+
+}
+
+
+/* =========================================
+   LIVE SEARCH
+========================================= */
+
+function handleSearchInput(event) {
+
+  updateSearchResults(event.target.value);
+
+}
+
+
+/* =========================================
+   CONNECT BOTH SEARCH BOXES
+========================================= */
+
+const heroProductSearch =
+  document.getElementById("heroProductSearch");
+
+const shopProductSearch =
+  document.getElementById("shopProductSearch");
+
+
+if (heroProductSearch) {
+
+  heroProductSearch.addEventListener(
+    "input",
+    handleSearchInput
+  );
+
+}
+
+
+if (shopProductSearch) {
+
+  shopProductSearch.addEventListener(
+    "input",
+    handleSearchInput
+  );
+
+}
+
+
+/* =========================================
+   ENTER SEARCH
 ========================================= */
 
 function handleProductSearchEnter(event) {
@@ -591,101 +810,29 @@ function handleProductSearchEnter(event) {
 
 
   const searchTerm =
-    event.target.value.trim().toLowerCase();
+    event.target.value.trim();
 
 
   if (!searchTerm) return;
 
 
   /* =========================
-     FIRST: CHECK BRANDS
+     FIRST: CHECK BRAND
   ========================= */
 
-  const brandCards =
-    document.querySelectorAll(".brand-card");
+  const targetBrand =
+    findPartnerBrand(searchTerm);
 
-
-  let targetBrand = null;
-
-
-  brandCards.forEach(card => {
-
-    if (targetBrand) return;
-
-
-    const brandName =
-      card.querySelector("h3");
-
-
-    if (!brandName) return;
-
-
-    const name =
-      brandName.innerText.trim().toLowerCase();
-
-
-    if (name.includes(searchTerm)) {
-
-      targetBrand = card;
-
-    }
-
-  });
-
-
-  /* =========================
-     IF BRAND WAS FOUND
-  ========================= */
 
   if (targetBrand) {
 
     /*
-      Find the section containing
-      the brand cards.
+      Send the user to the
+      partner brand directory.
     */
 
-    const brandSection =
-      targetBrand.closest(
-        ".brands-section, .brand-marketplace-section"
-      );
-
-
-    if (brandSection) {
-
-      brandSection.scrollIntoView({
-        behavior: "smooth",
-        block: "start"
-      });
-
-    } else {
-
-      targetBrand.scrollIntoView({
-        behavior: "smooth",
-        block: "center"
-      });
-
-    }
-
-
-    /* =========================
-       HIGHLIGHT BRAND
-    ========================= */
-
-    targetBrand.style.outline =
-      "3px solid var(--gold)";
-
-    targetBrand.style.outlineOffset =
-      "5px";
-
-
-    setTimeout(() => {
-
-      targetBrand.style.outline = "";
-
-      targetBrand.style.outlineOffset = "";
-
-    }, 3000);
-
+    window.location.href =
+      targetBrand.url;
 
     return;
 
@@ -693,48 +840,11 @@ function handleProductSearchEnter(event) {
 
 
   /* =========================
-     IF NO BRAND → SEARCH PRODUCT
+     SECOND: CHECK PRODUCT
   ========================= */
 
-  const foodSection =
-    document.getElementById("food");
-
-
-  foodSection.style.display = "block";
-
-
-  const allItems =
-    document.querySelectorAll("#food .item");
-
-
-  let targetProduct = null;
-
-
-  allItems.forEach(item => {
-
-    if (targetProduct) return;
-
-
-    const productName =
-      item.querySelector("p");
-
-
-    if (!productName) return;
-
-
-    const name =
-      productName.innerText
-        .trim()
-        .toLowerCase();
-
-
-    if (name.includes(searchTerm)) {
-
-      targetProduct = item;
-
-    }
-
-  });
+  const targetProduct =
+    findProduct(searchTerm);
 
 
   if (!targetProduct) {
@@ -749,16 +859,15 @@ function handleProductSearchEnter(event) {
 
 
   /* =========================
-     OPEN HIDDEN PRODUCT SECTION
+     OPEN SHOP
   ========================= */
 
-  const hiddenSection =
-    targetProduct.closest(".hidden-items");
+  const foodSection =
+    document.getElementById("food");
 
+  if (foodSection) {
 
-  if (hiddenSection) {
-
-    hiddenSection.style.display = "grid";
+    foodSection.style.display = "block";
 
   }
 
@@ -770,10 +879,23 @@ function handleProductSearchEnter(event) {
   const categoryView =
     document.getElementById("categoryView");
 
-
   if (categoryView) {
 
     categoryView.style.display = "none";
+
+  }
+
+
+  /* =========================
+     OPEN HIDDEN SECTION
+  ========================= */
+
+  const hiddenSection =
+    targetProduct.closest(".hidden-items");
+
+  if (hiddenSection) {
+
+    hiddenSection.style.display = "grid";
 
   }
 
@@ -793,81 +915,19 @@ function handleProductSearchEnter(event) {
     targetProduct.style.outline =
       "3px solid var(--gold)";
 
+    targetProduct.style.outlineOffset =
+      "5px";
+
 
     setTimeout(() => {
 
       targetProduct.style.outline = "";
+      targetProduct.style.outlineOffset = "";
 
     }, 2500);
 
   }, 100);
 
-}
-
-function handleProductSearchEnter(event) {
-  if (event.key !== "Enter") return;
-
-  event.preventDefault();
-
-  const searchTerm = event.target.value.trim().toLowerCase();
-
-  if (!searchTerm) return;
-
-  const foodSection = document.getElementById("food");
-
-  // Reveal the full catalogue first
-  foodSection.style.display = "block";
-
-  const allItems = document.querySelectorAll("#food .item");
-
-  let targetProduct = null;
-
-  allItems.forEach(item => {
-    if (targetProduct) return;
-
-    const productName = item.querySelector("p");
-
-    if (!productName) return;
-
-    const name = productName.innerText.trim().toLowerCase();
-
-    if (name.includes(searchTerm)) {
-      targetProduct = item;
-    }
-  });
-
-  if (!targetProduct) {
-    alert("Product not found. Please try another search.");
-    return;
-  }
-
-  // Open the hidden product section if necessary
-  const hiddenSection = targetProduct.closest(".hidden-items");
-
-  if (hiddenSection) {
-    hiddenSection.style.display = "grid";
-  }
-
-  // Close category view if it is open
-  const categoryView = document.getElementById("categoryView");
-
-  if (categoryView) {
-    categoryView.style.display = "none";
-  }
-
-  // Scroll directly to the product
-  setTimeout(() => {
-    targetProduct.scrollIntoView({
-      behavior: "smooth",
-      block: "center"
-    });
-
-    targetProduct.style.outline = "3px solid var(--gold)";
-
-    setTimeout(() => {
-      targetProduct.style.outline = "";
-    }, 2500);
-  }, 100);
 }
 
 function scrollToProduct(productName) {
