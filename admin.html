@@ -312,6 +312,147 @@
       padding: 30px;
     }
 
+
+    /* ================= ADMIN PROFILE ================= */
+
+.admin-profile {
+  margin-top: 50px;
+
+  padding: 30px;
+
+  border: 1px solid rgba(185, 138, 59, 0.25);
+
+  background: rgba(255, 255, 255, 0.035);
+
+  border-radius: 10px;
+}
+
+.admin-profile h2 {
+  margin-bottom: 8px;
+  font-size: 20px;
+}
+
+.admin-profile-intro {
+  font-size: 13px;
+  opacity: 0.55;
+  margin-bottom: 25px;
+}
+
+.profile-information {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.profile-information p {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+
+  padding: 14px;
+
+  border: 1px solid rgba(185, 138, 59, 0.15);
+
+  border-radius: 6px;
+
+  font-size: 13px;
+}
+
+.profile-information strong {
+  color: #d4aa60;
+}
+
+.profile-information span {
+  opacity: 0.7;
+  text-align: right;
+}
+
+.profile-edit {
+  margin-top: 30px;
+  padding-top: 25px;
+  border-top: 1px solid rgba(185, 138, 59, 0.15);
+}
+
+.profile-edit h3 {
+  margin-bottom: 15px;
+  font-size: 15px;
+}
+
+.profile-edit input {
+  width: 100%;
+
+  padding: 13px 14px;
+
+  margin-bottom: 12px;
+
+  border: 1px solid rgba(185, 138, 59, 0.3);
+
+  border-radius: 6px;
+
+  background: #100b08;
+
+  color: #f2eadb;
+
+  outline: none;
+}
+
+.profile-edit input:focus {
+  border-color: #d4aa60;
+}
+
+.profile-edit button {
+  border: 1px solid #b98a3b;
+
+  background: transparent;
+
+  color: #f2eadb;
+
+  padding: 10px 16px;
+
+  border-radius: 6px;
+
+  cursor: pointer;
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  letter-spacing: .5px;
+}
+
+.profile-edit button:hover {
+  background: #b98a3b;
+  color: #100b08;
+}
+
+.profile-message {
+  margin-top: 10px;
+
+  font-size: 12px;
+
+  color: #d4aa60;
+}
+
+.admin-back-store {
+  display: inline-block;
+
+  margin-bottom: 25px;
+
+  color: #d4aa60;
+
+  text-decoration: none;
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  letter-spacing: .7px;
+}
+
+.admin-back-store:hover {
+  opacity: .7;
+}
+
     /* ================= MOBILE ================= */
 
     @media (max-width: 700px) {
@@ -496,6 +637,114 @@
       </section>
 
 
+      <!-- ================= ADMIN PROFILE ================= -->
+
+<section class="admin-profile">
+
+  <a
+    href="index.html"
+    class="admin-back-store"
+  >
+    ← BACK TO SAINT LEO'S MART
+  </a>
+
+  <h2>
+    Admin Profile
+  </h2>
+
+  <p class="admin-profile-intro">
+    Manage your administrator account details.
+  </p>
+
+
+  <!-- CURRENT INFORMATION -->
+
+  <div class="profile-information">
+
+    <p>
+      <strong>
+        Name
+      </strong>
+
+      <span id="adminProfileName">
+        —
+      </span>
+    </p>
+
+
+    <p>
+      <strong>
+        Email
+      </strong>
+
+      <span id="adminProfileEmail">
+        —
+      </span>
+    </p>
+
+  </div>
+
+
+  <!-- CHANGE NAME -->
+
+  <div class="profile-edit">
+
+    <h3>
+      Change Name
+    </h3>
+
+    <input
+      type="text"
+      id="adminNewName"
+      placeholder="Enter your new name"
+    >
+
+    <button
+      type="button"
+      onclick="changeAdminName()"
+    >
+      CHANGE NAME
+    </button>
+
+    <div
+      id="adminNameMessage"
+      class="profile-message"
+    ></div>
+
+  </div>
+
+
+  <!-- CHANGE PASSWORD -->
+
+  <div class="profile-edit">
+
+    <h3>
+      Change Password
+    </h3>
+
+    <input
+      type="password"
+      id="adminNewPassword"
+      placeholder="Enter your new password"
+    >
+
+    <button
+      type="button"
+      onclick="changeAdminPassword()"
+    >
+      CHANGE PASSWORD
+    </button>
+
+    <div
+      id="adminPasswordMessage"
+      class="profile-message"
+    ></div>
+
+  </div>
+
+</section>
+
+
     </main>
 
 
@@ -595,17 +844,19 @@
 
 
       // ------------------------------------------
-      // ADMIN VERIFIED
-      // ------------------------------------------
+// ADMIN VERIFIED
+// ------------------------------------------
 
-      accessMessage.style.display =
-        "none";
+accessMessage.style.display =
+  "none";
 
-      adminApp.style.display =
-        "block";
+adminApp.style.display =
+  "block";
 
 
-      loadAdminReviews();
+loadAdminReviews();
+
+loadAdminProfile();
 
     }
 
@@ -1020,6 +1271,269 @@
       loadAdminReviews();
 
     }
+
+
+    // ==================================================
+// LOAD ADMIN PROFILE
+// ==================================================
+
+async function loadAdminProfile() {
+
+  const {
+    data: {
+      session
+    }
+  } =
+    await supabaseClient.auth.getSession();
+
+
+  if (!session) {
+    return;
+  }
+
+
+  document.getElementById(
+    "adminProfileEmail"
+  ).innerText =
+    session.user.email;
+
+
+  const {
+    data: profile,
+    error
+  } =
+    await supabaseClient
+      .from("profiles")
+      .select("full_name")
+      .eq(
+        "id",
+        session.user.id
+      )
+      .maybeSingle();
+
+
+  if (error) {
+
+    console.error(
+      "Could not load admin profile:",
+      error
+    );
+
+    return;
+
+  }
+
+
+  const name =
+    profile?.full_name ||
+    "Saint Leo's Mart Admin";
+
+
+  document.getElementById(
+    "adminProfileName"
+  ).innerText =
+    name;
+
+}
+
+
+// ==================================================
+// CHANGE ADMIN NAME
+// ==================================================
+
+async function changeAdminName() {
+
+  const newName =
+    document.getElementById(
+      "adminNewName"
+    )
+      .value
+      .trim();
+
+
+  const message =
+    document.getElementById(
+      "adminNameMessage"
+    );
+
+
+  if (!newName) {
+
+    message.innerText =
+      "Please enter your new name.";
+
+    return;
+
+  }
+
+
+  const {
+    data: {
+      session
+    }
+  } =
+    await supabaseClient.auth.getSession();
+
+
+  if (!session) {
+
+    message.innerText =
+      "Please sign in again.";
+
+    return;
+
+  }
+
+
+  message.innerText =
+    "Updating your name...";
+
+
+  const {
+    error
+  } =
+    await supabaseClient
+      .from("profiles")
+      .update({
+        full_name: newName
+      })
+      .eq(
+        "id",
+        session.user.id
+      );
+
+
+  if (error) {
+
+    console.error(
+      "Admin name update error:",
+      error
+    );
+
+    message.innerText =
+      "Could not update your name.";
+
+    return;
+
+  }
+
+
+  await supabaseClient.auth.updateUser({
+    data: {
+      full_name: newName
+    }
+  });
+
+
+  document.getElementById(
+    "adminProfileName"
+  ).innerText =
+    newName;
+
+
+  document.getElementById(
+    "adminNewName"
+  ).value = "";
+
+
+  message.innerText =
+    "Name updated successfully.";
+
+}
+
+
+// ==================================================
+// CHANGE ADMIN PASSWORD
+// ==================================================
+
+async function changeAdminPassword() {
+
+  const newPassword =
+    document.getElementById(
+      "adminNewPassword"
+    ).value;
+
+
+  const message =
+    document.getElementById(
+      "adminPasswordMessage"
+    );
+
+
+  if (!newPassword) {
+
+    message.innerText =
+      "Please enter a new password.";
+
+    return;
+
+  }
+
+
+  if (newPassword.length < 6) {
+
+    message.innerText =
+      "Password must be at least 6 characters.";
+
+    return;
+
+  }
+
+
+  const {
+    data: {
+      session
+    }
+  } =
+    await supabaseClient.auth.getSession();
+
+
+  if (!session) {
+
+    message.innerText =
+      "Please sign in again.";
+
+    return;
+
+  }
+
+
+  message.innerText =
+    "Updating your password...";
+
+
+  const {
+    error
+  } =
+    await supabaseClient.auth.updateUser({
+      password: newPassword
+    });
+
+
+  if (error) {
+
+    console.error(
+      "Admin password update error:",
+      error
+    );
+
+    message.innerText =
+      error.message;
+
+    return;
+
+  }
+
+
+  document.getElementById(
+    "adminNewPassword"
+  ).value = "";
+
+
+  message.innerText =
+    "Password updated successfully.";
+
+}
 
 
     // ==================================================
