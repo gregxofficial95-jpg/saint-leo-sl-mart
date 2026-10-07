@@ -37,6 +37,9 @@
   <p onclick="scrollToSection('home'); closeMenu()">🏠 Home</p>
 <p onclick="scrollToSection('categories'); closeMenu()">🛍 Categories</p>
 <p onclick="scrollToSection('food'); closeMenu()">🍲 Shop</p>
+ <p onclick="window.location.href='reviews.html'; closeMenu()">
+    ⭐ Reviews
+  </p>
 <p onclick="openFAQ()">❓ FAQ</p>
 <p onclick="contactUs()">📞 Contact Us</p>
 </div>
@@ -1810,17 +1813,24 @@
 
   <!-- WRITE REVIEW -->
 
-  <div class="review-action">
+<div class="review-action">
 
-    <button
-      type="button"
-      onclick="openReviewFlow()"
-      class="write-review-btn"
-    >
-      ★ Write a Review
-    </button>
+  <a
+    href="reviews.html"
+    class="see-all-reviews-btn"
+  >
+    SEE ALL REVIEWS
+  </a>
 
-  </div>
+  <button
+    type="button"
+    onclick="openReviewFlow()"
+    class="write-review-btn"
+  >
+    ★ WRITE A REVIEW
+  </button>
+
+</div>
 
 </section>
 
