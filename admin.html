@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Saint Leo's Mart — Admin</title>
+
+  <!-- SUPABASE -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script src="supabase.js"></script>
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #100b08;
+      color: #f2eadb;
+      min-height: 100vh;
+    }
+
+    /* ================= HEADER ================= */
+
+    .admin-header {
+      padding: 22px 30px;
+      border-bottom: 1px solid rgba(185, 138, 59, 0.25);
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      gap: 20px;
+    }
+
+    .admin-brand {
+      color: #d4aa60;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 2px;
+    }
+
+    .admin-title {
+      margin-top: 6px;
+      font-size: 24px;
+    }
+
+    .logout-button {
+      border: 1px solid #b98a3b;
+      background: transparent;
+      color: #f2eadb;
+
+      padding: 10px 18px;
+
+      border-radius: 6px;
+
+      cursor: pointer;
+    }
+
+    .logout-button:hover {
+      background: #b98a3b;
+      color: #100b08;
+    }
+
+    /* ================= MAIN ================= */
+
+    .admin-container {
+      width: min(1100px, 92%);
+      margin: 40px auto 80px;
+    }
+
+    /* ================= STATS ================= */
+
+    .stats-grid {
+      display: grid;
+
+      grid-template-columns:
+        repeat(3, 1fr);
+
+      gap: 18px;
+
+      margin-bottom: 45px;
+    }
+
+    .stat-card {
+      padding: 25px;
+
+      border: 1px solid rgba(185, 138, 59, 0.25);
+
+      background: rgba(255, 255, 255, 0.035);
+
+      border-radius: 10px;
+    }
+
+    .stat-label {
+      font-size: 11px;
+
+      letter-spacing: 1.5px;
+
+      opacity: 0.55;
+    }
+
+    .stat-number {
+      display: block;
+
+      margin-top: 10px;
+
+      font-size: 35px;
+
+      color: #d4aa60;
+    }
+
+    /* ================= SECTION ================= */
+
+    .admin-section {
+      margin-top: 35px;
+    }
+
+    .admin-section h2 {
+      margin-bottom: 18px;
+
+      font-size: 20px;
+    }
+
+    /* ================= REVIEWS ================= */
+
+    .reviews-container {
+      display: grid;
+
+      gap: 15px;
+    }
+
+    .review-card {
+      padding: 22px;
+
+      border: 1px solid rgba(185, 138, 59, 0.2);
+
+      background: rgba(255, 255, 255, 0.035);
+
+      border-radius: 9px;
+    }
+
+    .review-top {
+      display: flex;
+
+      justify-content: space-between;
+
+      align-items: flex-start;
+
+      gap: 15px;
+
+      margin-bottom: 12px;
+    }
+
+    .review-name {
+      font-weight: 700;
+
+      font-size: 14px;
+    }
+
+    .review-stars {
+      color: #d4aa60;
+
+      letter-spacing: 2px;
+    }
+
+    .review-text {
+      line-height: 1.7;
+
+      font-size: 14px;
+
+      opacity: 0.75;
+    }
+
+    .review-date {
+      display: block;
+
+      margin-top: 12px;
+
+      font-size: 10px;
+
+      opacity: 0.4;
+    }
+
+    /* ================= STATUS ================= */
+
+    .review-status {
+      display: inline-block;
+
+      margin-top: 12px;
+
+      padding: 5px 9px;
+
+      border-radius: 4px;
+
+      font-size: 9px;
+
+      letter-spacing: 1px;
+
+      font-weight: 700;
+    }
+
+    .status-pending {
+      background: rgba(212, 170, 96, 0.12);
+
+      color: #d4aa60;
+    }
+
+    .status-approved {
+      background: rgba(80, 160, 100, 0.12);
+
+      color: #7fc58b;
+    }
+
+    .status-rejected {
+      background: rgba(180, 70, 70, 0.12);
+
+      color: #df8585;
+    }
+
+    /* ================= ACTIONS ================= */
+
+    .review-actions {
+      display: flex;
+
+      gap: 8px;
+
+      margin-top: 18px;
+
+      flex-wrap: wrap;
+    }
+
+    .review-actions button {
+      border: none;
+
+      padding: 9px 14px;
+
+      border-radius: 5px;
+
+      cursor: pointer;
+
+      font-size: 11px;
+
+      font-weight: 700;
+    }
+
+    .approve-button {
+      background: #7fc58b;
+
+      color: #101010;
+    }
+
+    .reject-button {
+      background: #df8585;
+
+      color: #101010;
+    }
+
+    .delete-button {
+      background: transparent;
+
+      color: #df8585;
+
+      border: 1px solid #df8585 !important;
+    }
+
+    .review-actions button:hover {
+      opacity: 0.8;
+    }
+
+    /* ================= EMPTY ================= */
+
+    .empty-message {
+      padding: 35px 20px;
+
+      text-align: center;
+
+      border: 1px dashed rgba(185, 138, 59, 0.25);
+
+      border-radius: 8px;
+
+      opacity: 0.5;
+
+      font-size: 13px;
+    }
+
+    /* ================= ACCESS ================= */
+
+    .access-message {
+      min-height: 100vh;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      text-align: center;
+
+      padding: 30px;
+    }
+
+    /* ================= MOBILE ================= */
+
+    @media (max-width: 700px) {
+
+      .admin-header {
+        padding: 20px;
+      }
+
+      .admin-title {
+        font-size: 20px;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .review-top {
+        flex-direction: column;
+      }
+
+      .admin-container {
+        width: min(100% - 30px, 600px);
+      }
+
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+
+  <!-- ================= ACCESS CHECK ================= -->
+
+  <div
+    id="accessMessage"
+    class="access-message"
+  >
+
+    Checking admin access...
+
+  </div>
+
+
+  <!-- ================= ADMIN APP ================= -->
+
+  <div
+    id="adminApp"
+    style="display:none;"
+  >
+
+
+    <!-- HEADER -->
+
+    <header class="admin-header">
+
+      <div>
+
+        <div class="admin-brand">
+          SAINT LEO'S MART
+        </div>
+
+        <h1 class="admin-title">
+          Admin Dashboard
+        </h1>
+
+      </div>
+
+
+      <button
+        class="logout-button"
+        onclick="adminLogout()"
+      >
+        LOG OUT
+      </button>
+
+    </header>
+
+
+    <!-- MAIN -->
+
+    <main class="admin-container">
+
+
+      <!-- ================= STATS ================= -->
+
+      <section class="stats-grid">
+
+        <div class="stat-card">
+
+          <span class="stat-label">
+            TOTAL REVIEWS
+          </span>
+
+          <strong
+            id="totalReviews"
+            class="stat-number"
+          >
+            0
+          </strong>
+
+        </div>
+
+
+        <div class="stat-card">
+
+          <span class="stat-label">
+            PENDING
+          </span>
+
+          <strong
+            id="pendingReviews"
+            class="stat-number"
+          >
+            0
+          </strong>
+
+        </div>
+
+
+        <div class="stat-card">
+
+          <span class="stat-label">
+            APPROVED
+          </span>
+
+          <strong
+            id="approvedReviews"
+            class="stat-number"
+          >
+            0
+          </strong>
+
+        </div>
+
+      </section>
+
+
+      <!-- ================= PENDING ================= -->
+
+      <section class="admin-section">
+
+        <h2>
+          Pending Reviews
+        </h2>
+
+        <div
+          id="pendingList"
+          class="reviews-container"
+        >
+
+          <div class="empty-message">
+            Loading pending reviews...
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- ================= ALL REVIEWS ================= -->
+
+      <section class="admin-section">
+
+        <h2>
+          All Reviews
+        </h2>
+
+        <div
+          id="allReviewsList"
+          class="reviews-container"
+        >
+
+          <div class="empty-message">
+            Loading reviews...
+          </div>
+
+        </div>
+
+      </section>
+
+
+    </main>
+
+
+  </div>
+
+
+  <script>
+
+    // ==================================================
+    // SAINT LEO'S MART — ADMIN DASHBOARD
+    // ==================================================
+
+
+    async function checkAdminAccess() {
+
+      const accessMessage =
+        document.getElementById(
+          "accessMessage"
+        );
+
+      const adminApp =
+        document.getElementById(
+          "adminApp"
+        );
+
+
+      // ------------------------------------------
+      // GET CURRENT SESSION
+      // ------------------------------------------
+
+      const {
+        data: {
+          session
+        }
+      } =
+        await supabaseClient.auth.getSession();
+
+
+      if (!session) {
+
+        window.location.href =
+          "account.html";
+
+        return;
+
+      }
+
+
+      // ------------------------------------------
+      // CHECK ADMIN TABLE
+      // ------------------------------------------
+
+      const {
+        data,
+        error
+      } =
+        await supabaseClient
+          .from("admin_users")
+          .select("user_id")
+          .eq(
+            "user_id",
+            session.user.id
+          )
+          .maybeSingle();
+
+
+      if (
+        error ||
+        !data
+      ) {
+
+        accessMessage.innerHTML = `
+          <div>
+            <h2>Access Denied</h2>
+
+            <p style="margin-top:10px; opacity:.6;">
+              You do not have permission to access this page.
+            </p>
+
+            <button
+              onclick="window.location.href='index.html'"
+              style="
+                margin-top:20px;
+                padding:10px 18px;
+                cursor:pointer;
+              "
+            >
+              BACK TO SHOP
+            </button>
+
+          </div>
+        `;
+
+        return;
+
+      }
+
+
+      // ------------------------------------------
+      // ADMIN VERIFIED
+      // ------------------------------------------
+
+      accessMessage.style.display =
+        "none";
+
+      adminApp.style.display =
+        "block";
+
+
+      loadAdminReviews();
+
+    }
+
+
+    // ==================================================
+    // LOAD REVIEWS
+    // ==================================================
+
+    async function loadAdminReviews() {
+
+      const {
+        data,
+        error
+      } =
+        await supabaseClient
+          .from("reviews")
+          .select(`
+            id,
+            rating,
+            review_text,
+            status,
+            created_at,
+            user_id,
+            profiles (
+              full_name
+            )
+          `)
+          .order(
+            "created_at",
+            {
+              ascending: false
+            }
+          );
+
+
+      if (error) {
+
+        console.error(
+          "Admin review loading error:",
+          error
+        );
+
+        document.getElementById(
+          "pendingList"
+        ).innerHTML = `
+          <div class="empty-message">
+            Could not load reviews.
+          </div>
+        `;
+
+        return;
+
+      }
+
+
+      updateStats(data);
+
+      renderPendingReviews(data);
+
+      renderAllReviews(data);
+
+    }
+
+
+    // ==================================================
+    // STATS
+    // ==================================================
+
+    function updateStats(
+      reviews
+    ) {
+
+      const total =
+        reviews.length;
+
+      const pending =
+        reviews.filter(
+          review =>
+            review.status ===
+            "pending"
+        ).length;
+
+      const approved =
+        reviews.filter(
+          review =>
+            review.status ===
+            "approved"
+        ).length;
+
+
+      document.getElementById(
+        "totalReviews"
+      ).innerText = total;
+
+
+      document.getElementById(
+        "pendingReviews"
+      ).innerText = pending;
+
+
+      document.getElementById(
+        "approvedReviews"
+      ).innerText = approved;
+
+    }
+
+
+    // ==================================================
+    // CREATE REVIEW CARD
+    // ==================================================
+
+    function createReviewCard(
+      review
+    ) {
+
+      const name =
+        review.profiles?.full_name ||
+        "Saint Leo's Mart Customer";
+
+
+      const stars =
+        "★".repeat(review.rating) +
+        "☆".repeat(
+          5 - review.rating
+        );
+
+
+      const date =
+        new Date(
+          review.created_at
+        ).toLocaleDateString(
+          "en-NG",
+          {
+            day: "numeric",
+            month: "short",
+            year: "numeric"
+          }
+        );
+
+
+      const card =
+        document.createElement(
+          "article"
+        );
+
+      card.className =
+        "review-card";
+
+
+      card.innerHTML = `
+
+        <div class="review-top">
+
+          <span class="review-name">
+            ${escapeHtml(name)}
+          </span>
+
+          <span class="review-stars">
+            ${stars}
+          </span>
+
+        </div>
+
+
+        <p class="review-text">
+          ${escapeHtml(review.review_text)}
+        </p>
+
+
+        <span class="review-date">
+          ${date}
+        </span>
+
+
+        <span
+          class="review-status status-${review.status}"
+        >
+          ${review.status.toUpperCase()}
+        </span>
+
+
+        <div class="review-actions">
+
+          ${
+            review.status !== "approved"
+              ? `
+                <button
+                  class="approve-button"
+                  onclick="updateReviewStatus(${review.id}, 'approved')"
+                >
+                  APPROVE
+                </button>
+              `
+              : ""
+          }
+
+
+          ${
+            review.status !== "rejected"
+              ? `
+                <button
+                  class="reject-button"
+                  onclick="updateReviewStatus(${review.id}, 'rejected')"
+                >
+                  REJECT
+                </button>
+              `
+              : ""
+          }
+
+
+          <button
+            class="delete-button"
+            onclick="deleteReview(${review.id})"
+          >
+            DELETE
+          </button>
+
+        </div>
+
+      `;
+
+
+      return card;
+
+    }
+
+
+    // ==================================================
+    // PENDING REVIEWS
+    // ==================================================
+
+    function renderPendingReviews(
+      reviews
+    ) {
+
+      const container =
+        document.getElementById(
+          "pendingList"
+        );
+
+
+      container.innerHTML = "";
+
+
+      const pending =
+        reviews.filter(
+          review =>
+            review.status ===
+            "pending"
+        );
+
+
+      if (!pending.length) {
+
+        container.innerHTML = `
+          <div class="empty-message">
+            No pending reviews.
+          </div>
+        `;
+
+        return;
+
+      }
+
+
+      pending.forEach(
+        review => {
+
+          container.appendChild(
+            createReviewCard(
+              review
+            )
+          );
+
+        }
+      );
+
+    }
+
+
+    // ==================================================
+    // ALL REVIEWS
+    // ==================================================
+
+    function renderAllReviews(
+      reviews
+    ) {
+
+      const container =
+        document.getElementById(
+          "allReviewsList"
+        );
+
+
+      container.innerHTML = "";
+
+
+      if (!reviews.length) {
+
+        container.innerHTML = `
+          <div class="empty-message">
+            No reviews yet.
+          </div>
+        `;
+
+        return;
+
+      }
+
+
+      reviews.forEach(
+        review => {
+
+          container.appendChild(
+            createReviewCard(
+              review
+            )
+          );
+
+        }
+      );
+
+    }
+
+
+    // ==================================================
+    // UPDATE REVIEW STATUS
+    // ==================================================
+
+    async function updateReviewStatus(
+      reviewId,
+      newStatus
+    ) {
+
+      const { error } =
+        await supabaseClient
+          .from("reviews")
+          .update({
+            status: newStatus
+          })
+          .eq(
+            "id",
+            reviewId
+          );
+
+
+      if (error) {
+
+        console.error(
+          "Status update error:",
+          error
+        );
+
+        alert(
+          "Could not update review."
+        );
+
+        return;
+
+      }
+
+
+      loadAdminReviews();
+
+    }
+
+
+    // ==================================================
+    // DELETE REVIEW
+    // ==================================================
+
+    async function deleteReview(
+      reviewId
+    ) {
+
+      const confirmed =
+        confirm(
+          "Delete this review permanently?"
+        );
+
+
+      if (!confirmed) return;
+
+
+      const { error } =
+        await supabaseClient
+          .from("reviews")
+          .delete()
+          .eq(
+            "id",
+            reviewId
+          );
+
+
+      if (error) {
+
+        console.error(
+          "Delete error:",
+          error
+        );
+
+        alert(
+          "Could not delete review."
+        );
+
+        return;
+
+      }
+
+
+      loadAdminReviews();
+
+    }
+
+
+    // ==================================================
+    // LOG OUT
+    // ==================================================
+
+    async function adminLogout() {
+
+      await supabaseClient.auth.signOut();
+
+      window.location.href =
+        "account.html";
+
+    }
+
+
+    // ==================================================
+    // HTML ESCAPE
+    // ==================================================
+
+    function escapeHtml(
+      text
+    ) {
+
+      const div =
+        document.createElement(
+          "div"
+        );
+
+      div.textContent =
+        text;
+
+      return div.innerHTML;
+
+    }
+
+
+    // ==================================================
+    // START
+    // ==================================================
+
+    checkAdminAccess();
+
+  </script>
+
+
+</body>
+
+</html>
