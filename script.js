@@ -1141,7 +1141,7 @@ async function loadReviews() {
   reviewsList.innerHTML = "";
 
 
-  data.forEach(review => {
+  data.slice(0, 5).forEach(review => {
 
     const card =
       document.createElement("article");
