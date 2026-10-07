@@ -136,6 +136,58 @@
     .hidden {
       display: none;
     }
+
+    /* ================= REVIEW FORM ================= */
+
+.review-rating-selector {
+  margin-bottom: 20px;
+}
+
+.review-rating-selector label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.review-stars-input {
+  display: flex;
+  gap: 5px;
+}
+
+.review-stars-input button {
+  border: none;
+  background: transparent;
+  color: #d2c7b7;
+  font-size: 30px;
+  cursor: pointer;
+  padding: 0;
+  transition: 0.2s ease;
+}
+
+.review-stars-input button.selected {
+  color: #b98a3b;
+}
+
+.review-stars-input button:hover {
+  color: #b98a3b;
+}
+
+#reviewText {
+  width: 100%;
+  resize: vertical;
+  min-height: 130px;
+  padding: 13px 14px;
+  border: 1px solid #d8cdbd;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 14px;
+  outline: none;
+}
+
+#reviewText:focus {
+  border-color: #b98a3b;
+}
   </style>
 </head>
 
@@ -300,6 +352,73 @@
       </div>
 
     </section>
+
+    <!-- ================= REVIEW FORM ================= -->
+
+<section id="reviewForm" class="account-form hidden">
+
+  <h2>Write a Review</h2>
+
+  <p>
+    Share your experience with Saint Leo's Mart.
+  </p>
+
+
+  <div class="review-rating-selector">
+
+    <label>YOUR RATING</label>
+
+    <div class="review-stars-input">
+
+      <button type="button" onclick="selectRating(1)">★</button>
+      <button type="button" onclick="selectRating(2)">★</button>
+      <button type="button" onclick="selectRating(3)">★</button>
+      <button type="button" onclick="selectRating(4)">★</button>
+      <button type="button" onclick="selectRating(5)">★</button>
+
+    </div>
+
+  </div>
+
+
+  <div class="form-group">
+
+    <label for="reviewText">
+      YOUR REVIEW
+    </label>
+
+    <textarea
+      id="reviewText"
+      placeholder="Tell us about your experience..."
+      rows="6"
+    ></textarea>
+
+  </div>
+
+
+  <button
+    class="account-button"
+    onclick="submitReview()"
+  >
+    SUBMIT REVIEW
+  </button>
+
+
+  <div
+    id="reviewMessage"
+    class="account-message"
+  ></div>
+
+
+  <div class="account-switch">
+
+    <button onclick="showLogin()">
+      ← Back to account
+    </button>
+
+  </div>
+
+</section>
 
   </main>
 
@@ -530,6 +649,211 @@
 
     }
 
+
+    // ==================================================
+// SAINT LEO'S MART — REVIEW SUBMISSION
+// ==================================================
+
+let selectedRating = 0;
+
+
+function showReviewForm() {
+
+  document.getElementById("loginForm")
+    .classList.add("hidden");
+
+  document.getElementById("signupForm")
+    .classList.add("hidden");
+
+  document.getElementById("forgotForm")
+    .classList.add("hidden");
+
+  document.getElementById("reviewForm")
+    .classList.remove("hidden");
+
+}
+
+
+function selectRating(rating) {
+
+  selectedRating = rating;
+
+  const buttons =
+    document.querySelectorAll(
+      ".review-stars-input button"
+    );
+
+
+  buttons.forEach((button, index) => {
+
+    button.classList.toggle(
+      "selected",
+      index < rating
+    );
+
+  });
+
+}
+
+
+async function submitReview() {
+
+  const reviewText =
+    document.getElementById(
+      "reviewText"
+    ).value.trim();
+
+  const message =
+    document.getElementById(
+      "reviewMessage"
+    );
+
+
+  if (selectedRating === 0) {
+
+    message.innerText =
+      "Please select a rating.";
+
+    return;
+
+  }
+
+
+  if (!reviewText) {
+
+    message.innerText =
+      "Please write a review.";
+
+    return;
+
+  }
+
+
+  if (reviewText.length < 5) {
+
+    message.innerText =
+      "Please write a little more about your experience.";
+
+    return;
+
+  }
+
+
+  message.innerText =
+    "Submitting your review...";
+
+
+  const {
+    data: {
+      session
+    }
+  } =
+    await supabaseClient.auth.getSession();
+
+
+  if (!session) {
+
+    message.innerText =
+      "Please sign in before submitting a review.";
+
+    return;
+
+  }
+
+
+  const { error } =
+    await supabaseClient
+      .from("reviews")
+      .insert({
+
+        user_id: session.user.id,
+
+        rating: selectedRating,
+
+        review_text: reviewText
+
+      });
+
+
+  if (error) {
+
+    console.error(
+      "Review submission error:",
+      error
+    );
+
+    message.innerText =
+      error.message;
+
+    return;
+
+  }
+
+
+  message.innerText =
+    "Review submitted successfully. It will appear after approval.";
+
+  document.getElementById(
+    "reviewText"
+  ).value = "";
+
+  selectedRating = 0;
+
+
+  document
+    .querySelectorAll(
+      ".review-stars-input button"
+    )
+    .forEach(button => {
+
+      button.classList.remove(
+        "selected"
+      );
+
+    });
+
+}
+
+// ==================================================
+// OPEN REVIEW FORM WHEN ?review=true
+// ==================================================
+
+async function checkReviewRequest() {
+
+  const params =
+    new URLSearchParams(
+      window.location.search
+    );
+
+  if (
+    params.get("review") !== "true"
+  ) {
+    return;
+  }
+
+
+  const {
+    data: {
+      session
+    }
+  } =
+    await supabaseClient.auth.getSession();
+
+
+  if (session) {
+
+    showReviewForm();
+
+  } else {
+
+    showLogin();
+
+  }
+
+}
+
+
+checkReviewRequest();
   </script>
 
 </body>
