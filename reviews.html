@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Customer Reviews — Saint Leo's Mart</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script src="supabase.js"></script>
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: #100b08;
+      color: #f2eadb;
+      font-family: Arial, sans-serif;
+      min-height: 100vh;
+    }
+
+    .reviews-page {
+      width: min(1000px, 92%);
+      margin: 0 auto;
+      padding: 80px 0;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-bottom: 50px;
+      color: #d4aa60;
+      text-decoration: none;
+      font-size: 12px;
+      letter-spacing: 1px;
+    }
+
+    .reviews-header {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto 55px;
+    }
+
+    .eyebrow {
+      color: #d4aa60;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      margin-bottom: 12px;
+    }
+
+    .reviews-header h1 {
+      font-size: clamp(32px, 6vw, 55px);
+      margin-bottom: 15px;
+    }
+
+    .reviews-header p {
+      opacity: .65;
+      line-height: 1.7;
+      font-size: 14px;
+    }
+
+    .rating-summary {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    .rating-number {
+      display: block;
+      font-size: 48px;
+    }
+
+    .rating-stars {
+      color: #d4aa60;
+      font-size: 25px;
+      letter-spacing: 4px;
+      margin: 7px 0;
+    }
+
+    .rating-count {
+      font-size: 12px;
+      opacity: .5;
+    }
+
+    .reviews-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+
+    .review-card {
+      padding: 25px;
+      border: 1px solid rgba(185, 138, 59, .22);
+      background: rgba(255, 255, 255, .035);
+      border-radius: 10px;
+    }
+
+    .review-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+      margin-bottom: 15px;
+    }
+
+    .review-name {
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .review-stars {
+      color: #d4aa60;
+      letter-spacing: 2px;
+      font-size: 13px;
+    }
+
+    .review-text {
+      font-size: 13px;
+      line-height: 1.7;
+      opacity: .75;
+    }
+
+    .review-date {
+      display: block;
+      margin-top: 15px;
+      font-size: 10px;
+      opacity: .4;
+    }
+
+    .write-review {
+      text-align: center;
+      margin-top: 45px;
+    }
+
+    .write-review a {
+      display: inline-block;
+      padding: 13px 24px;
+      border: 1px solid #b98a3b;
+      border-radius: 7px;
+      color: #f2eadb;
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .5px;
+      transition: .3s ease;
+    }
+
+    .write-review a:hover {
+      background: #b98a3b;
+      color: #100b08;
+    }
+
+    .loading,
+    .empty {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 40px 20px;
+      opacity: .5;
+      font-size: 13px;
+    }
+
+    @media (max-width: 700px) {
+
+      .reviews-page {
+        padding: 55px 0;
+      }
+
+      .reviews-list {
+        grid-template-columns: 1fr;
+      }
+
+      .review-card {
+        padding: 20px;
+      }
+
+      .review-top {
+        flex-direction: column;
+        gap: 7px;
+      }
+
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+
+  <main class="reviews-page">
+
+
+    <a
+      href="index.html"
+      class="back-link"
+    >
+      ← BACK TO SAINT LEO'S MART
+    </a>
+
+
+    <header class="reviews-header">
+
+      <div class="eyebrow">
+        CUSTOMER FEEDBACK
+      </div>
+
+      <h1>
+        What Our Customers Say
+      </h1>
+
+      <p>
+        Real experiences from customers
+        who shop with Saint Leo's Mart.
+      </p>
+
+    </header>
+
+
+    <section class="rating-summary">
+
+      <strong
+        id="averageRating"
+        class="rating-number"
+      >
+        0.0
+      </strong>
+
+      <div
+        id="averageStars"
+        class="rating-stars"
+      >
+        ☆☆☆☆☆
+      </div>
+
+      <span
+        id="reviewCount"
+        class="rating-count"
+      >
+        No reviews yet
+      </span>
+
+    </section>
+
+
+    <section
+      id="reviewsList"
+      class="reviews-list"
+    >
+
+      <div class="loading">
+        Loading reviews...
+      </div>
+
+    </section>
+
+
+    <div class="write-review">
+
+      <a href="account.html?review=true">
+        ★ WRITE A REVIEW
+      </a>
+
+    </div>
+
+
+  </main>
+
+
+  <script>
+
+    // ==================================================
+    // SAINT LEO'S MART — FULL REVIEWS PAGE
+    // ==================================================
+
+    function createStars(rating) {
+
+      let stars = "";
+
+      for (
+        let i = 1;
+        i <= 5;
+        i++
+      ) {
+
+        stars +=
+          i <= rating
+            ? "★"
+            : "☆";
+
+      }
+
+      return stars;
+
+    }
+
+
+    function escapeHtml(text) {
+
+      const div =
+        document.createElement("div");
+
+      div.textContent = text;
+
+      return div.innerHTML;
+
+    }
+
+
+    async function loadAllReviews() {
+
+      const reviewsList =
+        document.getElementById(
+          "reviewsList"
+        );
+
+
+      const {
+        data,
+        error
+      } =
+        await supabaseClient
+          .from("reviews")
+          .select(`
+            id,
+            rating,
+            review_text,
+            created_at,
+            profiles (
+              full_name
+            )
+          `)
+          .eq(
+            "status",
+            "approved"
+          )
+          .order(
+            "created_at",
+            {
+              ascending: false
+            }
+          );
+
+
+      if (error) {
+
+        console.error(
+          "Could not load reviews:",
+          error
+        );
+
+        reviewsList.innerHTML = `
+          <div class="empty">
+            Reviews are temporarily unavailable.
+          </div>
+        `;
+
+        return;
+
+      }
+
+
+      if (
+        !data ||
+        data.length === 0
+      ) {
+
+        document.getElementById(
+          "averageRating"
+        ).innerText = "0.0";
+
+        document.getElementById(
+          "averageStars"
+        ).innerText = "☆☆☆☆☆";
+
+        document.getElementById(
+          "reviewCount"
+        ).innerText =
+          "No reviews yet";
+
+
+        reviewsList.innerHTML = `
+          <div class="empty">
+            Be the first to share your experience.
+          </div>
+        `;
+
+        return;
+
+      }
+
+
+      // ------------------------------------------
+      // AVERAGE
+      // ------------------------------------------
+
+      const totalRating =
+        data.reduce(
+          (
+            sum,
+            review
+          ) =>
+            sum + review.rating,
+          0
+        );
+
+
+      const average =
+        totalRating /
+        data.length;
+
+
+      document.getElementById(
+        "averageRating"
+      ).innerText =
+        average.toFixed(1);
+
+
+      document.getElementById(
+        "averageStars"
+      ).innerText =
+        createStars(
+          Math.round(average)
+        );
+
+
+      document.getElementById(
+        "reviewCount"
+      ).innerText =
+        `${data.length} review${
+          data.length === 1
+            ? ""
+            : "s"
+        }`;
+
+
+      // ------------------------------------------
+      // REVIEWS
+      // ------------------------------------------
+
+      reviewsList.innerHTML = "";
+
+
+      data.forEach(
+        review => {
+
+          const name =
+            review.profiles?.full_name ||
+            "Saint Leo's Mart Customer";
+
+
+          const date =
+            new Date(
+              review.created_at
+            ).toLocaleDateString(
+              "en-NG",
+              {
+                day: "numeric",
+                month: "short",
+                year: "numeric"
+              }
+            );
+
+
+          const card =
+            document.createElement(
+              "article"
+            );
+
+
+          card.className =
+            "review-card";
+
+
+          card.innerHTML = `
+
+            <div class="review-top">
+
+              <span class="review-name">
+                ${escapeHtml(name)}
+              </span>
+
+              <span class="review-stars">
+                ${createStars(review.rating)}
+              </span>
+
+            </div>
+
+            <p class="review-text">
+              ${escapeHtml(
+                review.review_text
+              )}
+            </p>
+
+            <span class="review-date">
+              ${date}
+            </span>
+
+          `;
+
+
+          reviewsList.appendChild(
+            card
+          );
+
+        }
+      );
+
+    }
+
+
+    loadAllReviews();
+
+  </script>
+
+
+</body>
+
+</html>
