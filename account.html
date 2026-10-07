@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Account | Saint Leo's Mart</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
+      background: #f5efe4;
+      color: #1c1009;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .account-container {
+      width: 100%;
+      max-width: 430px;
+      background: #ffffff;
+      padding: 35px;
+      border-radius: 16px;
+      box-shadow: 0 15px 50px rgba(0, 0, 0, 0.08);
+    }
+
+    .account-logo {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .account-logo h1 {
+      font-size: 25px;
+      letter-spacing: 1px;
+    }
+
+    .account-logo p {
+      margin-top: 8px;
+      font-size: 13px;
+      opacity: 0.65;
+    }
+
+    .account-form h2 {
+      font-size: 22px;
+      margin-bottom: 8px;
+    }
+
+    .account-form > p {
+      font-size: 13px;
+      opacity: 0.65;
+      margin-bottom: 25px;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 7px;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 13px 14px;
+      border: 1px solid #d8cdbd;
+      border-radius: 8px;
+      font-size: 14px;
+      outline: none;
+    }
+
+    .form-group input:focus {
+      border-color: #b98a3b;
+    }
+
+    .account-button {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 8px;
+      background: #1c1009;
+      color: #ffffff;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 5px;
+    }
+
+    .account-button:hover {
+      opacity: 0.9;
+    }
+
+    .account-message {
+      margin-top: 15px;
+      font-size: 13px;
+      line-height: 1.5;
+      text-align: center;
+    }
+
+    .account-switch {
+      margin-top: 22px;
+      text-align: center;
+      font-size: 13px;
+    }
+
+    .account-switch button {
+      border: none;
+      background: none;
+      color: #a4772f;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .forgot-password {
+      display: block;
+      margin-top: 12px;
+      text-align: right;
+      border: none;
+      background: none;
+      color: #a4772f;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="account-container">
+
+    <div class="account-logo">
+      <h1>SAINT LEO'S MART</h1>
+      <p>Customer Account</p>
+    </div>
+
+
+    <!-- LOGIN -->
+
+    <section id="loginForm" class="account-form">
+
+      <h2>Welcome back</h2>
+
+      <p>Sign in to your Saint Leo's Mart account.</p>
+
+      <div class="form-group">
+        <label for="loginEmail">EMAIL</label>
+
+        <input
+          type="email"
+          id="loginEmail"
+          placeholder="Enter your email"
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="loginPassword">PASSWORD</label>
+
+        <input
+          type="password"
+          id="loginPassword"
+          placeholder="Enter your password"
+        >
+      </div>
+
+      <button
+        class="forgot-password"
+        onclick="showForgotPassword()"
+      >
+        Forgot password?
+      </button>
+
+      <button
+        class="account-button"
+        onclick="loginUser()"
+      >
+        SIGN IN
+      </button>
+
+      <div id="loginMessage" class="account-message"></div>
+
+      <div class="account-switch">
+        Don't have an account?
+
+        <button onclick="showSignup()">
+          Create one
+        </button>
+      </div>
+
+    </section>
+
+
+    <!-- SIGN UP -->
+
+    <section id="signupForm" class="account-form hidden">
+
+      <h2>Create account</h2>
+
+      <p>Create your Saint Leo's Mart customer account.</p>
+
+      <div class="form-group">
+        <label for="signupName">FULL NAME</label>
+
+        <input
+          type="text"
+          id="signupName"
+          placeholder="Enter your full name"
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="signupEmail">EMAIL</label>
+
+        <input
+          type="email"
+          id="signupEmail"
+          placeholder="Enter your email"
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="signupPassword">PASSWORD</label>
+
+        <input
+          type="password"
+          id="signupPassword"
+          placeholder="Create a password"
+        >
+      </div>
+
+      <button
+        class="account-button"
+        onclick="signupUser()"
+      >
+        CREATE ACCOUNT
+      </button>
+
+      <div id="signupMessage" class="account-message"></div>
+
+      <div class="account-switch">
+        Already have an account?
+
+        <button onclick="showLogin()">
+          Sign in
+        </button>
+      </div>
+
+    </section>
+
+
+    <!-- FORGOT PASSWORD -->
+
+    <section id="forgotForm" class="account-form hidden">
+
+      <h2>Reset password</h2>
+
+      <p>
+        Enter your email and we'll send you a password reset link.
+      </p>
+
+      <div class="form-group">
+        <label for="resetEmail">EMAIL</label>
+
+        <input
+          type="email"
+          id="resetEmail"
+          placeholder="Enter your email"
+        >
+      </div>
+
+      <button
+        class="account-button"
+        onclick="resetPassword()"
+      >
+        SEND RESET LINK
+      </button>
+
+      <div id="resetMessage" class="account-message"></div>
+
+      <div class="account-switch">
+
+        <button onclick="showLogin()">
+          ← Back to sign in
+        </button>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- SUPABASE -->
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script src="supabase.js"></script>
+
+
+  <!-- ACCOUNT LOGIC -->
+
+  <script>
+
+    function showLogin() {
+
+      document.getElementById("loginForm")
+        .classList.remove("hidden");
+
+      document.getElementById("signupForm")
+        .classList.add("hidden");
+
+      document.getElementById("forgotForm")
+        .classList.add("hidden");
+
+    }
+
+
+    function showSignup() {
+
+      document.getElementById("loginForm")
+        .classList.add("hidden");
+
+      document.getElementById("signupForm")
+        .classList.remove("hidden");
+
+      document.getElementById("forgotForm")
+        .classList.add("hidden");
+
+    }
+
+
+    function showForgotPassword() {
+
+      document.getElementById("loginForm")
+        .classList.add("hidden");
+
+      document.getElementById("signupForm")
+        .classList.add("hidden");
+
+      document.getElementById("forgotForm")
+        .classList.remove("hidden");
+
+    }
+
+
+    async function signupUser() {
+
+      const name =
+        document.getElementById("signupName").value.trim();
+
+      const email =
+        document.getElementById("signupEmail").value.trim();
+
+      const password =
+        document.getElementById("signupPassword").value;
+
+      const message =
+        document.getElementById("signupMessage");
+
+
+      if (!name || !email || !password) {
+
+        message.innerText =
+          "Please fill in all fields.";
+
+        return;
+
+      }
+
+
+      if (password.length < 6) {
+
+        message.innerText =
+          "Password must be at least 6 characters.";
+
+        return;
+
+      }
+
+
+      message.innerText =
+        "Creating your account...";
+
+
+      const { data, error } =
+        await supabaseClient.auth.signUp({
+
+          email: email,
+
+          password: password,
+
+          options: {
+
+            data: {
+              full_name: name
+            }
+
+          }
+
+        });
+
+
+      if (error) {
+
+        message.innerText =
+          error.message;
+
+        return;
+
+      }
+
+
+      message.innerText =
+        "Account created. Please check your email to confirm your account.";
+
+    }
+
+
+    async function loginUser() {
+
+      const email =
+        document.getElementById("loginEmail").value.trim();
+
+      const password =
+        document.getElementById("loginPassword").value;
+
+      const message =
+        document.getElementById("loginMessage");
+
+
+      if (!email || !password) {
+
+        message.innerText =
+          "Please enter your email and password.";
+
+        return;
+
+      }
+
+
+      message.innerText =
+        "Signing you in...";
+
+
+      const { data, error } =
+        await supabaseClient.auth.signInWithPassword({
+
+          email: email,
+
+          password: password
+
+        });
+
+
+      if (error) {
+
+        message.innerText =
+          error.message;
+
+        return;
+
+      }
+
+
+      message.innerText =
+        "Login successful.";
+
+    }
+
+
+    async function resetPassword() {
+
+      const email =
+        document.getElementById("resetEmail").value.trim();
+
+      const message =
+        document.getElementById("resetMessage");
+
+
+      if (!email) {
+
+        message.innerText =
+          "Please enter your email.";
+
+        return;
+
+      }
+
+
+      message.innerText =
+        "Sending reset link...";
+
+
+      const { error } =
+        await supabaseClient.auth.resetPasswordForEmail(
+          email,
+          {
+            redirectTo:
+              window.location.origin + "/account.html"
+          }
+        );
+
+
+      if (error) {
+
+        message.innerText =
+          error.message;
+
+        return;
+
+      }
+
+
+      message.innerText =
+        "Password reset link sent. Check your email.";
+
+    }
+
+  </script>
+
+</body>
+</html>
