@@ -1,0 +1,1801 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="description"
+    content="Maryann's Cakes & Pastries — Cakes, cupcakes, pastries, small chops and special orders."
+  >
+
+  <title>Maryann's Cakes & Pastries</title>
+
+  <!-- GOOGLE FONTS -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="mary.css">
+</head>
+
+
+<body>
+
+  <!-- ==================================================
+       INTRO
+  ================================================== -->
+
+  <div class="intro-screen" id="introScreen">
+
+    <div class="intro-inner">
+
+      <span class="intro-small">
+        EST. WITH CARE
+      </span>
+
+      <h1>
+        MARYANN'S
+      </h1>
+
+      <p>
+        Cakes & Pastries
+      </p>
+
+      <div class="intro-line"></div>
+
+      <span class="intro-tagline">
+        Sweet moments, beautifully baked.
+      </span>
+
+    </div>
+
+  </div>
+
+
+  <!-- ==================================================
+       NAVIGATION
+  ================================================== -->
+
+  <header class="site-header" id="siteHeader">
+
+    <div class="header-inner">
+
+      <a href="#home" class="logo">
+
+        <span class="logo-main">
+          MARYANN'S
+        </span>
+
+        <span class="logo-sub">
+          CAKES & PASTRIES
+        </span>
+
+      </a>
+
+
+      <nav class="desktop-nav">
+
+        <a href="#home">
+          Home
+        </a>
+
+        <a href="#menu">
+          Menu
+        </a>
+
+        <a href="#special-orders">
+          Special Orders
+        </a>
+
+        <a href="#contact">
+          Contact
+        </a>
+
+      </nav>
+
+
+      <button
+        class="mobile-menu-btn"
+        id="mobileMenuBtn"
+        aria-label="Open menu"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+    </div>
+
+
+    <div
+      class="mobile-nav"
+      id="mobileNav"
+    >
+
+      <a href="#home">
+        Home
+      </a>
+
+      <a href="#menu">
+        Menu
+      </a>
+
+      <a href="#special-orders">
+        Special Orders
+      </a>
+
+      <a href="#contact">
+        Contact
+      </a>
+
+    </div>
+
+  </header>
+
+
+  <main id="home">
+
+
+    <!-- ==================================================
+         HERO
+    ================================================== -->
+
+    <section class="hero">
+
+      <div class="hero-background">
+
+        <img
+          src="marys-hero.jpeg"
+          alt="Maryann's beautiful cake"
+        >
+
+      </div>
+
+
+      <div class="hero-overlay"></div>
+
+
+      <div class="hero-content">
+
+        <span class="eyebrow hero-eyebrow">
+          CAKES • PASTRIES • SWEET TREATS
+        </span>
+
+        <h1>
+          BAKED FOR
+          <span>YOUR MOMENTS.</span>
+        </h1>
+
+        <p>
+          From everyday cravings to birthdays,
+          celebrations and special gatherings,
+          Maryann's brings something delicious to the moment.
+        </p>
+
+
+        <div class="hero-buttons">
+
+          <a
+            href="#menu"
+            class="btn btn-primary"
+          >
+            Explore Menu
+          </a>
+
+          <button
+            class="btn btn-light"
+            onclick="openOrderPanel()"
+          >
+            Order Now
+          </button>
+
+        </div>
+
+
+        <div class="hero-bottom-note">
+
+          <span>
+            Freshly prepared
+          </span>
+
+          <span class="dot"></span>
+
+          <span>
+            Quality ingredients
+          </span>
+
+          <span class="dot"></span>
+
+          <span>
+            Made for every occasion
+          </span>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ==================================================
+         BRAND INTRODUCTION
+    ================================================== -->
+
+    <section class="brand-story section">
+
+      <div class="story-grid">
+
+        <div class="story-copy reveal">
+
+          <span class="eyebrow">
+            WELCOME TO MARYANN'S
+          </span>
+
+          <h2>
+            Something special
+            <span>for every sweet moment.</span>
+          </h2>
+
+          <p>
+            Whether you're celebrating something big,
+            sharing a little moment with someone special,
+            or simply craving something delicious,
+            Maryann's Cakes & Pastries has something
+            made for you.
+          </p>
+
+          <p>
+            From beautifully finished cakes to warm
+            pastries, cupcakes, small chops and sweet
+            treats, every order is prepared with care
+            and attention to detail.
+          </p>
+
+          <a href="#menu" class="text-link">
+            Discover the menu
+            <span>→</span>
+          </a>
+
+        </div>
+
+
+        <div class="story-visual reveal">
+
+          <div class="story-image-main">
+
+            <img
+              src="marys-bakery.jpeg"
+              alt="Maryann's bakery treats"
+            >
+
+          </div>
+
+          <div class="story-card">
+
+            <strong>
+              FOR EVERY OCCASION
+            </strong>
+
+            <span>
+              Birthdays • Parties • Gifts • Events
+            </span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ==================================================
+         VALUES
+    ================================================== -->
+
+    <section class="values section">
+
+      <div class="section-heading centered reveal">
+
+        <span class="eyebrow">
+          WHY MARYANN'S
+        </span>
+
+        <h2>
+          Made to make the
+          <span>moment sweeter.</span>
+        </h2>
+
+      </div>
+
+
+      <div class="values-grid">
+
+        <article class="value-card reveal">
+
+          <span class="value-number">
+            01
+          </span>
+
+          <h3>
+            BEAUTIFULLY MADE
+          </h3>
+
+          <p>
+            Thoughtfully prepared treats
+            with attention to how they
+            look and taste.
+          </p>
+
+        </article>
+
+
+        <article class="value-card reveal">
+
+          <span class="value-number">
+            02
+          </span>
+
+          <h3>
+            MADE FOR MOMENTS
+          </h3>
+
+          <p>
+            From quiet cravings to
+            birthdays, parties, gifts
+            and celebrations.
+          </p>
+
+        </article>
+
+
+        <article class="value-card reveal">
+
+          <span class="value-number">
+            03
+          </span>
+
+          <h3>
+            ORDER YOUR WAY
+          </h3>
+
+          <p>
+            Choose your favourites,
+            build your order and send
+            it directly to Maryann's.
+          </p>
+
+        </article>
+
+      </div>
+
+    </section>
+
+
+    <!-- ==================================================
+         MENU INTRO
+    ================================================== -->
+
+    <section class="menu-intro section" id="menu">
+
+      <div class="section-heading reveal">
+
+        <span class="eyebrow">
+          THE MENU
+        </span>
+
+        <h2>
+          WHAT ARE YOU
+          <span>CRAVING?</span>
+        </h2>
+
+        <p>
+          Pick your favourites and build your order.
+        </p>
+
+      </div>
+
+
+      <!-- CATEGORY TABS -->
+
+      <div class="category-tabs reveal">
+
+        <button
+          class="category-tab active"
+          data-filter="all"
+        >
+          All
+        </button>
+
+        <button
+          class="category-tab"
+          data-filter="cakes"
+        >
+          Cakes
+        </button>
+
+        <button
+          class="category-tab"
+          data-filter="cupcakes"
+        >
+          Cupcakes
+        </button>
+
+        <button
+          class="category-tab"
+          data-filter="pastries"
+        >
+          Pastries
+        </button>
+
+        <button
+          class="category-tab"
+          data-filter="small-chops"
+        >
+          Small Chops
+        </button>
+
+      </div>
+
+
+      <!-- ==================================================
+           CAKES
+      ================================================== -->
+
+      <section
+        class="product-section"
+        data-category-section="cakes"
+      >
+
+        <div class="product-heading reveal">
+
+          <div>
+
+            <span class="section-kicker">
+              01 / CAKES
+            </span>
+
+            <h3>
+              Cakes for every celebration.
+            </h3>
+
+          </div>
+
+          <span class="product-heading-note">
+            Custom cakes from ₦12,000
+          </span>
+
+        </div>
+
+
+        <div class="product-grid">
+
+
+          <article
+            class="product-card reveal"
+            data-category="cakes"
+          >
+
+            <div class="product-image">
+
+              <img
+                src="marys-vanilla-cake.jpeg"
+                alt="Vanilla Cake"
+              >
+
+              <button
+                class="add-button"
+                onclick="addToOrder(
+                  'Vanilla Cake',
+                  8000,
+                  'marys-vanilla-cake.jpeg'
+                )"
+              >
+                +
+              </button>
+
+            </div>
+
+            <div class="product-info">
+
+              <div>
+
+                <span class="product-category">
+                  CAKE
+                </span>
+
+                <h4>
+                  Vanilla Cake
+                </h4>
+
+              </div>
+
+              <strong>
+                ₦8,000
+              </strong>
+
+            </div>
+
+          </article>
+
+
+          <article
+            class="product-card reveal"
+            data-category="cakes"
+          >
+
+            <div class="product-image">
+
+              <img
+                src="marys-red-velvet-cake.jpeg"
+                alt="Red Velvet Cake"
+              >
+
+              <button
+                class="add-button"
+                onclick="addToOrder(
+                  'Red Velvet Cake',
+                  10000,
+                  'marys-red-velvet-cake.jpeg'
+                )"
+              >
+                +
+              </button>
+
+            </div>
+
+            <div class="product-info">
+
+              <div>
+
+                <span class="product-category">
+                  CAKE
+                </span>
+
+                <h4>
+                  Red Velvet Cake
+                </h4>
+
+              </div>
+
+              <strong>
+                ₦10,000
+              </strong>
+
+            </div>
+
+          </article>
+
+
+          <article
+            class="product-card reveal"
+            data-category="cakes"
+          >
+
+            <div class="product-image">
+
+              <img
+                src="marys-chocolate-cake.jpeg"
+                alt="Chocolate Cake"
+              >
+
+              <button
+                class="add-button"
+                onclick="addToOrder(
+                  'Chocolate Cake',
+                  10000,
+                  'marys-chocolate-cake.jpeg'
+                )"
+              >
+                +
+              </button>
+
+            </div>
+
+            <div class="product-info">
+
+              <div>
+
+                <span class="product-category">
+                  CAKE
+                </span>
+
+                <h4>
+                  Chocolate Cake
+                </h4>
+
+              </div>
+
+              <strong>
+                ₦10,000
+              </strong>
+
+            </div>
+
+          </article>
+
+
+          <article
+            class="product-card featured-product reveal"
+            data-category="cakes"
+          >
+
+            <div class="product-image">
+
+              <img
+                src="marys-custom-cake.jpeg"
+                alt="Custom Cake"
+              >
+
+              <span class="product-badge">
+                SPECIAL
+              </span>
+
+              <button
+                class="add-button"
+                onclick="addToOrder(
+                  'Custom Cake',
+                  12000,
+                  'marys-custom-cake.jpeg'
+                )"
+              >
+                +
+              </button>
+
+            </div>
+
+            <div class="product-info">
+
+              <div>
+
+                <span class="product-category">
+                  CUSTOM
+                </span>
+
+                <h4>
+                  Custom Cake
+                </h4>
+
+              </div>
+
+              <strong>
+                From ₦12,000
+              </strong>
+
+            </div>
+
+          </article>
+
+        </div>
+
+      </section>
+
+
+      <!-- ==================================================
+           CUPCAKES
+      ================================================== -->
+
+      <section
+        class="product-section"
+        data-category-section="cupcakes"
+      >
+
+        <div class="product-heading reveal">
+
+          <div>
+
+            <span class="section-kicker">
+              02 / CUPCAKES
+            </span>
+
+            <h3>
+              Little treats. Big smiles.
+            </h3>
+
+          </div>
+
+        </div>
+
+
+        <div class="product-grid">
+
+
+          <article
+            class="product-card reveal"
+            data-category="cupcakes"
+          >
+
+            <div class="product-image">
+
+              <img
+                src="marys-1-cupcake.jpeg"
+                alt="1 Cupcake"
+              >
+
+              <button
+                class="add-button"
+                onclick="addToOrder(
+                  '1 Cupcake',
+                  500,
+                  'marys-1-cupcake.jpeg'
+                )"
+              >
+                +
+              </button>
+
+            </div>
+
+            <div class="product-info">
+
+              <div>
+
+                <span class="product-category">
+                  CUPCAKE
+                </span>
+
+                <h4>
+                  1 Cupcake
+                </h4>
+
+              </div>
+
+              <strong>
+                ₦500
+              </strong>
+
+            </div>
+
+          </article>
+
+
+          <article
+            class="product-card reveal"
+            data-category="cupcakes"
+          >
+
+            <div class="product-image">
+
+              <img
+                src="marys-6-cupcakes.jpeg"
+                alt="6 Cupcakes"
+              >
+
+              <button
+                class="add-button"
+                onclick="addToOrder(
+                  '6 Cupcakes',
+                  3000,
+                  'marys-6-cupcakes.jpeg'
+                )"
+              >
+                +
+              </button>
+
+            </div>
+
+            <div class="product-info">
+
+              <div>
+
+                <span class="product-category">
+                  BOX
+                </span>
+
+                <h4>
+                  6 Cupcakes
+                </h4>
+
+              </div>
+
+              <strong>
+                ₦3,000
+              </strong>
+
+            </div>
+
+          </article>
+
+
+          <article
+            class="product-card reveal"
+            data-category="cupcakes"
+          >
+
+            <div class="product-image">
+
+              <img
+                src="marys-12-cupcakes.jpeg"
+                alt="12 Cupcakes"
+              >
+
+              <button
+                class="add-button"
+                onclick="addToOrder(
+                  '12 Cupcakes',
+                  6000,
+                  'marys-12-cupcakes.jpeg'
+                )"
+              >
+                +
+              </button>
+
+            </div>
+
+            <div class="product-info">
+
+              <div>
+
+                <span class="product-category">
+                  BOX
+                </span>
+
+                <h4>
+                  12 Cupcakes
+                </h4>
+
+              </div>
+
+              <strong>
+                ₦6,000
+              </strong>
+
+            </div>
+
+          </article>
+
+        </div>
+
+      </section>
+
+
+      <!-- ==================================================
+           PASTRIES
+      ================================================== -->
+
+      <section
+        class="pastries-section product-section"
+        data-category-section="pastries"
+      >
+
+        <div class="pastry-intro reveal">
+
+          <div>
+
+            <span class="section-kicker">
+              03 / PASTRIES & TREATS
+            </span>
+
+            <h3>
+              The little things
+              that make the day better.
+            </h3>
+
+          </div>
+
+          <p>
+            Sweet, savoury, crunchy and delicious.
+            Pick exactly what you want.
+          </p>
+
+        </div>
+
+
+        <div class="pastry-menu">
+
+
+          <article
+            class="pastry-row reveal"
+            data-category="pastries"
+          >
+
+            <div class="pastry-thumb">
+
+              <img
+                src="marys-meat-pie.jpeg"
+                alt="Meat Pie"
+              >
+
+            </div>
+
+            <div class="pastry-name">
+              Meat Pie
+            </div>
+
+            <strong class="pastry-price">
+              ₦1,500
+            </strong>
+
+            <button
+              onclick="addToOrder(
+                'Meat Pie',
+                1500,
+                'marys-meat-pie.jpeg'
+              )"
+            >
+              Add
+            </button>
+
+          </article>
+
+
+          <article
+            class="pastry-row reveal"
+            data-category="pastries"
+          >
+
+            <div class="pastry-thumb">
+
+              <img
+                src="marys-sausage-roll.jpeg"
+                alt="Sausage Roll"
+              >
+
+            </div>
+
+            <div class="pastry-name">
+              Sausage Roll
+            </div>
+
+            <strong class="pastry-price">
+              ₦1,200
+            </strong>
+
+            <button
+              onclick="addToOrder(
+                'Sausage Roll',
+                1200,
+                'marys-sausage-roll.jpeg'
+              )"
+            >
+              Add
+            </button>
+
+          </article>
+
+
+          <article
+            class="pastry-row reveal"
+            data-category="pastries"
+          >
+
+            <div class="pastry-thumb">
+
+              <img
+                src="marys-cinnamon-roll.jpeg"
+                alt="Cinnamon Roll"
+              >
+
+            </div>
+
+            <div class="pastry-name">
+              Cinnamon Roll
+            </div>
+
+            <strong class="pastry-price">
+              ₦1,500
+            </strong>
+
+            <button
+              onclick="addToOrder(
+                'Cinnamon Roll',
+                1500,
+                'marys-cinnamon-roll.jpeg'
+              )"
+            >
+              Add
+            </button>
+
+          </article>
+
+
+          <article
+            class="pastry-row reveal"
+            data-category="pastries"
+          >
+
+            <div class="pastry-thumb">
+
+              <img
+                src="marys-doughnut.jpeg"
+                alt="Doughnut"
+              >
+
+            </div>
+
+            <div class="pastry-name">
+              Doughnut
+            </div>
+
+            <strong class="pastry-price">
+              ₦500
+            </strong>
+
+            <button
+              onclick="addToOrder(
+                'Doughnut',
+                500,
+                'marys-doughnut.jpeg'
+              )"
+            >
+              Add
+            </button>
+
+          </article>
+
+
+          <article
+            class="pastry-row reveal"
+            data-category="pastries"
+          >
+
+            <div class="pastry-thumb">
+
+              <img
+                src="marys-egg-roll.jpeg"
+                alt="Egg Roll"
+              >
+
+            </div>
+
+            <div class="pastry-name">
+              Egg Roll
+            </div>
+
+            <strong class="pastry-price">
+              ₦700
+            </strong>
+
+            <button
+              onclick="addToOrder(
+                'Egg Roll',
+                700,
+                'marys-egg-roll.jpeg'
+              )"
+            >
+              Add
+            </button>
+
+          </article>
+
+
+          <article
+            class="pastry-row reveal"
+            data-category="pastries"
+          >
+
+            <div class="pastry-thumb">
+
+              <img
+                src="marys-meat-roll.jpeg"
+                alt="Meat Roll"
+              >
+
+            </div>
+
+            <div class="pastry-name">
+              Meat Roll
+            </div>
+
+            <strong class="pastry-price">
+              ₦1,200
+            </strong>
+
+            <button
+              onclick="addToOrder(
+                'Meat Roll',
+                1200,
+                'marys-meat-roll.jpeg'
+              )"
+            >
+              Add
+            </button>
+
+          </article>
+
+
+          <article
+            class="pastry-row reveal"
+            data-category="pastries"
+          >
+
+            <div class="pastry-thumb">
+
+              <img
+                src="marys-puff-puff.jpeg"
+                alt="Puff Puff"
+              >
+
+            </div>
+
+            <div class="pastry-name">
+              Puff Puff
+            </div>
+
+            <strong class="pastry-price">
+              ₦100 each
+            </strong>
+
+            <button
+              onclick="addToOrder(
+                'Puff Puff',
+                100,
+                'marys-puff-puff.jpeg'
+              )"
+            >
+              Add
+            </button>
+
+          </article>
+
+
+          <article
+            class="pastry-row reveal"
+            data-category="pastries"
+          >
+
+            <div class="pastry-thumb">
+
+              <img
+                src="marys-chinchin.jpeg"
+                alt="Chinchin"
+              >
+
+            </div>
+
+            <div class="pastry-name">
+              Chinchin (200g)
+            </div>
+
+            <strong class="pastry-price">
+              ₦1,500
+            </strong>
+
+            <button
+              onclick="addToOrder(
+                'Chinchin (200g)',
+                1500,
+                'marys-chinchin.jpeg'
+              )"
+            >
+              Add
+            </button>
+
+          </article>
+
+
+          <article
+            class="pastry-row reveal"
+            data-category="pastries"
+          >
+
+            <div class="pastry-thumb">
+
+              <img
+                src="marys-chocolate-bar.jpeg"
+                alt="Chocolate Bar"
+              >
+
+            </div>
+
+            <div class="pastry-name">
+              Chocolate Bar
+            </div>
+
+            <strong class="pastry-price">
+              ₦500
+            </strong>
+
+            <button
+              onclick="addToOrder(
+                'Chocolate Bar',
+                500,
+                'marys-chocolate-bar.jpeg'
+              )"
+            >
+              Add
+            </button>
+
+          </article>
+
+        </div>
+
+      </section>
+
+
+      <!-- ==================================================
+           SMALL CHOPS
+      ================================================== -->
+
+      <section
+        class="small-chops-section product-section"
+        data-category-section="small-chops"
+      >
+
+        <div class="small-chops-grid">
+
+          <div class="small-chops-copy reveal">
+
+            <span class="section-kicker">
+              04 / SMALL CHOPS
+            </span>
+
+            <h3>
+              PLANNING
+              <span>A PARTY?</span>
+            </h3>
+
+            <p>
+              Let Maryann's take care of the little
+              bites that keep everybody reaching
+              for one more.
+            </p>
+
+            <p>
+              Perfect for birthdays, events,
+              gatherings and celebrations.
+            </p>
+
+            <button
+              class="btn btn-dark"
+              onclick="addToOrder(
+                'Small Chops Pack',
+                3000,
+                'marys-small-chops.jpeg'
+              )"
+            >
+              Add Small Chops Pack
+            </button>
+
+          </div>
+
+
+          <div class="small-chops-images reveal">
+
+            <div class="small-chops-main">
+
+              <img
+                src="marys-small-chops.jpeg"
+                alt="Small Chops Pack"
+              >
+
+            </div>
+
+            <div class="small-chops-secondary">
+
+              <img
+                src="marys-party-small-chops.jpeg"
+                alt="Party Small Chops"
+              >
+
+              <div class="small-chops-note">
+
+                <span>
+                  FROM
+                </span>
+
+                <strong>
+                  ₦3,000
+                </strong>
+
+                <small>
+                  Party orders depend
+                  on quantity.
+                </small>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+    </section>
+
+
+    <!-- ==================================================
+         CUSTOM CAKES
+    ================================================== -->
+
+    <section class="custom-cakes section">
+
+      <div class="custom-grid">
+
+        <div class="custom-image reveal">
+
+          <img
+            src="marys-custom-cake.jpeg"
+            alt="Custom cake by Maryann's"
+          >
+
+        </div>
+
+
+        <div class="custom-copy reveal">
+
+          <span class="eyebrow">
+            SPECIAL CAKES
+          </span>
+
+          <h2>
+            HAVE SOMETHING
+            <span>IN MIND?</span>
+          </h2>
+
+          <p>
+            Tell us what you're celebrating and
+            we'll help turn the idea into something
+            worth remembering.
+          </p>
+
+          <div class="custom-list">
+
+            <span>
+              Birthdays
+            </span>
+
+            <span>
+              Parties
+            </span>
+
+            <span>
+              Events
+            </span>
+
+            <span>
+              Gifts
+            </span>
+
+            <span>
+              Anniversaries
+            </span>
+
+            <span>
+              Small Gatherings
+            </span>
+
+          </div>
+
+          <div class="custom-price">
+            From <strong>₦12,000</strong>
+          </div>
+
+          <button
+            class="btn btn-dark"
+            onclick="openOrderPanel('Custom Cake')"
+          >
+            Request A Custom Cake
+          </button>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ==================================================
+         SPECIAL ORDERS
+    ================================================== -->
+
+    <section
+      class="special-orders section"
+      id="special-orders"
+    >
+
+      <div class="special-content reveal">
+
+        <span class="eyebrow">
+          SPECIAL ORDERS
+        </span>
+
+        <h2>
+          YOU BRING THE
+          <span>OCCASION.</span>
+        </h2>
+
+        <h3>
+          WE'LL BRING THE TREATS.
+        </h3>
+
+        <p>
+          Birthdays • Parties • Events • Gifts • Small Gatherings
+        </p>
+
+        <div class="special-actions">
+
+          <button
+            class="btn btn-light"
+            onclick="openSpecialOrder()"
+          >
+            Make A Special Order
+          </button>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ==================================================
+         BULK ORDER
+    ================================================== -->
+
+    <section class="bulk-order section">
+
+      <div class="bulk-inner reveal">
+
+        <div>
+
+          <span class="eyebrow">
+            BULK ORDERS
+          </span>
+
+          <h2>
+            Feeding more people?
+          </h2>
+
+        </div>
+
+        <p>
+          Bulk orders are available for events,
+          parties and larger gatherings.
+        </p>
+
+        <button
+          class="text-button"
+          onclick="openSpecialOrder()"
+        >
+          Discuss Your Order
+          <span>→</span>
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <!-- ==================================================
+         CONTACT
+    ================================================== -->
+
+    <section
+      class="contact section"
+      id="contact"
+    >
+
+      <div class="contact-grid">
+
+        <div class="contact-copy reveal">
+
+          <span class="eyebrow">
+            LET'S MAKE SOMETHING DELICIOUS
+          </span>
+
+          <h2>
+            Ready to
+            <span>order?</span>
+          </h2>
+
+          <p>
+            Pick your favourites, build your order
+            and send it directly to Maryann's on WhatsApp.
+          </p>
+
+          <button
+            class="btn btn-dark"
+            onclick="openOrderPanel()"
+          >
+            Start My Order
+          </button>
+
+        </div>
+
+
+        <div class="contact-card reveal">
+
+          <span>
+            WHATSAPP
+          </span>
+
+          <strong>
+            +234 708 802 4775
+          </strong>
+
+          <a
+            href="https://wa.me/2347088024775"
+            target="_blank"
+            rel="noopener"
+          >
+            Chat directly
+            <span>→</span>
+          </a>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+  </main>
+
+
+  <!-- ==================================================
+       FLOATING ORDER BUTTON
+  ================================================== -->
+
+  <button
+    class="floating-order"
+    id="floatingOrder"
+    onclick="openOrderPanel()"
+    aria-label="Open order"
+  >
+
+    <span class="floating-order-count" id="orderCount">
+      0
+    </span>
+
+    <span>
+      Your Order
+    </span>
+
+    <span class="floating-arrow">
+      →
+    </span>
+
+  </button>
+
+
+  <!-- ==================================================
+       ORDER PANEL
+  ================================================== -->
+
+  <aside
+    class="order-panel"
+    id="orderPanel"
+  >
+
+    <div class="order-overlay" onclick="closeOrderPanel()"></div>
+
+
+    <div class="order-drawer">
+
+      <div class="order-header">
+
+        <div>
+
+          <span class="eyebrow">
+            YOUR ORDER
+          </span>
+
+          <h2>
+            Let's get this started.
+          </h2>
+
+        </div>
+
+        <button
+          class="close-order"
+          onclick="closeOrderPanel()"
+          aria-label="Close order panel"
+        >
+          ×
+        </button>
+
+      </div>
+
+
+      <div class="order-body">
+
+        <div
+          class="order-items"
+          id="orderItems"
+        >
+        </div>
+
+
+        <div
+          class="empty-order"
+          id="emptyOrder"
+        >
+
+          <span class="empty-icon">
+            +
+          </span>
+
+          <h3>
+            Your order is empty.
+          </h3>
+
+          <p>
+            Add something delicious from the menu.
+          </p>
+
+          <button
+            onclick="closeOrderPanel(); scrollToMenu();"
+            class="text-button"
+          >
+            Browse menu
+            <span>→</span>
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <div class="order-footer">
+
+        <div class="order-total">
+
+          <span>
+            Total
+          </span>
+
+          <strong id="orderTotal">
+            ₦0
+          </strong>
+
+        </div>
+
+
+        <div class="order-fields">
+
+          <label>
+            Your Name
+            <input
+              type="text"
+              id="customerName"
+              placeholder="Enter your name"
+            >
+          </label>
+
+
+          <label>
+            Note / Delivery Details
+            <textarea
+              id="customerNote"
+              rows="3"
+              placeholder="Add any special instructions..."
+            ></textarea>
+          </label>
+
+        </div>
+
+
+        <button
+          class="checkout-button"
+          onclick="checkoutWhatsApp()"
+        >
+          Place Order on WhatsApp
+          <span>→</span>
+        </button>
+
+        <p class="checkout-note">
+          Your order details will be sent directly to Maryann's.
+        </p>
+
+      </div>
+
+    </div>
+
+  </aside>
+
+
+  <!-- ==================================================
+       SPECIAL ORDER MODAL
+  ================================================== -->
+
+  <div
+    class="modal"
+    id="specialOrderModal"
+  >
+
+    <div
+      class="modal-backdrop"
+      onclick="closeSpecialOrder()"
+    ></div>
+
+
+    <div class="special-modal-card">
+
+      <button
+        class="modal-close"
+        onclick="closeSpecialOrder()"
+      >
+        ×
+      </button>
+
+
+      <span class="eyebrow">
+        SPECIAL ORDER
+      </span>
+
+      <h2>
+        Tell us what
+        <span>you're planning.</span>
+      </h2>
+
+      <p>
+        Birthdays, parties, events, gifts,
+        gatherings or bulk orders.
+      </p>
+
+
+      <form id="specialOrderForm">
+
+        <label>
+          Your Name
+
+          <input
+            type="text"
+            id="specialName"
+            placeholder="Enter your name"
+            required
+          >
+
+        </label>
+
+
+        <label>
+          What do you need?
+
+          <input
+            type="text"
+            id="specialNeed"
+            placeholder="e.g. birthday cake + small chops"
+            required
+          >
+
+        </label>
+
+
+        <label>
+          Tell us a little more
+
+          <textarea
+            id="specialDetails"
+            rows="4"
+            placeholder="Quantity, date, flavour, event, etc."
+            required
+          ></textarea>
+
+        </label>
+
+
+        <button
+          type="submit"
+          class="checkout-button"
+        >
+          Send Special Order
+          <span>→</span>
+        </button>
+
+      </form>
+
+    </div>
+
+  </div>
+
+
+  <!-- JS -->
+  <script src="mary.js"></script>
+
+</body>
+
+</html>
