@@ -2567,3 +2567,43 @@ a {
   }
 
 }
+
+
+/* =================================
+   MOBILE NAVIGATION & EXPLORE BUTTON
+================================= */
+
+@media (max-width: 850px) {
+
+  /* Keep the mobile menu hidden when closed */
+  .mobile-nav {
+    display: flex;
+    flex-direction: column;
+    max-height: 0;
+    overflow: hidden;
+    padding: 0 22px;
+    visibility: hidden;
+    pointer-events: none;
+    transition:
+      max-height 0.3s ease,
+      padding 0.3s ease,
+      visibility 0.3s ease;
+  }
+
+  /* Show it only when the menu button is pressed */
+  .mobile-nav.open {
+    max-height: 320px;
+    padding: 0 22px 25px;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+}
+
+/* Center Explore Menu text */
+.hero-buttons .btn:first-child {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
