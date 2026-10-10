@@ -47,23 +47,38 @@ document.addEventListener("DOMContentLoaded", () => {
   const mobileNav =
     document.getElementById("mobileNav");
 
+  // Menu starts closed
+  mobileNav.classList.remove("open");
+  mobileMenuBtn.setAttribute("aria-expanded", "false");
 
+  // Open and close menu when button is clicked
   mobileMenuBtn.addEventListener("click", () => {
 
-    mobileNav.classList.toggle("open");
+    const isOpen = mobileNav.classList.toggle("open");
+
+    mobileMenuBtn.setAttribute(
+      "aria-expanded",
+      isOpen
+    );
 
   });
 
-
+  // Close menu when a navigation link is clicked
   mobileNav.querySelectorAll("a").forEach(link => {
 
     link.addEventListener("click", () => {
 
       mobileNav.classList.remove("open");
 
+      mobileMenuBtn.setAttribute(
+        "aria-expanded",
+        "false"
+      );
+
     });
 
   });
+
 
 
   /* =======================================================
