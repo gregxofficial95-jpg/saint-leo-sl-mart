@@ -1,0 +1,152 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#111111">
+
+  <title>Rhamsey Footwear | Step Into Style</title>
+  <meta name="description" content="Shop stylish footwear at Rhamsey. Explore slippers, sneakers, clogs and mules.">
+
+  <link rel="stylesheet" href="rhamsey.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <header class="header">
+    <a href="#" class="logo">RHAMSEY<span>.</span></a>
+
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#shop">Shop</a>
+    </nav>
+
+    <button class="bag-button" id="bagButton">
+      Bag (<span id="bagCount">0</span>)
+    </button>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="hero-content">
+        <p class="eyebrow">THE RHAMSEY COLLECTION</p>
+        <h1>Every step.<br>Make it <em>count.</em></h1>
+        <p class="hero-description">
+          Discover footwear that brings comfort, character and style together.
+        </p>
+        <a href="#shop" class="primary-button">EXPLORE COLLECTION ↗</a>
+      </div>
+      <div class="hero-decoration">
+        <span>R</span>
+        <p>WALK YOUR WAY.</p>
+      </div>
+    </section>
+
+    <section class="shop-section" id="shop">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">FIND YOUR NEXT PAIR</p>
+          <h2>Our Collection</h2>
+        </div>
+        <p class="product-count"><span id="productCount">10</span> styles</p>
+      </div>
+
+      <div class="filter-row">
+        <input id="searchInput" type="search" placeholder="Search footwear...">
+        <select id="categoryFilter">
+          <option value="all">All footwear</option>
+          <option value="Slippers">Slippers</option>
+          <option value="Sneakers">Sneakers</option>
+          <option value="Clogs">Clogs</option>
+          <option value="Mules">Mules</option>
+        </select>
+      </div>
+
+      <div class="product-grid" id="productGrid"></div>
+    </section>
+
+    <section class="service-strip">
+      <div><strong>01</strong><span>Choose your style</span></div>
+      <div><strong>02</strong><span>Select size & quantity</span></div>
+      <div><strong>03</strong><span>Order on WhatsApp</span></div>
+    </section>
+  </main>
+
+  <footer>
+    <a href="#" class="logo">RHAMSEY<span>.</span></a>
+    <p>Find your fit. Own your style.</p>
+    <p class="copyright">© 2026 Rhamsey Footwear. All rights reserved.</p>
+  </footer>
+
+  <!-- PRODUCT OPTIONS -->
+  <div class="overlay" id="productOverlay">
+    <div class="modal product-modal">
+      <button class="close-button" data-close="productOverlay" aria-label="Close">×</button>
+
+      <div class="modal-image">
+        <img id="modalImage" src="rhamsey-hermes-a.jpeg" alt="Selected footwear">
+      </div>
+
+      <div class="modal-info">
+        <p class="eyebrow" id="modalCategory">FOOTWEAR</p>
+        <h2 id="modalName">Product name</h2>
+        <p class="modal-price" id="modalPrice">₦0</p>
+        <p class="modal-description">Select your preferred option, size and quantity.</p>
+
+        <label for="variantSelect">Colour / Style</label>
+        <select id="variantSelect"></select>
+
+        <label for="sizeSelect">Shoe size</label>
+        <select id="sizeSelect">
+          <option value="">Select your size</option>
+          <option value="36">EU 36</option>
+          <option value="37">EU 37</option>
+          <option value="38">EU 38</option>
+          <option value="39">EU 39</option>
+          <option value="40">EU 40</option>
+          <option value="41">EU 41</option>
+          <option value="42">EU 42</option>
+          <option value="43">EU 43</option>
+          <option value="44">EU 44</option>
+          <option value="45">EU 45</option>
+        </select>
+
+        <label for="quantityInput">Quantity</label>
+        <div class="quantity-control">
+          <button type="button" id="decreaseQty" aria-label="Decrease quantity">−</button>
+          <input id="quantityInput" type="number" min="1" max="99" value="1">
+          <button type="button" id="increaseQty" aria-label="Increase quantity">+</button>
+        </div>
+
+        <p class="line-total">Subtotal: <strong id="lineTotal">₦0</strong></p>
+        <button class="primary-button full-button" id="addToBag">ADD TO BAG</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SHOPPING BAG -->
+  <div class="overlay" id="bagOverlay">
+    <div class="modal bag-modal">
+      <button class="close-button" data-close="bagOverlay" aria-label="Close">×</button>
+      <p class="eyebrow">YOUR SELECTION</p>
+      <h2>Your Shopping Bag</h2>
+
+      <div id="bagItems"></div>
+
+      <div class="bag-summary">
+        <span>Total</span>
+        <strong id="bagTotal">₦0</strong>
+      </div>
+
+      <button class="primary-button full-button" id="checkoutButton">
+        ORDER ON WHATSAPP ↗
+      </button>
+      <p class="small-note">Your order details will be sent to Rhamsey on WhatsApp.</p>
+    </div>
+  </div>
+
+  <script src="rhamsey.js"></script>
+</body>
+</html>
