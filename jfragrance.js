@@ -13,7 +13,7 @@ const products = [
   {
     id: 1,
     name: "Club de Nuit Intense Man",
-    image: "j-fragrance-01.jpeg",
+    image: "jfragrance-01.jpeg",
     category: "Eau de Parfum",
     variants: [
       {
@@ -27,7 +27,7 @@ const products = [
   {
     id: 2,
     name: "Rifaaqat",
-    image: "j-fragrance-02.jpeg",
+    image: "jfragrance-02.jpeg",
     category: "Fragrance",
     variants: [
       {
@@ -41,7 +41,7 @@ const products = [
   {
     id: 3,
     name: "Berries Weekend Eau de Parfum",
-    image: "j-fragrance-03.jpeg",
+    image: "jfragrance-03.jpeg",
     category: "Eau de Parfum",
     variants: [
       {
@@ -55,7 +55,7 @@ const products = [
   {
     id: 4,
     name: "Supremacy",
-    image: "j-fragrance-04.jpeg",
+    image: "jfragrance-04.jpeg",
     category: "Eau de Parfum",
     variants: [
       {
@@ -73,7 +73,7 @@ const products = [
   {
     id: 5,
     name: "Orchid of Love",
-    image: "j-fragrance-05.jpeg",
+    image: "jfragrance-05.jpeg",
     category: "Fragrance",
     variants: [
       {
@@ -87,7 +87,7 @@ const products = [
   {
     id: 6,
     name: "Incidence",
-    image: "j-fragrance-06.jpeg",
+    image: "jfragrance-06.jpeg",
     category: "Fragrance",
     variants: [
       {
@@ -101,7 +101,7 @@ const products = [
   {
     id: 7,
     name: "Eau de Parfum Set",
-    image: "j-fragrance-07.jpeg",
+    image: "jfragrance-07.jpeg",
     category: "Gift Set",
     variants: [
       {
@@ -115,7 +115,7 @@ const products = [
   {
     id: 8,
     name: "Barcrat Set",
-    image: "j-fragrance-08.jpeg",
+    image: "jfragrance-08.jpeg",
     category: "Gift Set",
     variants: [
       {
@@ -129,7 +129,7 @@ const products = [
   {
     id: 9,
     name: "9PM",
-    image: "j-fragrance-09.jpeg",
+    image: "jfragrance-09.jpeg",
     category: "Eau de Parfum",
     variants: [
       {
@@ -147,7 +147,7 @@ const products = [
   {
     id: 10,
     name: "Matelot",
-    image: "j-fragrance-10.jpeg",
+    image: "jfragrance-10.jpeg",
     category: "Eau de Parfum",
     variants: [
       {
@@ -161,7 +161,7 @@ const products = [
   {
     id: 11,
     name: "Ophylia",
-    image: "j-fragrance-11.jpeg",
+    image: "jfragrance-11.jpeg",
     category: "Fragrance",
     variants: [
       {
@@ -175,7 +175,7 @@ const products = [
   {
     id: 12,
     name: "Aventos Eau de Parfum",
-    image: "j-fragrance-12.jpeg",
+    image: "jfragrance-12.jpeg",
     category: "Eau de Parfum",
     variants: [
       {
@@ -193,7 +193,7 @@ const products = [
   {
     id: 13,
     name: "Vintage Radio",
-    image: "j-fragrance-13.jpeg",
+    image: "jfragrance-13.jpeg",
     category: "Fragrance",
     variants: [
       {
@@ -211,7 +211,7 @@ const products = [
   {
     id: 14,
     name: "Imperio Prive",
-    image: "j-fragrance-14.jpeg",
+    image: "jfragrance-14.jpeg",
     category: "Fragrance",
     variants: [
       {
@@ -225,7 +225,7 @@ const products = [
   {
     id: 15,
     name: "Eclaire",
-    image: "j-fragrance-15.jpeg",
+    image: "jfragrance-15.jpeg",
     category: "Fragrance",
     variants: [
       {
@@ -239,7 +239,7 @@ const products = [
   {
     id: 16,
     name: "Whisper + Bond Elixir",
-    image: "j-fragrance-16.jpeg",
+    image: "jfragrance-16.jpeg",
     category: "Elixir",
     variants: [
       {
@@ -247,8 +247,38 @@ const products = [
         price: 20000
       }
     ]
+  },
+
+    {
+    id: 17,
+    name: "Fragrance Collection",
+    image: "jfragrance-17.jpeg",
+    category: "Fragrance Collection",
+    variants: [
+      {
+        name: "Lattafa Asad",
+        price: 10000
+      },
+      {
+        name: "Sugar Baby",
+        price: 10000
+      },
+      {
+        name: "Yara",
+        price: 10000
+      },
+      {
+        name: "Lattafa Khamrah",
+        price: 10000
+      },
+      {
+        name: "Berries Weekend",
+        price: 10000
+      }
+    ]
   }
 
+  
 ];
 
 
