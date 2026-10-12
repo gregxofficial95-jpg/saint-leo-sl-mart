@@ -1,0 +1,851 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#111d2b">
+
+  <title>Designs by Consultate | Bespoke Men's Tailoring</title>
+
+  <meta name="description"
+    content="Discover bespoke men's fashion, explore style inspirations, book a measurement appointment, or customize your next outfit with Designs by Consultate.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet" href="consultate.css">
+  <script src="consultate.js" defer></script>
+</head>
+
+<body>
+
+  <!-- INTRO: SPLIT LOGO REVEAL -->
+  <div class="intro-screen" id="introScreen" aria-label="Designs by Consultate">
+    <div class="intro-panel intro-panel-top"></div>
+
+    <div class="intro-logo">
+      <img src="designs-by-consultate.jpeg"
+        alt="Designs by Consultate logo">
+    </div>
+
+    <div class="intro-panel intro-panel-bottom"></div>
+  </div>
+
+  <!-- HEADER -->
+  <header class="site-header" id="siteHeader">
+    <a href="#home" class="brand-logo">
+      <img src="designs-by-consultate.jpeg"
+        alt="Designs by Consultate">
+    </a>
+
+    <button class="menu-toggle"
+      id="menuToggle"
+      aria-label="Open navigation"
+      aria-expanded="false"
+      aria-controls="mainNav">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <nav class="main-nav" id="mainNav">
+      <a href="#home">Home</a>
+      <a href="#about">Our Craft</a>
+      <a href="#inspiration">Style Gallery</a>
+      <a href="#appointments">Appointments</a>
+      <a href="#customize" class="nav-cta">Custom Design</a>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- HERO -->
+    <section class="hero" id="home">
+      <div class="hero-overlay"></div>
+
+      <div class="hero-content">
+        <span class="eyebrow hero-eyebrow">
+          BESPOKE MENSWEAR · MADE FOR YOU
+        </span>
+
+        <h1>
+          Wear the man<br>
+          <span>you were made to be.</span>
+        </h1>
+
+        <p>
+          Exceptional tailoring. Personal style. A perfect fit.
+          Discover menswear designed around you.
+        </p>
+
+        <div class="hero-actions">
+          <a href="#inspiration" class="btn btn-light">
+            Explore Our Styles
+          </a>
+
+          <a href="#customize" class="btn btn-outline-light">
+            Create Your Own
+          </a>
+        </div>
+
+        <div class="hero-note">
+          <span class="hero-line"></span>
+          YOUR STYLE. OUR CRAFT. YOUR STATEMENT.
+        </div>
+      </div>
+
+      <a href="#about" class="scroll-indicator" aria-label="Scroll down">
+        <span></span>
+      </a>
+    </section>
+
+    <!-- BRAND INTRODUCTION -->
+    <section class="about section-pad" id="about">
+      <div class="about-image-wrap">
+        <img src="consultate-01.webp"
+          alt="Bespoke men's fashion by Designs by Consultate"
+          class="about-image"
+          loading="lazy">
+
+        <div class="image-caption">
+          <span>THE ART OF</span>
+          <strong>PERSONAL STYLE</strong>
+        </div>
+      </div>
+
+      <div class="about-content">
+        <span class="eyebrow">THE CONSULTATE EXPERIENCE</span>
+
+        <h2>
+          Tailoring that<br>
+          <span>speaks for you.</span>
+        </h2>
+
+        <p>
+          Great style goes beyond what you wear. It is about the
+          confidence, individuality, and attention to detail that
+          make every appearance count.
+        </p>
+
+        <p>
+          At Designs by Consultate, every outfit begins with your
+          vision. Choose a design you love, bring your own
+          inspiration, or work with us to create something uniquely yours.
+        </p>
+
+        <div class="craft-points">
+          <div class="craft-point">
+            <span class="point-number">01</span>
+            <div>
+              <h3>Personalized Fit</h3>
+              <p>Made around your measurements and preferences.</p>
+            </div>
+          </div>
+
+          <div class="craft-point">
+            <span class="point-number">02</span>
+            <div>
+              <h3>Your Own Style</h3>
+              <p>Bring a reference or customize your design.</p>
+            </div>
+          </div>
+
+          <div class="craft-point">
+            <span class="point-number">03</span>
+            <div>
+              <h3>Direct Communication</h3>
+              <p>Discuss your order directly with our tailor on WhatsApp.</p>
+            </div>
+          </div>
+        </div>
+
+        <a href="#customize" class="text-link">
+          Start your design <span>↗</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- STYLE GALLERY -->
+    <section class="gallery-section section-pad" id="inspiration">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">FIND YOUR NEXT LOOK</span>
+          <h2>Style <span>inspiration.</span></h2>
+        </div>
+
+        <p>
+          From timeless classics to contemporary statements,
+          find a look that feels like you.
+        </p>
+      </div>
+
+      <div class="style-grid">
+
+        <article class="style-card">
+          <div class="style-image">
+            <img src="consultate-01.webp"
+              alt="Men's style inspiration 01" loading="lazy">
+            <span class="style-number">01</span>
+          </div>
+          <div class="style-info">
+            <div>
+              <h3>The Signature Look</h3>
+              <p>Classic menswear</p>
+            </div>
+            <button class="style-button" data-style="The Signature Look — Style 01">
+              Get Inspo <span>↗</span>
+            </button>
+          </div>
+        </article>
+
+        <article class="style-card">
+          <div class="style-image">
+            <img src="consultate-02.jpg"
+              alt="Men's style inspiration 02" loading="lazy">
+            <span class="style-number">02</span>
+          </div>
+          <div class="style-info">
+            <div>
+              <h3>Modern Senator</h3>
+              <p>Refined traditional wear</p>
+            </div>
+            <button class="style-button" data-style="Modern Senator — Style 02">
+              Get Inspo <span>↗</span>
+            </button>
+          </div>
+        </article>
+
+        <article class="style-card">
+          <div class="style-image">
+            <img src="consultate-03.jpg"
+              alt="Men's style inspiration 03" loading="lazy">
+            <span class="style-number">03</span>
+          </div>
+          <div class="style-info">
+            <div>
+              <h3>Executive Elegance</h3>
+              <p>Contemporary formalwear</p>
+            </div>
+            <button class="style-button" data-style="Executive Elegance — Style 03">
+              Get Inspo <span>↗</span>
+            </button>
+          </div>
+        </article>
+
+        <article class="style-card">
+          <div class="style-image">
+            <img src="consultate-04.jpg"
+              alt="Men's style inspiration 04" loading="lazy">
+            <span class="style-number">04</span>
+          </div>
+          <div class="style-info">
+            <div>
+              <h3>Native Prestige</h3>
+              <p>Elevated native attire</p>
+            </div>
+            <button class="style-button" data-style="Native Prestige — Style 04">
+              Get Inspo <span>↗</span>
+            </button>
+          </div>
+        </article>
+
+        <article class="style-card">
+          <div class="style-image">
+            <img src="consultate-05.jpg"
+              alt="Men's style inspiration 05" loading="lazy">
+            <span class="style-number">05</span>
+          </div>
+          <div class="style-info">
+            <div>
+              <h3>The Modern Gentleman</h3>
+              <p>Effortless sophistication</p>
+            </div>
+            <button class="style-button" data-style="The Modern Gentleman — Style 05">
+              Get Inspo <span>↗</span>
+            </button>
+          </div>
+        </article>
+
+        <article class="style-card">
+          <div class="style-image">
+            <img src="consultate-06.webp"
+              alt="Men's style inspiration 06" loading="lazy">
+            <span class="style-number">06</span>
+          </div>
+          <div class="style-info">
+            <div>
+              <h3>Urban Tailoring</h3>
+              <p>Modern everyday style</p>
+            </div>
+            <button class="style-button" data-style="Urban Tailoring — Style 06">
+              Get Inspo <span>↗</span>
+            </button>
+          </div>
+        </article>
+
+        <article class="style-card">
+          <div class="style-image">
+            <img src="consultate-07.jpg"
+              alt="Men's style inspiration 07" loading="lazy">
+            <span class="style-number">07</span>
+          </div>
+          <div class="style-info">
+            <div>
+              <h3>Occasion Ready</h3>
+              <p>Weddings and celebrations</p>
+            </div>
+            <button class="style-button" data-style="Occasion Ready — Style 07">
+              Get Inspo <span>↗</span>
+            </button>
+          </div>
+        </article>
+
+        <article class="style-card">
+          <div class="style-image">
+            <img src="consultate-08.jpg"
+              alt="Men's style inspiration 08" loading="lazy">
+            <span class="style-number">08</span>
+          </div>
+          <div class="style-info">
+            <div>
+              <h3>Minimal & Refined</h3>
+              <p>Understated elegance</p>
+            </div>
+            <button class="style-button" data-style="Minimal and Refined — Style 08">
+              Get Inspo <span>↗</span>
+            </button>
+          </div>
+        </article>
+
+        <article class="style-card">
+          <div class="style-image">
+            <img src="consultate-09.webp"
+              alt="Men's style inspiration 09" loading="lazy">
+            <span class="style-number">09</span>
+          </div>
+          <div class="style-info">
+            <div>
+              <h3>Statement Piece</h3>
+              <p>Distinctive personal style</p>
+            </div>
+            <button class="style-button" data-style="Statement Piece — Style 09">
+              Get Inspo <span>↗</span>
+            </button>
+          </div>
+        </article>
+
+        <article class="style-card">
+          <div class="style-image">
+            <img src="consultate-10.webp"
+              alt="Men's style inspiration 10" loading="lazy">
+            <span class="style-number">10</span>
+          </div>
+          <div class="style-info">
+            <div>
+              <h3>Contemporary Classic</h3>
+              <p>Tradition meets modern design</p>
+            </div>
+            <button class="style-button" data-style="Contemporary Classic — Style 10">
+              Get Inspo <span>↗</span>
+            </button>
+          </div>
+        </article>
+
+      </div>
+
+      <div class="gallery-footer">
+        <p>Love a style but want to make it your own?</p>
+        <a href="#customize" class="btn btn-dark">
+          Customize Your Inspiration
+        </a>
+      </div>
+    </section>
+
+    <!-- TWO ORDERING OPTIONS -->
+    <section class="order-options section-pad">
+      <div class="section-heading centered-heading">
+        <span class="eyebrow">YOUR ORDER, YOUR WAY</span>
+        <h2>How would you like <span>to begin?</span></h2>
+        <p>
+          Choose the process that works best for you.
+          We'll take it from there on WhatsApp.
+        </p>
+      </div>
+
+      <div class="options-grid">
+
+        <article class="option-card appointment-option">
+          <div class="option-icon">01</div>
+          <span class="eyebrow">PERSONAL MEASUREMENT</span>
+          <h3>Book an Appointment</h3>
+          <p>
+            Prefer to have your measurements taken professionally?
+            Request an appointment and discuss a suitable date and
+            time directly with the tailor.
+          </p>
+          <a href="#appointments" class="btn btn-dark">
+            Book Measurement
+          </a>
+        </article>
+
+        <article class="option-card measurement-option">
+          <div class="option-icon">02</div>
+          <span class="eyebrow">READY WITH YOUR MEASUREMENTS?</span>
+          <h3>Submit Your Measurements</h3>
+          <p>
+            Already have your measurements? Skip the appointment
+            and submit your details alongside your preferred style.
+          </p>
+          <a href="#customize" class="btn btn-teal">
+            Customize My Outfit
+          </a>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- APPOINTMENT BOOKING -->
+    <section class="appointment-section section-pad" id="appointments">
+      <div class="appointment-intro">
+        <span class="eyebrow">LET'S GET THE FIT RIGHT</span>
+        <h2>Your fit begins with <span>a conversation.</span></h2>
+        <p>
+          Request a measurement appointment below. Your request
+          will be sent to WhatsApp, where you can confirm availability,
+          location, and the next steps with the tailor.
+        </p>
+
+        <div class="appointment-benefit">
+          <span>✓</span>
+          Personal measurement request
+        </div>
+
+        <div class="appointment-benefit">
+          <span>✓</span>
+          Discuss a suitable date and time
+        </div>
+
+        <div class="appointment-benefit">
+          <span>✓</span>
+          Confirm details directly on WhatsApp
+        </div>
+      </div>
+
+      <form class="form-card" id="appointmentForm">
+        <div class="form-heading">
+          <span class="eyebrow">APPOINTMENT REQUEST</span>
+          <h3>Let's arrange a fitting.</h3>
+        </div>
+
+        <div class="form-grid">
+          <div class="field full-field">
+            <label for="appointmentName">Full name *</label>
+            <input type="text" id="appointmentName"
+              name="name" placeholder="Your full name" required>
+          </div>
+
+          <div class="field">
+            <label for="appointmentPhone">Phone number *</label>
+            <input type="tel" id="appointmentPhone"
+              name="phone" placeholder="Your phone number" required>
+          </div>
+
+          <div class="field">
+            <label for="appointmentType">What do you need? *</label>
+            <select id="appointmentType" name="service" required>
+              <option value="">Select a service</option>
+              <option>Native wear</option>
+              <option>Suit or formalwear</option>
+              <option>Casual wear</option>
+              <option>Wedding or occasion outfit</option>
+              <option>Multiple outfits</option>
+              <option>Other tailoring service</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="appointmentDate">Preferred date *</label>
+            <input type="date" id="appointmentDate"
+              name="date" required>
+          </div>
+
+          <div class="field">
+            <label for="appointmentTime">Preferred time *</label>
+            <select id="appointmentTime" name="time" required>
+              <option value="">Choose a time</option>
+              <option>Morning</option>
+              <option>Afternoon</option>
+              <option>Evening</option>
+              <option>Flexible</option>
+            </select>
+          </div>
+
+          <div class="field full-field">
+            <label for="appointmentLocation">Your location *</label>
+            <input type="text" id="appointmentLocation"
+              name="location" placeholder="Hostel"
+              required>
+          </div>
+
+          <div class="field full-field">
+            <label for="appointmentNotes">Additional details</label>
+            <textarea id="appointmentNotes" name="notes"
+              rows="3" placeholder="Tell us anything else we should know"></textarea>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-teal form-submit">
+          Send Appointment Request <span>↗</span>
+        </button>
+
+        <p class="form-disclaimer">
+          This is a request, not a confirmed booking.
+          The tailor will confirm availability on WhatsApp.
+        </p>
+      </form>
+    </section>
+
+    <!-- CUSTOM DESIGN FORM -->
+    <section class="custom-section section-pad" id="customize">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">MAKE IT YOUR OWN</span>
+          <h2>Design your <span>next statement.</span></h2>
+        </div>
+
+        <p>
+          Share your preferred style, provide your measurements
+          if available, and add reference images to help communicate
+          your vision.
+        </p>
+      </div>
+
+      <form class="form-card custom-form" id="customForm">
+
+        <div class="form-heading">
+          <span class="eyebrow">CUSTOM ORDER DETAILS</span>
+          <h3>Tell us what you have in mind.</h3>
+          <p>
+            Fields marked * are required. If you don't have your
+            measurements, you can request an appointment instead.
+          </p>
+        </div>
+
+        <!-- CUSTOMER DETAILS -->
+        <div class="form-section-title">
+          <span>01</span>
+          Customer information
+        </div>
+
+        <div class="form-grid">
+          <div class="field">
+            <label for="customerName">Full name *</label>
+            <input type="text" id="customerName"
+              name="name" placeholder="Your full name" required>
+          </div>
+
+          <div class="field">
+            <label for="customerPhone">Phone number *</label>
+            <input type="tel" id="customerPhone"
+              name="phone" placeholder="Your WhatsApp number" required>
+          </div>
+
+          <div class="field">
+            <label for="orderType">Outfit category *</label>
+            <select id="orderType" name="outfit" required>
+              <option value="">Select outfit type</option>
+              <option>Senator / Native wear</option>
+              <option>Agbada</option>
+              <option>Suit / Blazer</option>
+              <option>Shirt / Trousers</option>
+              <option>Casual wear</option>
+              <option>Wedding outfit</option>
+              <option>Traditional occasion wear</option>
+              <option>Other</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="orderQuantity">Number of outfits *</label>
+            <input type="number" id="orderQuantity"
+              name="quantity" min="1" max="100"
+              value="1" required>
+          </div>
+
+          <div class="field">
+            <label for="orderDeadline">When do you need it?</label>
+            <input type="date" id="orderDeadline" name="deadline">
+          </div>
+
+          <div class="field">
+            <label for="orderBudget">Budget (optional)</label>
+            <input type="text" id="orderBudget" name="budget"
+              placeholder="e.g. ₦50,000">
+          </div>
+        </div>
+
+        <!-- STYLE INFORMATION -->
+        <div class="form-section-title">
+          <span>02</span>
+          Your style preferences
+        </div>
+
+        <div class="form-grid">
+          <div class="field">
+            <label for="styleChoice">Style inspiration</label>
+            <select id="styleChoice" name="style">
+              <option value="My own custom design">My own custom design</option>
+              <option value="The Signature Look — Style 01">Style 01 — Signature Look</option>
+              <option value="Modern Senator — Style 02">Style 02 — Modern Senator</option>
+              <option value="Executive Elegance — Style 03">Style 03 — Executive Elegance</option>
+              <option value="Native Prestige — Style 04">Style 04 — Native Prestige</option>
+              <option value="The Modern Gentleman — Style 05">Style 05 — Modern Gentleman</option>
+              <option value="Urban Tailoring — Style 06">Style 06 — Urban Tailoring</option>
+              <option value="Occasion Ready — Style 07">Style 07 — Occasion Ready</option>
+              <option value="Minimal and Refined — Style 08">Style 08 — Minimal & Refined</option>
+              <option value="Statement Piece — Style 09">Style 09 — Statement Piece</option>
+              <option value="Contemporary Classic — Style 10">Style 10 — Contemporary Classic</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="fabricPreference">Fabric preference</label>
+            <select id="fabricPreference" name="fabric">
+              <option value="Open to recommendations">Open to recommendations</option>
+              <option>Customer will provide fabric</option>
+              <option>Need the tailor to provide fabric</option>
+              <option>Discuss fabric options on WhatsApp</option>
+            </select>
+          </div>
+
+          <div class="field full-field">
+            <label for="styleDescription">Describe your desired design</label>
+            <textarea id="styleDescription" name="description"
+              rows="4"
+              placeholder="Colour, fit, collar, sleeves, embroidery, pockets, special details..."></textarea>
+          </div>
+        </div>
+
+        <!-- MEASUREMENTS -->
+        <div class="form-section-title">
+          <span>03</span>
+          Your measurements
+        </div>
+
+        <div class="measurement-notice">
+          <strong>Don't have your measurements?</strong>
+          No problem. Leave the fields blank and request a measurement
+          appointment using the section above.
+        </div>
+
+        <div class="field measurement-unit-field">
+          <label for="measurementUnit">Measurement unit</label>
+          <select id="measurementUnit" name="unit">
+            <option value="inches">Inches</option>
+            <option value="cm">Centimetres (cm)</option>
+          </select>
+        </div>
+
+        <div class="measurement-grid">
+          <div class="field">
+            <label for="measureChest">Chest</label>
+            <input type="number" id="measureChest" name="chest"
+              min="0" step="0.1" placeholder="e.g. 40">
+          </div>
+
+          <div class="field">
+            <label for="measureShoulder">Shoulder</label>
+            <input type="number" id="measureShoulder" name="shoulder"
+              min="0" step="0.1" placeholder="e.g. 18">
+          </div>
+
+          <div class="field">
+            <label for="measureNeck">Neck</label>
+            <input type="number" id="measureNeck" name="neck"
+              min="0" step="0.1" placeholder="e.g. 16">
+          </div>
+
+          <div class="field">
+            <label for="measureSleeve">Sleeve length</label>
+            <input type="number" id="measureSleeve" name="sleeve"
+              min="0" step="0.1" placeholder="e.g. 25">
+          </div>
+
+          <div class="field">
+            <label for="measureArmhole">Armhole</label>
+            <input type="number" id="measureArmhole" name="armhole"
+              min="0" step="0.1" placeholder="Optional">
+          </div>
+
+          <div class="field">
+            <label for="measureBicep">Bicep</label>
+            <input type="number" id="measureBicep" name="bicep"
+              min="0" step="0.1" placeholder="Optional">
+          </div>
+
+          <div class="field">
+            <label for="measureWaist">Waist</label>
+            <input type="number" id="measureWaist" name="waist"
+              min="0" step="0.1" placeholder="e.g. 34">
+          </div>
+
+          <div class="field">
+            <label for="measureHip">Hip</label>
+            <input type="number" id="measureHip" name="hip"
+              min="0" step="0.1" placeholder="e.g. 40">
+          </div>
+
+          <div class="field">
+            <label for="measureTop">Top length</label>
+            <input type="number" id="measureTop" name="topLength"
+              min="0" step="0.1" placeholder="Optional">
+          </div>
+
+          <div class="field">
+            <label for="measureTrouser">Trouser length</label>
+            <input type="number" id="measureTrouser" name="trouserLength"
+              min="0" step="0.1" placeholder="Optional">
+          </div>
+
+          <div class="field">
+            <label for="measureThigh">Thigh</label>
+            <input type="number" id="measureThigh" name="thigh"
+              min="0" step="0.1" placeholder="Optional">
+          </div>
+
+          <div class="field">
+            <label for="measureInseam">Inseam</label>
+            <input type="number" id="measureInseam" name="inseam"
+              min="0" step="0.1" placeholder="Optional">
+          </div>
+        </div>
+
+        <div class="field full-field other-measurement-field">
+          <label for="otherMeasurements">Other measurements or fitting notes</label>
+          <textarea id="otherMeasurements" name="otherMeasurements"
+            rows="3"
+            placeholder="Any other measurements you have, preferred fit, or notes"></textarea>
+        </div>
+
+        <!-- REFERENCE IMAGES -->
+        <div class="form-section-title">
+          <span>04</span>
+          Style reference images
+        </div>
+
+        <div class="upload-area">
+          <input type="file"
+            id="inspirationImages"
+            name="inspirationImages"
+            accept="image/*"
+            multiple>
+
+          <label for="inspirationImages" class="upload-label">
+            <span class="upload-icon">↑</span>
+            <strong>Upload your inspiration images</strong>
+            <span>Select photos from your device. You can choose more than one.</span>
+            <span class="upload-cta">Choose Images</span>
+          </label>
+
+          <div id="imagePreview" class="image-preview"></div>
+
+          <p class="upload-help">
+            Your selected photos are not uploaded to a server.
+            WhatsApp does not accept automatic file attachments through
+            ordinary chat links. After WhatsApp opens, attach these images
+            directly to the conversation.
+          </p>
+        </div>
+
+        <!-- DELIVERY / CONTACT -->
+        <div class="form-section-title">
+          <span>05</span>
+          Final details
+        </div>
+
+        <div class="form-grid">
+          <div class="field full-field">
+            <label for="deliveryLocation">Location / delivery address</label>
+            <input type="text" id="deliveryLocation"
+              name="location"
+              placeholder="Your area, city or delivery address">
+          </div>
+
+          <div class="field full-field">
+            <label for="extraNotes">Anything else we should know?</label>
+            <textarea id="extraNotes" name="extraNotes"
+              rows="3"
+              placeholder="Additional instructions or questions"></textarea>
+          </div>
+        </div>
+
+        <div class="submit-notice">
+          <span>i</span>
+          Your details will be prepared into a WhatsApp message.
+          Price, fabric availability, delivery and completion date
+          will be discussed directly with the tailor.
+        </div>
+
+        <button type="submit" class="btn btn-teal form-submit">
+          Send My Custom Order <span>↗</span>
+        </button>
+
+        <p class="form-disclaimer">
+          Please double-check your measurements before submitting.
+          Final order details will be confirmed on WhatsApp.
+        </p>
+      </form>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section class="final-cta section-pad">
+      <div class="final-cta-inner">
+        <span class="eyebrow">YOUR NEXT LOOK STARTS HERE</span>
+        <h2>Don't just wear it.<br><span>Make it yours.</span></h2>
+        <p>
+          Your vision. Your measurements. Your personal style.
+          Let's create something worth wearing.
+        </p>
+        <a href="#customize" class="btn btn-light">
+          Start Your Custom Order
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-main">
+      <a href="#home" class="footer-brand">
+        <img src="designs-by-consultate.jpeg" alt="">
+        <span>DESIGNS BY<br><strong>CONSULTATE</strong></span>
+      </a>
+
+      <p>
+        Bespoke menswear for the man who knows that
+        the details make the difference.
+      </p>
+
+      <div class="footer-links">
+        <a href="#inspiration">Style Gallery</a>
+        <a href="#appointments">Book Appointment</a>
+        <a href="#customize">Custom Order</a>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© <span id="currentYear"></span> Designs by Consultate.</span>
+      <span>Crafted with intention.</span>
+    </div>
+  </footer>
+
+  <button id="backToTop" class="back-to-top"
+    aria-label="Back to top">↑</button>
+
+</body>
+</html>
