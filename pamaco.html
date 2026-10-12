@@ -1,0 +1,193 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#111210">
+  <meta name="description" content="Shop Pamaco — original-quality sneakers, footwear, wristwatches and streetwear. Stay Original.">
+  <title>Pamaco | Stay Original</title>
+  <link rel="icon" href="pamaco.jpeg" type="image/jpeg">
+  <link rel="stylesheet" href="pamaco.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <header class="site-header">
+    <a href="#home" class="brand">
+      <img src="pamaco.jpeg" alt="Pamaco Stay Original logo">
+    </a>
+
+    <button class="menu-toggle" id="menuToggle" aria-label="Open navigation" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="main-nav" id="mainNav">
+      <a href="#home">Home</a>
+      <a href="#shop">Shop</a>
+      <a href="#about">Our Standard</a>
+      <a href="#contact">Contact</a>
+      <a href="#shop" class="nav-cta">Explore Collection <span>↗</span></a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="intro" id="home">
+      <div class="intro-text">
+        <span class="eyebrow"><span class="status-dot"></span> THE P​​AMACO COLLECTION</span>
+        <h1>STAND OUT.<br><span>STAY ORIGINAL.</span></h1>
+        <p>Distinctive footwear. Everyday essentials. A style that speaks before you do.</p>
+        <div class="intro-actions">
+          <a href="#shop" class="button button-light">Shop the collection <span>↗</span></a>
+          <a href="#about" class="text-link">Discover Pamaco <span>→</span></a>
+        </div>
+      </div>
+      <div class="intro-art" aria-hidden="true">
+        <div class="art-ring ring-one"></div>
+        <div class="art-ring ring-two"></div>
+        <div class="art-mark">P<span>.</span></div>
+        <div class="art-caption">ORIGINAL<br>BY DESIGN</div>
+        <div class="art-number">PM / 026</div>
+      </div>
+      <div class="intro-bottom">
+        <span>FOOTWEAR / ACCESSORIES / APPAREL</span>
+        <span>QUALITY IS THE STATEMENT <span class="arrow-down">↓</span></span>
+      </div>
+    </section>
+
+    <div class="ticker" aria-label="Pamaco brand slogan">
+      <div class="ticker-track">
+        <span>STAY ORIGINAL <b>✳</b> MOVE DIFFERENT <b>✳</b> OWN YOUR STYLE <b>✳</b> STAY ORIGINAL <b>✳</b> MOVE DIFFERENT <b>✳</b> OWN YOUR STYLE <b>✳</b></span>
+        <span aria-hidden="true">STAY ORIGINAL <b>✳</b> MOVE DIFFERENT <b>✳</b> OWN YOUR STYLE <b>✳</b> STAY ORIGINAL <b>✳</b> MOVE DIFFERENT <b>✳</b> OWN YOUR STYLE <b>✳</b></span>
+      </div>
+    </div>
+
+    <section class="shop-section" id="shop">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">THE LINEUP / 001—008</span>
+          <h2>THE COLLECTION<span>.</span></h2>
+          <p>Find your next favourite. Select a piece to explore its available options.</p>
+        </div>
+        <span class="collection-count" id="productCount">08 PIECES</span>
+      </div>
+
+      <div class="shop-tools">
+        <label class="search-box">
+          <span aria-hidden="true">⌕</span>
+          <input id="productSearch" type="search" placeholder="Search the collection..." aria-label="Search products">
+          <kbd>SEARCH</kbd>
+        </label>
+        <div class="filter-buttons" aria-label="Filter products">
+          <button class="filter-btn active" data-filter="all">All pieces</button>
+          <button class="filter-btn" data-filter="footwear">Footwear</button>
+          <button class="filter-btn" data-filter="apparel">Apparel</button>
+          <button class="filter-btn" data-filter="accessories">Accessories</button>
+        </div>
+      </div>
+
+      <div class="product-grid" id="productGrid" aria-live="polite"></div>
+      <div class="empty-state" id="emptyState" hidden>
+        <span>✳</span>
+        <h3>NOTHING FOUND.</h3>
+        <p>Try another product name or category.</p>
+      </div>
+    </section>
+
+    <section class="standard-section" id="about">
+      <div class="standard-symbol" aria-hidden="true">P<span>.</span></div>
+      <div class="standard-copy">
+        <span class="eyebrow">THE PAMACO STANDARD</span>
+        <h2>NOT HERE TO<br>BLEND IN<span>.</span></h2>
+        <p>Pamaco is for people who make their own statement. From everyday essentials to standout footwear, find the piece that fits your style.</p>
+        <a href="#shop" class="text-link">Find your piece <span>→</span></a>
+      </div>
+      <div class="standard-side">
+        <div class="standard-point"><span>01</span><div><strong>YOUR STYLE</strong><p>Choose the look that feels like you.</p></div></div>
+        <div class="standard-point"><span>02</span><div><strong>YOUR PICK</strong><p>Explore available product variations.</p></div></div>
+        <div class="standard-point"><span>03</span><div><strong>YOUR ORDER</strong><p>Send your selection directly to Pamaco.</p></div></div>
+      </div>
+    </section>
+
+    <section class="contact-strip" id="contact">
+      <div>
+        <span class="eyebrow">READY TO MAKE YOUR PICK?</span>
+        <h2>YOUR NEXT LOOK<br>STARTS HERE<span>.</span></h2>
+      </div>
+      <a class="button button-light" href="https://wa.me/2349063527990" target="_blank" rel="noopener noreferrer">Chat with Pamaco <span>↗</span></a>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <a href="#home" class="footer-brand">PAMACO<span>.</span></a>
+    <p>STAY ORIGINAL. MOVE DIFFERENT.</p>
+    <span>© <span id="currentYear"></span> PAMACO. ALL RIGHTS RESERVED.</span>
+  </footer>
+
+  <!-- Product details and image gallery -->
+  <div class="modal" id="productModal" aria-hidden="true">
+    <div class="modal-backdrop" data-close-modal></div>
+    <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button class="modal-close" id="modalClose" aria-label="Close product details">×</button>
+
+      <div class="modal-gallery">
+        <span class="gallery-label" id="galleryLabel">PAMACO / 01</span>
+        <button class="gallery-arrow gallery-prev" id="galleryPrev" aria-label="Previous image">‹</button>
+        <img id="modalImage" src="" alt="">
+        <button class="gallery-arrow gallery-next" id="galleryNext" aria-label="Next image">›</button>
+        <span class="gallery-hint" id="galleryHint">SWIPE TO EXPLORE</span>
+        <div class="gallery-dots" id="galleryDots"></div>
+      </div>
+
+      <div class="modal-details">
+        <span class="eyebrow" id="modalCategory">PAMACO COLLECTION</span>
+        <h2 id="modalTitle">Product name</h2>
+        <div class="modal-price" id="modalPrice">₦0</div>
+        <p class="modal-description" id="modalDescription"></p>
+        <div class="variant-info" id="variantInfo"></div>
+
+        <div class="option-group" id="variantGroup" hidden>
+          <label for="variantSelect">Choose your preferred type</label>
+          <select id="variantSelect"></select>
+        </div>
+
+        <div class="option-group" id="sizeGroup" hidden>
+          <label for="sizeSelect">Choose shoe size (EU)</label>
+          <select id="sizeSelect">
+            <option value="">Select your size</option>
+          </select>
+        </div>
+
+        <div class="option-group" id="boxGroup" hidden>
+          <label class="checkbox-option">
+            <input type="checkbox" id="boxCheckbox">
+            <span>Add shoe box <strong>+₦1,000</strong></span>
+          </label>
+        </div>
+
+        <div class="option-group quantity-group">
+          <label for="quantityInput">Quantity</label>
+          <div class="quantity-control">
+            <button type="button" id="quantityMinus" aria-label="Decrease quantity">−</button>
+            <input type="number" id="quantityInput" min="1" max="99" value="1" inputmode="numeric" aria-label="Quantity">
+            <button type="button" id="quantityPlus" aria-label="Increase quantity">+</button>
+          </div>
+        </div>
+
+        <div class="order-total">
+          <span>YOUR TOTAL</span>
+          <strong id="orderTotal">₦0</strong>
+        </div>
+        <button class="button button-dark order-button" id="orderButton">Order via WhatsApp <span>↗</span></button>
+        <p class="modal-note">Your order will be sent to Pamaco on WhatsApp for confirmation.</p>
+      </div>
+    </section>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="pamaco.js"></script>
+</body>
+</html>
