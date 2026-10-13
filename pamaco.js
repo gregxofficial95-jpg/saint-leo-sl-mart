@@ -130,6 +130,196 @@ document.addEventListener("DOMContentLoaded", () => {
         { name: "Type H", image: "pamaco-8h.jpeg" },
         { name: "Type I", image: "pamaco-8i.jpeg" }
       ]
+    },
+    {
+      id: 9, name: "Fashion Belts", price: 18000,
+      category: "accessories", categoryLabel: "Belts", tag: "2 Types",
+      description: "Fashion belts in two available designs.",
+      variants: [
+        { name: "Type A", image: "pamaco-9a.jpeg" },
+        { name: "Type B", image: "pamaco-9b.jpeg" }
+      ]
+    },
+    {
+      id: 10, name: "Henley's", price: 25000,
+      category: "apparel", categoryLabel: "Apparel", tag: "3 Colours",
+      description: "Henley's available in black, grey and white. Choose your preferred colour.",
+      colors: ["Black", "Grey", "White"],
+      variants: [{ name: "Available Colours", image: "pamaco-10.jpeg" }]
+    },
+    {
+      id: 11, name: "Roundnecks", price: 15000,
+      category: "apparel", categoryLabel: "Apparel", tag: "2 Types",
+      description: "Roundneck shirts in two available designs.",
+      variants: [
+        { name: "Type A", image: "pamaco-11a.jpeg" },
+        { name: "Type B", image: "pamaco-11b.jpeg" }
+      ]
+    },
+    {
+      id: 12, name: "Supreme Shirts", price: 20000,
+      category: "apparel", categoryLabel: "Apparel", tag: "2 Types",
+      description: "Supreme shirts in two available designs.",
+      variants: [
+        { name: "Type A", image: "pamaco-12a.jpeg" },
+        { name: "Type B", image: "pamaco-12b.jpeg" }
+      ]
+    },
+    {
+      id: 13, name: "Baggy Flare Jean", price: 25000,
+      category: "apparel", categoryLabel: "Denim", tag: "Featured",
+      description: "Baggy flare jeans from the Pamaco collection.",
+      variants: [{ name: "Available Design", image: "pamaco-13.jpeg" }]
+    },
+    {
+      id: 14, name: "Poedagar Watch", price: 32000,
+      category: "accessories", categoryLabel: "Watches", tag: "4 Types",
+      description: "Poedagar wristwatch. Supplied fully boxed with a bag.",
+      boxIncluded: true,
+      bagIncluded: true,
+      variants: [
+        { name: "Type A", image: "pamaco-14a.jpeg" },
+        { name: "Type B", image: "pamaco-14b.jpeg" },
+        { name: "Type C", image: "pamaco-14c.jpeg" },
+        { name: "Type D", image: "pamaco-14d.jpeg" }
+      ]
+    },
+    {
+      id: 15, name: "Sweatshirts", price: 18000,
+      category: "apparel", categoryLabel: "Apparel", tag: "4 Types",
+      description: "Choose from four available sweatshirt designs.",
+      variants: [
+        { name: "Type A", image: "pamaco-15a.jpeg" },
+        { name: "Type B", image: "pamaco-15b.jpeg" },
+        { name: "Type C", image: "pamaco-15c.jpeg" },
+        { name: "Type D", image: "pamaco-15d.jpeg" }
+      ]
+    },
+
+    // 16 — 20: FOOTWEAR AND WATCHES
+    {
+      id: 16, name: "Balenciaga Corporate Shoes", price: 45000,
+      category: "footwear", categoryLabel: "Corporate Shoes", tag: "Unisex",
+      description: "Balenciaga corporate shoes. Shoe box included.",
+      sizes: [40, 41, 42, 43, 44, 45, 46],
+      boxIncluded: true,
+      variants: [{ name: "Design 1", image: "pamaco-16.jpeg" }]
+    },
+    {
+      id: 17, name: "Herms Slippers", price: 45000,
+      category: "footwear", categoryLabel: "Slippers", tag: "4 Types",
+      description: "Herms slippers in four available designs.",
+      sizes: [40, 41, 42, 43, 44, 45],
+      variants: [
+        { name: "Type A", image: "pamaco-17a.jpeg" },
+        { name: "Type B", image: "pamaco-17b.jpeg" },
+        { name: "Type C", image: "pamaco-17c.jpeg" },
+        { name: "Type D", image: "pamaco-17d.jpeg" }
+      ]
+    },
+    {
+      id: 18, name: "New Balance 9030", price: 32000,
+      category: "footwear", categoryLabel: "Sneakers", tag: "Unisex",
+      description: "New Balance 9030 sneakers in four available designs.",
+      sizes: [40, 41, 42, 43, 44, 45],
+      variants: [
+        { name: "Type A", image: "pamaco-18a.jpeg" },
+        { name: "Type B", image: "pamaco-18b.jpeg" },
+        { name: "Type C", image: "pamaco-18c.jpeg" },
+        { name: "Type D", image: "pamaco-18d.jpeg" }
+      ]
+    },
+    {
+      id: 19, name: "Air Jordan Luxury", price: 60000,
+      category: "footwear", categoryLabel: "Sneakers", tag: "Fully Boxed",
+      description: "Air Jordan Luxury sneakers. Fully boxed, with four available designs.",
+      sizes: [40, 41, 42, 43, 44, 45],
+      boxIncluded: true,
+      variants: [
+        { name: "Type A", image: "pamaco-19a.jpeg" },
+        { name: "Type B", image: "pamaco-19b.jpeg" },
+        { name: "Type C", image: "pamaco-19c.jpeg" },
+        { name: "Type D", image: "pamaco-19d.jpeg" }
+      ]
+    },
+    {
+      id: 20, name: "Hublot Watch", price: 22000,
+      category: "accessories", categoryLabel: "Watches", tag: "4 Types",
+      description: "Hublot watch in four available designs.",
+      variants: [
+        { name: "Type A", image: "pamaco-20a.jpeg" },
+        { name: "Type B", image: "pamaco-20b.jpeg" },
+        { name: "Type C", image: "pamaco-20c.jpeg" },
+        { name: "Type D", image: "pamaco-20d.jpeg" }
+      ]
+    },
+
+    // 21 — 28: APPAREL AND ACCESSORIES
+    {
+      id: 21, name: "Jersey", price: 15000,
+      category: "apparel", categoryLabel: "Jerseys", tag: "4 Types",
+      description: "Jerseys in four available designs.",
+      variants: [
+        { name: "Type A", image: "pamaco-21a.jpeg" },
+        { name: "Type B", image: "pamaco-21b.jpeg" },
+        { name: "Type C", image: "pamaco-21c.jpeg" },
+        { name: "Type D", image: "pamaco-21d.jpeg" }
+      ]
+    },
+    {
+      id: 22, name: "Quality Jacket", price: 35000,
+      category: "apparel", categoryLabel: "Jackets", tag: "4 Types",
+      description: "Quality jackets in four available designs.",
+      variants: [
+        { name: "Type A", image: "pamaco-22a.jpeg" },
+        { name: "Type B", image: "pamaco-22b.jpeg" },
+        { name: "Type C", image: "pamaco-22c.jpeg" },
+        { name: "Type D", image: "pamaco-22d.jpeg" }
+      ]
+    },
+    {
+      id: 23, name: "Original Plain Polo", price: 15000,
+      category: "apparel", categoryLabel: "Polo Shirts", tag: "4 Types",
+      description: "Original plain polo shirts in four available designs.",
+      variants: [
+        { name: "Type A", image: "pamaco-23a.jpeg" },
+        { name: "Type B", image: "pamaco-23b.jpeg" },
+        { name: "Type C", image: "pamaco-23c.jpeg" },
+        { name: "Type D", image: "pamaco-23d.jpeg" }
+      ]
+    },
+    {
+      id: 24, name: "Balenciaga Corporate Shoes — Design 2", price: 45000,
+      category: "footwear", categoryLabel: "Corporate Shoes", tag: "Unisex",
+      description: "A separate Balenciaga corporate shoe design. Shoe box included.",
+      sizes: [40, 41, 42, 43, 44, 45, 46],
+      boxIncluded: true,
+      variants: [{ name: "Design 2", image: "pamaco-24.jpeg" }]
+    },
+    {
+      id: 25, name: "Tees", price: 25000,
+      category: "apparel", categoryLabel: "T-Shirts", tag: "3 Colours",
+      description: "Tees available in black, brown and white. Select your preferred colour.",
+      colors: ["Black", "Brown", "White"],
+      variants: [{ name: "Available Colours", image: "pamaco-25.jpeg" }]
+    },
+    {
+      id: 26, name: "Nike Watch", price: 30000,
+      category: "accessories", categoryLabel: "Watches", tag: "Featured",
+      description: "Nike watch from the Pamaco collection.",
+      variants: [{ name: "Available Design", image: "pamaco-26.jpeg" }]
+    },
+    {
+      id: 27, name: "Chrome Hearts Belt", price: 18000,
+      category: "accessories", categoryLabel: "Belts", tag: "Featured",
+      description: "Chrome Hearts belt from the Pamaco collection.",
+      variants: [{ name: "Available Design", image: "pamaco-27.jpeg" }]
+    },
+    {
+      id: 28, name: "Ringer Tees", price: 17000,
+      category: "apparel", categoryLabel: "T-Shirts", tag: "Featured",
+      description: "Ringer tees from the Pamaco collection.",
+      variants: [{ name: "Available Design", image: "pamaco-28.jpeg" }]
     }
   ];
 
