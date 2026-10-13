@@ -12,6 +12,21 @@
 
 <body>
 
+  <!-- EST EES INTRO SCREEN -->
+<div class="estees-intro" id="esteesIntro">
+  <div class="intro-circle">
+    <div class="intro-grid"></div>
+    <img
+      src="estees-nail-haven.jpeg"
+      alt="Estees Nail Haven Logo"
+      class="intro-logo"
+    >
+  </div>
+
+  <p class="intro-caption">ESTEES NAIL HAVEN</p>
+  <span class="intro-subtitle">BEAUTY IN EVERY DETAIL</span>
+</div>
+
   <!-- NAVIGATION -->
 <header class="brand-nav">
 
@@ -271,6 +286,98 @@
     </a>
 
   </footer>
+<!-- IMAGE LIGHTBOX -->
+<div class="image-lightbox" id="imageLightbox" role="dialog" aria-modal="true" aria-label="Enlarged nail inspiration image">
+  <button class="lightbox-close" id="lightboxClose" aria-label="Close image">&times;</button>
+  <img src="" alt="Enlarged nail design inspiration" id="lightboxImage">
+</div>
+
+<script>
+  const whatsappNumber = "2349079465090";
+
+  // Make service cards open WhatsApp without a prewritten message
+  document.querySelectorAll(".service-card").forEach(card => {
+    card.setAttribute("role", "link");
+    card.setAttribute("tabindex", "0");
+    card.setAttribute("aria-label", "Contact Estees Nail Haven");
+
+    function openWhatsApp() {
+      window.open(
+        "https://wa.me/" + whatsappNumber,
+        "_blank",
+        "noopener,noreferrer"
+      );
+    }
+
+    card.addEventListener("click", openWhatsApp);
+
+    card.addEventListener("keydown", event => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        openWhatsApp();
+      }
+    });
+  });
+
+  // Make gallery images clickable
+  const lightbox = document.getElementById("imageLightbox");
+  const lightboxImage = document.getElementById("lightboxImage");
+  const closeButton = document.getElementById("lightboxClose");
+
+  document.querySelectorAll(".gallery-image img").forEach(image => {
+    image.style.cursor = "pointer";
+    image.tabIndex = 0;
+
+    function showImage() {
+      lightboxImage.src = image.src;
+      lightboxImage.alt = image.alt;
+      lightbox.classList.add("active");
+      document.body.style.overflow = "hidden";
+      closeButton.focus();
+    }
+
+    image.addEventListener("click", showImage);
+
+    image.addEventListener("keydown", event => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        showImage();
+      }
+    });
+  });
+
+  function closeLightbox() {
+    lightbox.classList.remove("active");
+    lightboxImage.src = "";
+    document.body.style.overflow = "";
+  }
+
+  closeButton.addEventListener("click", closeLightbox);
+
+  lightbox.addEventListener("click", event => {
+    if (event.target === lightbox) {
+      closeLightbox();
+    }
+  });
+
+  document.addEventListener("keydown", event => {
+    if (event.key === "Escape") {
+      closeLightbox();
+    }
+  });
+
+  /* REMOVE INTRO AFTER ANIMATION */
+window.addEventListener("load", () => {
+  const intro = document.getElementById("esteesIntro");
+
+  if (intro) {
+    setTimeout(() => {
+      intro.remove();
+    }, 3700);
+  }
+});
+</script>
+
 
 </body>
 
