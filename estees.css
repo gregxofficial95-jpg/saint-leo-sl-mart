@@ -599,3 +599,223 @@ h2 {
     padding: 10px 12px;
   }
 }
+
+/* CLICKABLE SERVICE CARDS */
+.service-card {
+  cursor: pointer;
+}
+
+.service-card:focus-visible,
+.gallery-image:focus-visible {
+  outline: 2px solid var(--champagne);
+  outline-offset: 4px;
+}
+
+.service-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(74, 56, 53, 0.12);
+}
+
+/* CLICKABLE GALLERY IMAGES */
+.gallery-image {
+  cursor: pointer;
+}
+
+.gallery-image img {
+  cursor: pointer;
+}
+
+/* ENLARGED IMAGE VIEW */
+.image-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 25px;
+  background: rgba(25, 18, 17, 0.92);
+}
+
+.image-lightbox.active {
+  display: flex;
+}
+
+.image-lightbox img {
+  max-width: 95%;
+  max-height: 85vh;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 20px;
+  right: 25px;
+  border: none;
+  background: transparent;
+  color: white;
+  font-size: 35px;
+  cursor: pointer;
+}
+
+/* =========================
+   EST EES INTRO SCREEN
+========================= */
+
+.estees-intro {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--ivory);
+  overflow: hidden;
+  animation: introDisappear 0.8s ease-in-out 2.8s forwards;
+}
+
+/* Large circular logo container */
+.intro-circle {
+  position: relative;
+  width: 320px;
+  height: 320px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  overflow: hidden;
+  animation: circleDeteriorate 1s ease-in-out 1.7s forwards;
+}
+
+/* Remove the old grid lines completely */
+.intro-grid {
+  display: none;
+}
+
+/* Fit the square logo neatly inside the circle */
+.intro-logo {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  object-fit: contain;
+  border-radius: 50%;
+  background: transparent;
+  animation: logoDeteriorate 1s ease-in-out 1.7s forwards;
+}
+
+.intro-caption {
+  margin: 28px 0 5px;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 30px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-align: center;
+  animation: textFade 0.7s ease-in-out 2s forwards;
+}
+
+.intro-subtitle {
+  color: var(--champagne);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  text-align: center;
+  animation: textFade 0.7s ease-in-out 2s forwards;
+}
+
+/* Circle deteriorates */
+@keyframes circleDeteriorate {
+  0% {
+    transform: scale(1) rotate(0);
+    opacity: 1;
+    filter: blur(0);
+  }
+
+  45% {
+    transform: scale(1.05) rotate(5deg);
+    opacity: 0.8;
+  }
+
+  100% {
+    transform: scale(0.75) rotate(-12deg);
+    opacity: 0;
+    filter: blur(12px);
+  }
+}
+
+/* Logo fades and deteriorates */
+@keyframes logoDeteriorate {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+    filter: blur(0);
+  }
+
+  50% {
+    transform: scale(0.95);
+    opacity: 0.7;
+  }
+
+  100% {
+    transform: scale(0.7);
+    opacity: 0;
+    filter: blur(10px);
+  }
+}
+
+@keyframes textFade {
+  to {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes introDisappear {
+  to {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .intro-circle {
+    width: 260px;
+    height: 260px;
+  }
+
+  .intro-logo {
+    padding: 28px;
+  }
+
+  .intro-caption {
+    font-size: 24px;
+    letter-spacing: 2px;
+  }
+
+  .intro-subtitle {
+    font-size: 8px;
+    letter-spacing: 3px;
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .estees-intro {
+    animation-duration: 0.1s;
+    animation-delay: 0.5s;
+  }
+
+  .intro-circle,
+  .intro-logo,
+  .intro-caption,
+  .intro-subtitle {
+    animation: none;
+  }
+}
