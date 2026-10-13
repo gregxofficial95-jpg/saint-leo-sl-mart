@@ -2686,3 +2686,10 @@ color: var(--gold);
   }
 
 }
+
+
+.brands-grid .brand-item {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
