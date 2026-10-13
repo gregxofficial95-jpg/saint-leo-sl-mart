@@ -2688,8 +2688,72 @@ color: var(--gold);
 }
 
 
-.brands-grid .brand-item {
-  text-decoration: none;
-  color: inherit;
-  cursor: pointer;
+/* TOP BRANDS */
+.top-brands-section {
+  padding: 0 24px 45px;
+  background: var(--cream);
+  text-align: center;
 }
+
+.top-brands-section h2 {
+  margin: 0 0 22px;
+  color: var(--black);
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.top-brands-grid {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.top-brand-item {
+  width: 80px;
+  flex: 0 0 80px;
+}
+
+/* Reuse the More to Discover logo box */
+.top-brand-item .brand-logo-box {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto;
+}
+
+/* Logos are display-only, not clickable */
+.top-brand-item {
+  cursor: default;
+}
+
+@media (max-width: 600px) {
+  .top-brands-section {
+    padding: 0 15px 35px;
+  }
+
+  .top-brands-section h2 {
+    font-size: 19px;
+    margin-bottom: 18px;
+  }
+
+  .top-brands-grid {
+    gap: 12px;
+  }
+
+  .top-brand-item {
+    width: 70px;
+    flex-basis: 70px;
+  }
+
+  .top-brand-item .brand-logo-box {
+    width: 70px;
+    height: 70px;
+  }
+}
+
+
+
+
+
+
+
