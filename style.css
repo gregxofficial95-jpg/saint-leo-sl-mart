@@ -2752,8 +2752,13 @@ color: var(--gold);
 }
 
 
-
-
-
-
+/* REMOVE UNDERLINES FROM MORE TO DISCOVER BRAND LINKS */
+.brands-section a,
+.brands-section a:link,
+.brands-section a:visited,
+.brands-section a:hover,
+.brands-section a:active {
+  text-decoration: none !important;
+  color: inherit;
+}
 
