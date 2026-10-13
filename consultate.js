@@ -40,24 +40,35 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 
-  /* ===================================================
-     2. SPLIT INTRO SCREEN
-     =================================================== */
 
-  const introScreen = document.getElementById("introScreen");
+/* ===================================================
+   2. SPLIT INTRO SCREEN
+   =================================================== */
 
-  if (introScreen) {
-    const introDuration = 2600;
+const introScreen = document.getElementById("introScreen");
 
+if (introScreen) {
+  const introLogo = introScreen.querySelector(".intro-logo img");
+
+  function openIntro() {
     window.setTimeout(() => {
       introScreen.classList.add("is-opening");
 
       window.setTimeout(() => {
         introScreen.classList.add("is-finished");
       }, 1250);
-
-    }, introDuration);
+    }, 2600);
   }
+
+  if (introLogo && !introLogo.complete) {
+    introLogo.addEventListener("load", openIntro, { once: true });
+
+    introLogo.addEventListener("error", openIntro, { once: true });
+  } else {
+    openIntro();
+  }
+}
+
 
 
   /* ===================================================
