@@ -1,0 +1,441 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Mira's Nova Luxe | Bags & Shoes</title>
+  <meta name="description" content="Discover elegant bags and heels at Mira's Nova Luxe. Shop luxury styles with ease.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="mira.css">
+</head>
+
+<body>
+
+  <div class="announcement">
+    A little luxury, a lot of elegance ♡
+  </div>
+
+  <header class="navbar">
+    <a href="#home" class="logo">
+      <span class="logo-icon">N</span>
+      <span class="logo-text">
+        <strong>MIRA'S</strong>
+        <small>NOVA LUXE</small>
+      </span>
+    </a>
+
+    <button class="menu-toggle" id="menuToggle" aria-label="Open navigation" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <nav class="nav-links" id="navLinks">
+      <a href="#home">Home</a>
+      <a href="#shop">Shop</a>
+      <a href="#about">Our Story</a>
+      <a href="#contact">Contact</a>
+    </nav>
+
+    <a href="#shop" class="nav-cta">Explore Collection <span>↗</span></a>
+  </header>
+
+  <main>
+
+    <!-- HERO -->
+    <section class="hero" id="home">
+      <div class="hero-glow glow-one"></div>
+      <div class="hero-glow glow-two"></div>
+      <div class="hero-ring ring-one"></div>
+      <div class="hero-ring ring-two"></div>
+
+      <div class="hero-content">
+        <span class="eyebrow"><span class="eyebrow-line"></span> YOUR STYLE, ELEVATED</span>
+
+        <h1>
+          Luxury in every
+          <span>little detail.</span>
+        </h1>
+
+        <p>
+          Beautiful bags. Stunning heels. Timeless style.
+          Find your next favourite piece at Mira's Nova Luxe.
+        </p>
+
+        <div class="hero-actions">
+          <a href="#shop" class="primary-btn">Shop the Collection <span>→</span></a>
+          <a href="#about" class="secondary-btn">Discover Our Story</a>
+        </div>
+
+        <div class="hero-bottom">
+          <div class="hero-stat">
+            <strong>01</strong>
+            <span>Curated style</span>
+          </div>
+
+          <div class="stat-divider"></div>
+
+          <div class="hero-stat">
+            <strong>♡</strong>
+            <span>Made for your moments</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-decoration" aria-hidden="true">
+        <div class="decor-circle">
+          <div class="decor-inner">
+            <span class="decor-star">✳</span>
+            <span class="decor-label">THE ART OF</span>
+            <span class="decor-title">Elegance</span>
+            <span class="decor-small">MIRA'S NOVA LUXE</span>
+          </div>
+        </div>
+        <span class="floating-star star-one">✦</span>
+        <span class="floating-star star-two">✧</span>
+        <span class="floating-star star-three">✳</span>
+        <span class="decor-caption">Your next favourite awaits.</span>
+      </div>
+
+      <div class="hero-scroll">
+        <span></span>
+        SCROLL TO DISCOVER
+      </div>
+    </section>
+
+    <!-- COLLECTION INTRO -->
+    <section class="collection-intro" id="shop">
+      <div>
+        <span class="section-kicker">THE NOVA EDIT</span>
+        <h2>Pieces you'll <em>love.</em></h2>
+      </div>
+
+      <p>
+        From everyday essentials to statement heels,
+        discover pieces that make getting dressed special.
+      </p>
+    </section>
+
+    <!-- FILTERS -->
+    <section class="shop-section">
+      <div class="shop-toolbar">
+        <div class="filter-group">
+          <button class="filter-btn active" data-filter="all">All Pieces <span>05</span></button>
+          <button class="filter-btn" data-filter="bags">Bags</button>
+          <button class="filter-btn" data-filter="shoes">Shoes</button>
+        </div>
+
+        <span class="results-count" id="resultsCount">05 PRODUCTS</span>
+      </div>
+
+      <div class="product-grid">
+
+        <!-- PRODUCT 1 -->
+        <article class="product-card" data-category="bags" data-product="1">
+          <div class="product-image">
+            <img src="mira-01.jpeg" alt="Miss Gail Rough Skin Leather Bag" loading="lazy">
+            <span class="product-tag">SIGNATURE BAG</span>
+            <span class="image-number">01 / 05</span>
+          </div>
+
+          <div class="product-info">
+            <span class="product-category">BAGS · MISS GAIL</span>
+            <h3>Miss Gail Rough Skin Leather Bag</h3>
+            <p class="product-description">
+              Comes with a longer strap and twirl scarves, beautifully packaged.
+            </p>
+
+            <div class="product-price">₦45,000</div>
+
+            <div class="product-options">
+              <label for="miraColor1">Choose a colour</label>
+              <select id="miraColor1" class="product-select">
+                <option value="">Select colour</option>
+                <option value="Green">Green</option>
+                <option value="White">White</option>
+                <option value="Brown">Brown</option>
+                <option value="Blue">Blue</option>
+              </select>
+            </div>
+
+            <div class="product-options">
+              <label for="miraSize1">Size</label>
+              <select id="miraSize1" class="product-select">
+                <option value="Not applicable">Not applicable</option>
+              </select>
+            </div>
+
+            <div class="quantity-row">
+              <label for="miraQty1">Quantity</label>
+              <div class="quantity-control">
+                <button type="button" class="qty-btn" data-target="miraQty1" data-step="-1" aria-label="Decrease quantity">−</button>
+                <input type="number" id="miraQty1" value="1" min="1" max="99">
+                <button type="button" class="qty-btn" data-target="miraQty1" data-step="1" aria-label="Increase quantity">+</button>
+              </div>
+            </div>
+
+            <button class="order-btn" type="button" data-order="1">
+              Order on WhatsApp <span>↗</span>
+            </button>
+          </div>
+        </article>
+
+        <!-- PRODUCT 2 -->
+        <article class="product-card" data-category="bags" data-product="2">
+          <div class="product-image">
+            <img src="mira-02.jpeg" alt="Miss Gail Duffle Bag with Side Pockets" loading="lazy">
+            <span class="product-tag">EVERYDAY LUXE</span>
+            <span class="image-number">02 / 05</span>
+          </div>
+
+          <div class="product-info">
+            <span class="product-category">BAGS · MISS GAIL</span>
+            <h3>Miss Gail Duffle Bag with Side Pockets</h3>
+            <p class="product-description">
+              Stylish duffle bag with side pockets and double straps.
+            </p>
+
+            <div class="product-price">₦47,000</div>
+
+            <div class="product-options">
+              <label for="miraColor2">Choose a print</label>
+              <select id="miraColor2" class="product-select">
+                <option value="">Select print</option>
+                <option value="Pink">Pink</option>
+                <option value="Brown">Brown</option>
+              </select>
+            </div>
+
+            <div class="product-options">
+              <label for="miraSize2">Size</label>
+              <select id="miraSize2" class="product-select">
+                <option value="Not applicable">Not applicable</option>
+              </select>
+            </div>
+
+            <div class="quantity-row">
+              <label for="miraQty2">Quantity</label>
+              <div class="quantity-control">
+                <button type="button" class="qty-btn" data-target="miraQty2" data-step="-1" aria-label="Decrease quantity">−</button>
+                <input type="number" id="miraQty2" value="1" min="1" max="99">
+                <button type="button" class="qty-btn" data-target="miraQty2" data-step="1" aria-label="Increase quantity">+</button>
+              </div>
+            </div>
+
+            <button class="order-btn" type="button" data-order="2">
+              Order on WhatsApp <span>↗</span>
+            </button>
+          </div>
+        </article>
+
+        <!-- PRODUCT 3 -->
+        <article class="product-card" data-category="shoes" data-product="3">
+          <div class="product-image">
+            <img src="mira-03.jpeg" alt="Reno Luxury Heel" loading="lazy">
+            <span class="product-tag">LUXURY HEELS</span>
+            <span class="image-number">03 / 05</span>
+          </div>
+
+          <div class="product-info">
+            <span class="product-category">SHOES · RENO</span>
+            <h3>Reno Luxury Heel</h3>
+            <p class="product-description">
+              A luxury heel, fully boxed and carefully packaged.
+            </p>
+
+            <div class="product-price">₦60,000</div>
+
+            <div class="product-options">
+              <label for="miraColor3">Colour / style</label>
+              <select id="miraColor3" class="product-select">
+                <option value="As displayed">As displayed</option>
+              </select>
+            </div>
+
+            <div class="product-options">
+              <label for="miraSize3">Choose your size</label>
+              <select id="miraSize3" class="product-select">
+                <option value="">Select size</option>
+                <option value="Confirm availability">Confirm availability with seller</option>
+              </select>
+              <small class="field-note">Size availability will be confirmed on WhatsApp.</small>
+            </div>
+
+            <div class="quantity-row">
+              <label for="miraQty3">Quantity</label>
+              <div class="quantity-control">
+                <button type="button" class="qty-btn" data-target="miraQty3" data-step="-1" aria-label="Decrease quantity">−</button>
+                <input type="number" id="miraQty3" value="1" min="1" max="99">
+                <button type="button" class="qty-btn" data-target="miraQty3" data-step="1" aria-label="Increase quantity">+</button>
+              </div>
+            </div>
+
+            <button class="order-btn" type="button" data-order="3">
+              Order on WhatsApp <span>↗</span>
+            </button>
+          </div>
+        </article>
+
+        <!-- PRODUCT 4 -->
+        <article class="product-card" data-category="shoes" data-product="4">
+          <div class="product-image">
+            <img src="mira-04.jpeg" alt="Zara Sandal Heel" loading="lazy">
+            <span class="product-tag">CHIC ESSENTIAL</span>
+            <span class="image-number">04 / 05</span>
+          </div>
+
+          <div class="product-info">
+            <span class="product-category">SHOES · ZARA</span>
+            <h3>Zara Sandal Heel</h3>
+            <p class="product-description">
+              An elegant sandal heel for your everyday and special occasions.
+            </p>
+
+            <div class="product-price">₦22,000</div>
+
+            <div class="product-options">
+              <label for="miraColor4">Colour / style</label>
+              <select id="miraColor4" class="product-select">
+                <option value="As displayed">As displayed</option>
+              </select>
+            </div>
+
+            <div class="product-options">
+              <label for="miraSize4">Choose your size</label>
+              <select id="miraSize4" class="product-select">
+                <option value="">Select size</option>
+                <option value="37">37</option>
+                <option value="38">38</option>
+                <option value="39">39</option>
+                <option value="40">40</option>
+                <option value="41">41</option>
+              </select>
+            </div>
+
+            <div class="quantity-row">
+              <label for="miraQty4">Quantity</label>
+              <div class="quantity-control">
+                <button type="button" class="qty-btn" data-target="miraQty4" data-step="-1" aria-label="Decrease quantity">−</button>
+                <input type="number" id="miraQty4" value="1" min="1" max="99">
+                <button type="button" class="qty-btn" data-target="miraQty4" data-step="1" aria-label="Increase quantity">+</button>
+              </div>
+            </div>
+
+            <button class="order-btn" type="button" data-order="4">
+              Order on WhatsApp <span>↗</span>
+            </button>
+          </div>
+        </article>
+
+        <!-- PRODUCT 5 -->
+        <article class="product-card" data-category="shoes" data-product="5">
+          <div class="product-image">
+            <img src="mira-05.jpeg" alt="Monochrome Zara Heels" loading="lazy">
+            <span class="product-tag">STATEMENT PIECE</span>
+            <span class="image-number">05 / 05</span>
+          </div>
+
+          <div class="product-info">
+            <span class="product-category">SHOES · MONOCHROME</span>
+            <h3>Monochrome Zara Heels</h3>
+            <p class="product-description">
+              A classic monochrome heel that adds a refined touch to your look.
+            </p>
+
+            <div class="product-price">₦22,000</div>
+
+            <div class="product-options">
+              <label for="miraColor5">Colour / style</label>
+              <select id="miraColor5" class="product-select">
+                <option value="Monochrome">Monochrome</option>
+              </select>
+            </div>
+
+            <div class="product-options">
+              <label for="miraSize5">Choose your size</label>
+              <select id="miraSize5" class="product-select">
+                <option value="">Select size</option>
+                <option value="37">37</option>
+                <option value="38">38</option>
+                <option value="39">39</option>
+                <option value="40">40</option>
+                <option value="41">41</option>
+                <option value="42">42</option>
+              </select>
+            </div>
+
+            <div class="quantity-row">
+              <label for="miraQty5">Quantity</label>
+              <div class="quantity-control">
+                <button type="button" class="qty-btn" data-target="miraQty5" data-step="-1" aria-label="Decrease quantity">−</button>
+                <input type="number" id="miraQty5" value="1" min="1" max="99">
+                <button type="button" class="qty-btn" data-target="miraQty5" data-step="1" aria-label="Increase quantity">+</button>
+              </div>
+            </div>
+
+            <button class="order-btn" type="button" data-order="5">
+              Order on WhatsApp <span>↗</span>
+            </button>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- BRAND STORY -->
+    <section class="about-section" id="about">
+      <div class="about-decoration" aria-hidden="true">
+        <div class="about-orbit orbit-one"></div>
+        <div class="about-orbit orbit-two"></div>
+        <span class="about-heart">♡</span>
+      </div>
+
+      <div class="about-content">
+        <span class="section-kicker">A NOVA KIND OF LUXURY</span>
+        <h2>Your style deserves<br><em>a little extra.</em></h2>
+        <p>
+          At Mira's Nova Luxe, we believe the right accessories
+          can turn an ordinary outfit into something memorable.
+          Explore our collection of bags and shoes, selected
+          to bring a little more elegance to your everyday.
+        </p>
+        <a href="#shop" class="primary-btn">Find Your Favourite <span>→</span></a>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="contact-section" id="contact">
+      <span class="section-kicker">LET'S CONNECT</span>
+      <h2>Your next favourite is <em>waiting.</em></h2>
+      <p>Found something you love? Contact us to place your order.</p>
+      <a href="#" class="contact-btn" id="contactWhatsApp">
+        Chat with us on WhatsApp <span>↗</span>
+      </a>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <a href="#home" class="footer-logo">MIRA'S <span>NOVA LUXE</span></a>
+    <p>Elegance in every detail. ♡</p>
+    <div class="footer-links">
+      <a href="#home">Home</a>
+      <a href="#shop">Shop</a>
+      <a href="#about">Our Story</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span id="currentYear"></span> Mira's Nova Luxe</span>
+      <span>Made with ♡ for your style.</span>
+    </div>
+  </footer>
+
+  <script src="mira.js"></script>
+</body>
+</html>
