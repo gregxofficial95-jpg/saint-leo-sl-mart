@@ -1220,3 +1220,116 @@ h1 span {
   }
 
 }
+
+
+
+/* =========================
+   IVY'S GLAM INTRO SCREEN
+========================= */
+
+.intro-screen {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  z-index: 99999;
+  overflow: hidden;
+  background: #000;
+  isolation: isolate;
+}
+
+.intro-panel {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 50.5%;
+  background: #000;
+  z-index: 2;
+  transition: transform 1.15s cubic-bezier(0.77, 0, 0.18, 1);
+}
+
+.intro-panel-top {
+  top: 0;
+  border-bottom: 1px solid rgba(198, 164, 93, 0.15);
+}
+
+.intro-panel-bottom {
+  bottom: 0;
+  border-top: 1px solid rgba(198, 164, 93, 0.15);
+}
+
+.intro-logo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 3;
+  width: min(300px, 72vw);
+  margin: 0;
+  padding: 0;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  animation: ivyLogoReveal 0.9s 0.3s ease forwards;
+}
+
+.intro-logo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 30dvh;
+  object-fit: contain;
+  object-position: center;
+  margin: 0;
+  padding: 0;
+}
+
+.intro-screen.is-opening .intro-panel-top {
+  transform: translateY(-105%);
+}
+
+.intro-screen.is-opening .intro-panel-bottom {
+  transform: translateY(105%);
+}
+
+.intro-screen.is-opening .intro-logo {
+  opacity: 0;
+  animation: none;
+  transition: opacity 0.25s ease;
+}
+
+.intro-screen.is-finished {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+@keyframes ivyLogoReveal {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.92);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@media (max-width: 600px) {
+  .intro-logo {
+    width: min(260px, 72vw);
+  }
+
+  .intro-logo img {
+    max-height: 25dvh;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intro-panel {
+    transition-duration: 0.3s;
+  }
+
+  .intro-logo {
+    animation-duration: 0.3s;
+  }
+}
