@@ -1,0 +1,332 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="referrer" content="no-referrer">
+
+  <title>Vendor Request Confirmation | Saint Leo's Mart</title>
+
+  <style>
+    :root {
+      --black: #171512;
+      --cream: #f5f1e8;
+      --gold: #d6a64f;
+      --muted: #756f65;
+      --white: #fff;
+      --border: #e8e1d5;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      padding: 24px 16px;
+      display: grid;
+      place-items: center;
+      background: var(--cream);
+      color: var(--black);
+      font-family: Arial, sans-serif;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 480px;
+      padding: 32px 24px;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      box-shadow: 0 12px 40px rgba(23, 21, 18, 0.08);
+    }
+
+    .brand {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .brand-mark {
+      width: 58px;
+      height: 58px;
+      margin: 0 auto 14px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--black);
+      color: var(--gold);
+      font-size: 23px;
+      font-weight: 800;
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: 21px;
+      letter-spacing: 1px;
+    }
+
+    .brand p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    h2 {
+      margin: 0 0 10px;
+      font-size: 23px;
+      text-align: center;
+    }
+
+    .intro {
+      margin: 0 0 24px;
+      color: var(--muted);
+      text-align: center;
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    textarea {
+      display: block;
+      width: 100%;
+      min-height: 100px;
+      padding: 13px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      resize: vertical;
+      font: inherit;
+      font-size: 14px;
+      outline-color: var(--gold);
+    }
+
+    .actions {
+      display: grid;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    button {
+      width: 100%;
+      min-height: 48px;
+      padding: 13px 16px;
+      border: 0;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+    }
+
+    .received {
+      background: var(--black);
+      color: var(--white);
+    }
+
+    .not-received {
+      background: var(--cream);
+      color: var(--black);
+      border: 1px solid var(--border);
+    }
+
+    #message {
+      display: none;
+      margin-top: 18px;
+      padding: 13px;
+      border-radius: 9px;
+      font-size: 14px;
+      line-height: 1.6;
+      overflow-wrap: anywhere;
+    }
+
+    #message.show {
+      display: block;
+    }
+
+    #message.success {
+      background: #eaf6ed;
+      color: #205b31;
+    }
+
+    #message.error {
+      background: #fff0ed;
+      color: #8a2e20;
+    }
+
+    .notice {
+      margin: 22px 0 0;
+      text-align: center;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 380px) {
+      .card {
+        padding: 26px 18px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="card">
+    <header class="brand">
+      <div class="brand-mark">SL</div>
+      <h1>SAINT LEO'S MART</h1>
+      <p>Vendor Request Confirmation</p>
+    </header>
+
+    <section id="confirmation">
+      <h2>Confirm Your Request</h2>
+
+      <p class="intro">
+        Please confirm whether you received the customer request
+        sent to your brand.
+      </p>
+
+      <label for="vendorNote">
+        Note (optional)
+      </label>
+
+      <textarea
+        id="vendorNote"
+        maxlength="1000"
+        placeholder="Add a note if necessary..."
+      ></textarea>
+
+      <div class="actions">
+        <button
+          type="button"
+          class="received"
+          data-response="confirmed"
+        >
+          I Received This Request
+        </button>
+
+        <button
+          type="button"
+          class="not-received"
+          data-response="not_received"
+        >
+          I Did Not Receive This Request
+        </button>
+      </div>
+    </section>
+
+    <div id="message" role="status" aria-live="polite"></div>
+
+    <p class="notice">
+      This page is intended for authorised vendors.
+      Please do not share your confirmation link.
+    </p>
+  </main>
+
+  <script>
+    const FUNCTION_URL =
+      "https://tzjckojpgamjwigxmdja.supabase.co/functions/v1/vendor-order-response";
+
+    const params = new URLSearchParams(window.location.search);
+    const token = params.get("token");
+
+    const buttons = document.querySelectorAll("[data-response]");
+    const message = document.getElementById("message");
+    const noteField = document.getElementById("vendorNote");
+    const confirmation = document.getElementById("confirmation");
+
+    function showMessage(text, type) {
+      message.textContent = text;
+      message.className = "show " + type;
+    }
+
+    if (!token) {
+      confirmation.hidden = true;
+      showMessage(
+        "This confirmation link is missing its security token. Please open the original link from your vendor email.",
+        "error"
+      );
+    }
+
+    buttons.forEach((button) => {
+      button.addEventListener("click", async () => {
+        if (!token) return;
+
+        const response = button.dataset.response;
+        const vendor_note = noteField.value.trim();
+
+        const promptText = response === "confirmed"
+          ? "Confirm that you received this request?"
+          : "Confirm that you did not receive this request?";
+
+        if (!window.confirm(promptText)) return;
+
+        buttons.forEach((item) => item.disabled = true);
+        noteField.disabled = true;
+
+        showMessage("Submitting your response. Please wait...", "success");
+
+        try {
+          const result = await fetch(FUNCTION_URL, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              token,
+              response,
+              vendor_note
+            })
+          });
+
+          const data = await result.json().catch(() => ({}));
+
+          if (!result.ok || data.success === false) {
+            throw new Error(
+              data.error || data.message ||
+              "Your response could not be recorded."
+            );
+          }
+
+          confirmation.hidden = true;
+
+          showMessage(
+            response === "confirmed"
+              ? "Thank you. Your confirmation has been recorded."
+              : "Your response has been recorded. The marketplace team can follow up.",
+            "success"
+          );
+
+          // Remove the token from the visible browser address.
+          window.history.replaceState(
+            {},
+            document.title,
+            window.location.pathname
+          );
+
+        } catch (error) {
+          buttons.forEach((item) => item.disabled = false);
+          noteField.disabled = false;
+
+          showMessage(
+            error.message ||
+            "Something went wrong. Please try again or contact the marketplace team.",
+            "error"
+          );
+        }
+      });
+    });
+  </script>
+</body>
+</html>
