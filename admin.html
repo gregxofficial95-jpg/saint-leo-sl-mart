@@ -1,1585 +1,782 @@
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
   <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Saint Leo's Mart — Admin</title>
-
-  <!-- SUPABASE -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
   <script src="supabase.js"></script>
 
   <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: Arial, sans-serif; background: #100b08; color: #f2eadb; min-height: 100vh; }
+    button, input, select, textarea { font: inherit; }
+    button { cursor: pointer; }
+    .admin-header { padding: 22px 30px; border-bottom: 1px solid #493722; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    .admin-brand { color: #d4aa60; font-size: 13px; font-weight: 700; letter-spacing: 2px; }
+    .admin-title { margin-top: 6px; font-size: 24px; }
+    .logout-button, .action-button { border: 1px solid #b98a3b; background: transparent; color: #f2eadb; padding: 10px 16px; border-radius: 6px; }
+    .logout-button:hover, .action-button:hover { background: #b98a3b; color: #100b08; }
+    .admin-container { width: min(1200px, 94%); margin: 35px auto 80px; }
+    .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 30px; }
+    .stat-card, .panel, .review-card, .order-card, .admin-profile { padding: 22px; border: 1px solid #493722; background: rgba(255,255,255,.035); border-radius: 10px; }
+    .stat-label { font-size: 11px; letter-spacing: 1.2px; opacity: .65; }
+    .stat-number { display: block; margin-top: 10px; font-size: 32px; color: #d4aa60; }
+    .admin-section { margin-top: 38px; }
+    .admin-section h2, .admin-profile h2 { margin-bottom: 16px; font-size: 20px; }
+    .section-intro { color: #b9ad9b; font-size: 13px; line-height: 1.6; margin: -5px 0 18px; }
+    .reviews-container, .orders-container { display: grid; gap: 14px; }
+    .review-top, .order-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 15px; flex-wrap: wrap; }
+    .review-name { font-weight: 700; font-size: 14px; }
+    .review-stars { color: #d4aa60; letter-spacing: 2px; }
+    .review-text { line-height: 1.7; font-size: 14px; opacity: .8; margin-top: 12px; overflow-wrap: anywhere; }
+    .review-date, .muted { display: block; margin-top: 10px; font-size: 12px; color: #b9ad9b; overflow-wrap: anywhere; }
+    .status-badge { display: inline-block; padding: 6px 9px; border-radius: 4px; font-size: 10px; font-weight: 700; letter-spacing: .5px; background: #34291a; color: #e5bd70; }
+    .status-approved, .status-completed, .status-confirmed { background: #183321; color: #8dd49a; }
+    .status-rejected, .status-cancelled, .status-unconfirmed, .status-not_received { background: #3b2020; color: #ed9999; }
+    .review-actions { display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap; }
+    .review-actions button { border: 0; padding: 9px 12px; border-radius: 5px; font-size: 11px; font-weight: 700; }
+    .approve-button { background: #7fc58b; color: #101010; }
+    .reject-button { background: #df8585; color: #101010; }
+    .delete-button { background: transparent; color: #df8585; border: 1px solid #df8585 !important; }
+    .empty-message { padding: 28px 18px; text-align: center; border: 1px dashed #493722; border-radius: 8px; color: #b9ad9b; font-size: 13px; line-height: 1.6; }
+    .filters { display: grid; grid-template-columns: 2fr 1fr 1fr auto; gap: 10px; margin-bottom: 18px; }
+    .field, .filters input, .filters select, .order-card select, .order-card textarea, .profile-edit input { width: 100%; padding: 12px; border: 1px solid #59452c; border-radius: 6px; background: #17110d; color: #f2eadb; outline: none; }
+    .field:focus, .filters input:focus, .filters select:focus, .order-card select:focus, .order-card textarea:focus, .profile-edit input:focus { border-color: #d4aa60; }
+    .order-card h3 { font-size: 17px; margin: 12px 0 8px; color: #e8c786; }
+    .order-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 12px; margin-top: 15px; }
+    .detail { font-size: 13px; line-height: 1.7; overflow-wrap: anywhere; }
+    .detail strong { color: #d4aa60; }
+    .order-controls { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 12px; margin-top: 18px; }
+    .control-label { display: block; font-size: 11px; color: #b9ad9b; margin-bottom: 7px; }
+    .order-card textarea { min-height: 75px; resize: vertical; margin-top: 12px; }
+    .order-card .save-order { margin-top: 12px; }
+    .admin-profile { margin-top: 45px; }
+    .admin-profile-intro { font-size: 13px; color: #b9ad9b; margin-bottom: 22px; line-height: 1.6; }
+    .profile-information { display: grid; gap: 10px; margin-bottom: 25px; }
+    .profile-information p { display: flex; justify-content: space-between; gap: 15px; padding: 13px; border: 1px solid #493722; border-radius: 6px; font-size: 13px; }
+    .profile-information strong { color: #d4aa60; }
+    .profile-information span { text-align: right; overflow-wrap: anywhere; }
+    .profile-edit { margin-top: 24px; padding-top: 22px; border-top: 1px solid #493722; }
+    .profile-edit h3 { margin-bottom: 13px; font-size: 15px; }
+    .profile-edit input { margin-bottom: 10px; }
+    .profile-message { margin-top: 10px; font-size: 12px; color: #d4aa60; }
+    .admin-back-store { display: inline-block; margin-bottom: 22px; color: #d4aa60; text-decoration: none; font-size: 11px; font-weight: 700; }
+    .access-message { min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 30px; line-height: 1.7; }
+    .toolbar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 15px; }
+    .small-button { border: 1px solid #b98a3b; background: transparent; color: #f2eadb; padding: 9px 12px; border-radius: 5px; }
+    .small-button:hover { background: #b98a3b; color: #100b08; }
+    .hidden { display: none !important; }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
+    @media (max-width: 750px) {
+      .admin-header { padding: 18px 15px; }
+      .admin-title { font-size: 20px; }
+      .admin-container { width: 92%; margin-top: 25px; }
+      .stats-grid { grid-template-columns: 1fr; }
+      .filters { grid-template-columns: 1fr; }
+      .order-grid, .order-controls { grid-template-columns: 1fr; }
+      .stat-card { padding: 18px; }
+      .profile-information p { align-items: flex-start; }
     }
-
-    body {
-      font-family: Arial, sans-serif;
-      background: #100b08;
-      color: #f2eadb;
-      min-height: 100vh;
-    }
-
-    /* ================= HEADER ================= */
-
-    .admin-header {
-      padding: 22px 30px;
-      border-bottom: 1px solid rgba(185, 138, 59, 0.25);
-
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-
-      gap: 20px;
-    }
-
-    .admin-brand {
-      color: #d4aa60;
-      font-size: 13px;
-      font-weight: 700;
-      letter-spacing: 2px;
-    }
-
-    .admin-title {
-      margin-top: 6px;
-      font-size: 24px;
-    }
-
-    .logout-button {
-      border: 1px solid #b98a3b;
-      background: transparent;
-      color: #f2eadb;
-
-      padding: 10px 18px;
-
-      border-radius: 6px;
-
-      cursor: pointer;
-    }
-
-    .logout-button:hover {
-      background: #b98a3b;
-      color: #100b08;
-    }
-
-    /* ================= MAIN ================= */
-
-    .admin-container {
-      width: min(1100px, 92%);
-      margin: 40px auto 80px;
-    }
-
-    /* ================= STATS ================= */
-
-    .stats-grid {
-      display: grid;
-
-      grid-template-columns:
-        repeat(3, 1fr);
-
-      gap: 18px;
-
-      margin-bottom: 45px;
-    }
-
-    .stat-card {
-      padding: 25px;
-
-      border: 1px solid rgba(185, 138, 59, 0.25);
-
-      background: rgba(255, 255, 255, 0.035);
-
-      border-radius: 10px;
-    }
-
-    .stat-label {
-      font-size: 11px;
-
-      letter-spacing: 1.5px;
-
-      opacity: 0.55;
-    }
-
-    .stat-number {
-      display: block;
-
-      margin-top: 10px;
-
-      font-size: 35px;
-
-      color: #d4aa60;
-    }
-
-    /* ================= SECTION ================= */
-
-    .admin-section {
-      margin-top: 35px;
-    }
-
-    .admin-section h2 {
-      margin-bottom: 18px;
-
-      font-size: 20px;
-    }
-
-    /* ================= REVIEWS ================= */
-
-    .reviews-container {
-      display: grid;
-
-      gap: 15px;
-    }
-
-    .review-card {
-      padding: 22px;
-
-      border: 1px solid rgba(185, 138, 59, 0.2);
-
-      background: rgba(255, 255, 255, 0.035);
-
-      border-radius: 9px;
-    }
-
-    .review-top {
-      display: flex;
-
-      justify-content: space-between;
-
-      align-items: flex-start;
-
-      gap: 15px;
-
-      margin-bottom: 12px;
-    }
-
-    .review-name {
-      font-weight: 700;
-
-      font-size: 14px;
-    }
-
-    .review-stars {
-      color: #d4aa60;
-
-      letter-spacing: 2px;
-    }
-
-    .review-text {
-      line-height: 1.7;
-
-      font-size: 14px;
-
-      opacity: 0.75;
-    }
-
-    .review-date {
-      display: block;
-
-      margin-top: 12px;
-
-      font-size: 10px;
-
-      opacity: 0.4;
-    }
-
-    /* ================= STATUS ================= */
-
-    .review-status {
-      display: inline-block;
-
-      margin-top: 12px;
-
-      padding: 5px 9px;
-
-      border-radius: 4px;
-
-      font-size: 9px;
-
-      letter-spacing: 1px;
-
-      font-weight: 700;
-    }
-
-    .status-pending {
-      background: rgba(212, 170, 96, 0.12);
-
-      color: #d4aa60;
-    }
-
-    .status-approved {
-      background: rgba(80, 160, 100, 0.12);
-
-      color: #7fc58b;
-    }
-
-    .status-rejected {
-      background: rgba(180, 70, 70, 0.12);
-
-      color: #df8585;
-    }
-
-    /* ================= ACTIONS ================= */
-
-    .review-actions {
-      display: flex;
-
-      gap: 8px;
-
-      margin-top: 18px;
-
-      flex-wrap: wrap;
-    }
-
-    .review-actions button {
-      border: none;
-
-      padding: 9px 14px;
-
-      border-radius: 5px;
-
-      cursor: pointer;
-
-      font-size: 11px;
-
-      font-weight: 700;
-    }
-
-    .approve-button {
-      background: #7fc58b;
-
-      color: #101010;
-    }
-
-    .reject-button {
-      background: #df8585;
-
-      color: #101010;
-    }
-
-    .delete-button {
-      background: transparent;
-
-      color: #df8585;
-
-      border: 1px solid #df8585 !important;
-    }
-
-    .review-actions button:hover {
-      opacity: 0.8;
-    }
-
-    /* ================= EMPTY ================= */
-
-    .empty-message {
-      padding: 35px 20px;
-
-      text-align: center;
-
-      border: 1px dashed rgba(185, 138, 59, 0.25);
-
-      border-radius: 8px;
-
-      opacity: 0.5;
-
-      font-size: 13px;
-    }
-
-    /* ================= ACCESS ================= */
-
-    .access-message {
-      min-height: 100vh;
-
-      display: flex;
-
-      align-items: center;
-
-      justify-content: center;
-
-      text-align: center;
-
-      padding: 30px;
-    }
-
-
-    /* ================= ADMIN PROFILE ================= */
-
-.admin-profile {
-  margin-top: 50px;
-
-  padding: 30px;
-
-  border: 1px solid rgba(185, 138, 59, 0.25);
-
-  background: rgba(255, 255, 255, 0.035);
-
-  border-radius: 10px;
-}
-
-.admin-profile h2 {
-  margin-bottom: 8px;
-  font-size: 20px;
-}
-
-.admin-profile-intro {
-  font-size: 13px;
-  opacity: 0.55;
-  margin-bottom: 25px;
-}
-
-.profile-information {
-  display: grid;
-  gap: 10px;
-  margin-bottom: 30px;
-}
-
-.profile-information p {
-  display: flex;
-  justify-content: space-between;
-  gap: 20px;
-
-  padding: 14px;
-
-  border: 1px solid rgba(185, 138, 59, 0.15);
-
-  border-radius: 6px;
-
-  font-size: 13px;
-}
-
-.profile-information strong {
-  color: #d4aa60;
-}
-
-.profile-information span {
-  opacity: 0.7;
-  text-align: right;
-}
-
-.profile-edit {
-  margin-top: 30px;
-  padding-top: 25px;
-  border-top: 1px solid rgba(185, 138, 59, 0.15);
-}
-
-.profile-edit h3 {
-  margin-bottom: 15px;
-  font-size: 15px;
-}
-
-.profile-edit input {
-  width: 100%;
-
-  padding: 13px 14px;
-
-  margin-bottom: 12px;
-
-  border: 1px solid rgba(185, 138, 59, 0.3);
-
-  border-radius: 6px;
-
-  background: #100b08;
-
-  color: #f2eadb;
-
-  outline: none;
-}
-
-.profile-edit input:focus {
-  border-color: #d4aa60;
-}
-
-.profile-edit button {
-  border: 1px solid #b98a3b;
-
-  background: transparent;
-
-  color: #f2eadb;
-
-  padding: 10px 16px;
-
-  border-radius: 6px;
-
-  cursor: pointer;
-
-  font-size: 11px;
-
-  font-weight: 700;
-
-  letter-spacing: .5px;
-}
-
-.profile-edit button:hover {
-  background: #b98a3b;
-  color: #100b08;
-}
-
-.profile-message {
-  margin-top: 10px;
-
-  font-size: 12px;
-
-  color: #d4aa60;
-}
-
-.admin-back-store {
-  display: inline-block;
-
-  margin-bottom: 25px;
-
-  color: #d4aa60;
-
-  text-decoration: none;
-
-  font-size: 11px;
-
-  font-weight: 700;
-
-  letter-spacing: .7px;
-}
-
-.admin-back-store:hover {
-  opacity: .7;
-}
-
-    /* ================= MOBILE ================= */
-
-    @media (max-width: 700px) {
-
-      .admin-header {
-        padding: 20px;
-      }
-
-      .admin-title {
-        font-size: 20px;
-      }
-
-      .stats-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .review-top {
-        flex-direction: column;
-      }
-
-      .admin-container {
-        width: min(100% - 30px, 600px);
-      }
-
-    }
-
   </style>
-
 </head>
 
-
 <body>
+  <div id="accessMessage" class="access-message">Checking admin access...</div>
 
-
-  <!-- ================= ACCESS CHECK ================= -->
-
-  <div
-    id="accessMessage"
-    class="access-message"
-  >
-
-    Checking admin access...
-
-  </div>
-
-
-  <!-- ================= ADMIN APP ================= -->
-
-  <div
-    id="adminApp"
-    style="display:none;"
-  >
-
-
-    <!-- HEADER -->
-
+  <div id="adminApp" class="hidden">
     <header class="admin-header">
-
       <div>
-
-        <div class="admin-brand">
-          SAINT LEO'S MART
-        </div>
-
-        <h1 class="admin-title">
-          Admin Dashboard
-        </h1>
-
+        <div class="admin-brand">SAINT LEO'S MART</div>
+        <h1 class="admin-title">Admin Dashboard</h1>
       </div>
-
-
-      <button
-        class="logout-button"
-        onclick="adminLogout()"
-      >
-        LOG OUT
-      </button>
-
+      <button class="logout-button" onclick="adminLogout()">LOG OUT</button>
     </header>
 
-
-    <!-- MAIN -->
-
     <main class="admin-container">
-
-
-      <!-- ================= STATS ================= -->
-
       <section class="stats-grid">
-
         <div class="stat-card">
-
-          <span class="stat-label">
-            TOTAL REVIEWS
-          </span>
-
-          <strong
-            id="totalReviews"
-            class="stat-number"
-          >
-            0
-          </strong>
-
+          <span class="stat-label">TOTAL REVIEWS</span>
+          <strong id="totalReviews" class="stat-number">0</strong>
         </div>
-
-
         <div class="stat-card">
-
-          <span class="stat-label">
-            PENDING
-          </span>
-
-          <strong
-            id="pendingReviews"
-            class="stat-number"
-          >
-            0
-          </strong>
-
+          <span class="stat-label">PENDING REVIEWS</span>
+          <strong id="pendingReviews" class="stat-number">0</strong>
         </div>
-
-
         <div class="stat-card">
-
-          <span class="stat-label">
-            APPROVED
-          </span>
-
-          <strong
-            id="approvedReviews"
-            class="stat-number"
-          >
-            0
-          </strong>
-
+          <span class="stat-label">APPROVED REVIEWS</span>
+          <strong id="approvedReviews" class="stat-number">0</strong>
         </div>
-
       </section>
 
-
-      <!-- ================= PENDING ================= -->
-
-      <section class="admin-section">
-
-        <h2>
-          Pending Reviews
-        </h2>
-
-        <div
-          id="pendingList"
-          class="reviews-container"
-        >
-
-          <div class="empty-message">
-            Loading pending reviews...
-          </div>
-
+      <!-- BRAND ORDERS -->
+      <section class="admin-section" id="brandOrdersSection">
+        <div class="toolbar">
+          <h2>Brand Orders & Requests</h2>
+          <button class="small-button" onclick="loadBrandOrders()">REFRESH ORDERS</button>
         </div>
-
-      </section>
-
-
-      <!-- ================= ALL REVIEWS ================= -->
-
-      <section class="admin-section">
-
-        <h2>
-          All Reviews
-        </h2>
-
-        <div
-          id="allReviewsList"
-          class="reviews-container"
-        >
-
-          <div class="empty-message">
-            Loading reviews...
-          </div>
-
-        </div>
-
-      </section>
-
-
-      <!-- ================= ADMIN PROFILE ================= -->
-
-<section class="admin-profile">
-
-  <a
-    href="index.html"
-    class="admin-back-store"
-  >
-    ← BACK TO SAINT LEO'S MART
-  </a>
-
-  <h2>
-    Admin Profile
-  </h2>
-
-  <p class="admin-profile-intro">
-    Manage your administrator account details.
-  </p>
-
-
-  <!-- CURRENT INFORMATION -->
-
-  <div class="profile-information">
-
-    <p>
-      <strong>
-        Name
-      </strong>
-
-      <span id="adminProfileName">
-        —
-      </span>
-    </p>
-
-
-    <p>
-      <strong>
-        Email
-      </strong>
-
-      <span id="adminProfileEmail">
-        —
-      </span>
-    </p>
-
-  </div>
-
-
-  <!-- CHANGE NAME -->
-
-  <div class="profile-edit">
-
-    <h3>
-      Change Name
-    </h3>
-
-    <input
-      type="text"
-      id="adminNewName"
-      placeholder="Enter your new name"
-    >
-
-    <button
-      type="button"
-      onclick="changeAdminName()"
-    >
-      CHANGE NAME
-    </button>
-
-    <div
-      id="adminNameMessage"
-      class="profile-message"
-    ></div>
-
-  </div>
-
-
-  <!-- CHANGE PASSWORD -->
-
-  <div class="profile-edit">
-
-    <h3>
-      Change Password
-    </h3>
-
-    <input
-      type="password"
-      id="adminNewPassword"
-      placeholder="Enter your new password"
-    >
-
-    <button
-      type="button"
-      onclick="changeAdminPassword()"
-    >
-      CHANGE PASSWORD
-    </button>
-
-    <div
-      id="adminPasswordMessage"
-      class="profile-message"
-    ></div>
-
-  </div>
-
-</section>
-
-
-    </main>
-
-
-  </div>
-
-
-  <script>
-
-    // ==================================================
-    // SAINT LEO'S MART — ADMIN DASHBOARD
-    // ==================================================
-
-
-    async function checkAdminAccess() {
-
-      const accessMessage =
-        document.getElementById(
-          "accessMessage"
-        );
-
-      const adminApp =
-        document.getElementById(
-          "adminApp"
-        );
-
-
-      // ------------------------------------------
-      // GET CURRENT SESSION
-      // ------------------------------------------
-
-      const {
-        data: {
-          session
-        }
-      } =
-        await supabaseClient.auth.getSession();
-
-
-      if (!session) {
-
-        window.location.href =
-          "account.html";
-
-        return;
-
-      }
-
-
-      // ------------------------------------------
-      // CHECK ADMIN TABLE
-      // ------------------------------------------
-
-      const {
-        data,
-        error
-      } =
-        await supabaseClient
-          .from("admin_users")
-          .select("user_id")
-          .eq(
-            "user_id",
-            session.user.id
-          )
-          .maybeSingle();
-
-
-      if (
-        error ||
-        !data
-      ) {
-
-        accessMessage.innerHTML = `
-          <div>
-            <h2>Access Denied</h2>
-
-            <p style="margin-top:10px; opacity:.6;">
-              You do not have permission to access this page.
-            </p>
-
-            <button
-              onclick="window.location.href='index.html'"
-              style="
-                margin-top:20px;
-                padding:10px 18px;
-                cursor:pointer;
-              "
-            >
-              BACK TO SHOP
-            </button>
-
-          </div>
-        `;
-
-        return;
-
-      }
-
-
-      // ------------------------------------------
-// ADMIN VERIFIED
-// ------------------------------------------
-
-accessMessage.style.display =
-  "none";
-
-adminApp.style.display =
-  "block";
-
-
-loadAdminReviews();
-
-loadAdminProfile();
-
-    }
-
-
-    // ==================================================
-    // LOAD REVIEWS
-    // ==================================================
-
-    async function loadAdminReviews() {
-
-      const {
-        data,
-        error
-      } =
-        await supabaseClient
-          .from("reviews")
-          .select(`
-            id,
-            rating,
-            review_text,
-            status,
-            created_at,
-            user_id,
-            profiles (
-              full_name
-            )
-          `)
-          .order(
-            "created_at",
-            {
-              ascending: false
-            }
-          );
-
-
-      if (error) {
-
-        console.error(
-          "Admin review loading error:",
-          error
-        );
-
-        document.getElementById(
-          "pendingList"
-        ).innerHTML = `
-          <div class="empty-message">
-            Could not load reviews.
-          </div>
-        `;
-
-        return;
-
-      }
-
-
-      updateStats(data);
-
-      renderPendingReviews(data);
-
-      renderAllReviews(data);
-
-    }
-
-
-    // ==================================================
-    // STATS
-    // ==================================================
-
-    function updateStats(
-      reviews
-    ) {
-
-      const total =
-        reviews.length;
-
-      const pending =
-        reviews.filter(
-          review =>
-            review.status ===
-            "pending"
-        ).length;
-
-      const approved =
-        reviews.filter(
-          review =>
-            review.status ===
-            "approved"
-        ).length;
-
-
-      document.getElementById(
-        "totalReviews"
-      ).innerText = total;
-
-
-      document.getElementById(
-        "pendingReviews"
-      ).innerText = pending;
-
-
-      document.getElementById(
-        "approvedReviews"
-      ).innerText = approved;
-
-    }
-
-
-    // ==================================================
-    // CREATE REVIEW CARD
-    // ==================================================
-
-    function createReviewCard(
-      review
-    ) {
-
-      const name =
-        review.profiles?.full_name ||
-        "Saint Leo's Mart Customer";
-
-
-      const stars =
-        "★".repeat(review.rating) +
-        "☆".repeat(
-          5 - review.rating
-        );
-
-
-      const date =
-        new Date(
-          review.created_at
-        ).toLocaleDateString(
-          "en-NG",
-          {
-            day: "numeric",
-            month: "short",
-            year: "numeric"
-          }
-        );
-
-
-      const card =
-        document.createElement(
-          "article"
-        );
-
-      card.className =
-        "review-card";
-
-
-      card.innerHTML = `
-
-        <div class="review-top">
-
-          <span class="review-name">
-            ${escapeHtml(name)}
-          </span>
-
-          <span class="review-stars">
-            ${stars}
-          </span>
-
-        </div>
-
-
-        <p class="review-text">
-          ${escapeHtml(review.review_text)}
+        <p class="section-intro">
+          Track customer requests across your marketplace. WhatsApp requests are recorded as initiated;
+          they are not proof that a customer sent the message or completed payment.
         </p>
 
+        <section class="stats-grid">
+          <div class="stat-card">
+            <span class="stat-label">TOTAL REQUESTS</span>
+            <strong id="ordersTotal" class="stat-number">0</strong>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">AWAITING VENDOR</span>
+            <strong id="ordersAwaiting" class="stat-number">0</strong>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">OVERDUE / UNCONFIRMED</span>
+            <strong id="ordersOverdue" class="stat-number">0</strong>
+          </div>
+        </section>
 
-        <span class="review-date">
-          ${date}
-        </span>
-
-
-        <span
-          class="review-status status-${review.status}"
-        >
-          ${review.status.toUpperCase()}
-        </span>
-
-
-        <div class="review-actions">
-
-          ${
-            review.status !== "approved"
-              ? `
-                <button
-                  class="approve-button"
-                  onclick="updateReviewStatus(${review.id}, 'approved')"
-                >
-                  APPROVE
-                </button>
-              `
-              : ""
-          }
-
-
-          ${
-            review.status !== "rejected"
-              ? `
-                <button
-                  class="reject-button"
-                  onclick="updateReviewStatus(${review.id}, 'rejected')"
-                >
-                  REJECT
-                </button>
-              `
-              : ""
-          }
-
-
-          <button
-            class="delete-button"
-            onclick="deleteReview(${review.id})"
-          >
-            DELETE
-          </button>
-
+        <div class="filters">
+          <input id="orderSearch" placeholder="Search reference, customer, phone..." oninput="renderBrandOrders()">
+          <select id="orderBrandFilter" onchange="renderBrandOrders()">
+            <option value="">All brands</option>
+          </select>
+          <select id="orderStatusFilter" onchange="renderBrandOrders()">
+            <option value="">All statuses</option>
+            <option value="awaiting_confirmation">Awaiting confirmation</option>
+            <option value="confirmed">Confirmed</option>
+            <option value="not_received">Not received</option>
+            <option value="processing">Processing</option>
+            <option value="completed">Completed</option>
+            <option value="cancelled">Cancelled</option>
+            <option value="unconfirmed">Unconfirmed</option>
+          </select>
+          <select id="orderPaymentFilter" onchange="renderBrandOrders()">
+            <option value="">All payment statuses</option>
+            <option value="payment_pending">Payment pending</option>
+            <option value="not_paid">Not paid</option>
+            <option value="paid">Paid</option>
+          </select>
         </div>
 
-      `;
+        <div id="ordersMessage" class="empty-message">Loading brand requests...</div>
+        <div id="ordersList" class="orders-container"></div>
+      </section>
 
+      <!-- PENDING REVIEWS -->
+      <section class="admin-section">
+        <h2>Pending Reviews</h2>
+        <div id="pendingList" class="reviews-container">
+          <div class="empty-message">Loading pending reviews...</div>
+        </div>
+      </section>
 
-      return card;
+      <!-- ALL REVIEWS -->
+      <section class="admin-section">
+        <h2>All Reviews</h2>
+        <div id="allReviewsList" class="reviews-container">
+          <div class="empty-message">Loading reviews...</div>
+        </div>
+      </section>
 
+      <!-- ADMIN PROFILE -->
+      <section class="admin-profile">
+        <a href="index.html" class="admin-back-store">← BACK TO SAINT LEO'S MART</a>
+        <h2>Admin Profile</h2>
+        <p class="admin-profile-intro">Manage your administrator account details.</p>
+
+        <div class="profile-information">
+          <p><strong>Name</strong><span id="adminProfileName">—</span></p>
+          <p><strong>Email</strong><span id="adminProfileEmail">—</span></p>
+        </div>
+
+        <div class="profile-edit">
+          <h3>Change Name</h3>
+          <input type="text" id="adminNewName" maxlength="150" placeholder="Enter your new name">
+          <button class="action-button" onclick="changeAdminName()">CHANGE NAME</button>
+          <div id="adminNameMessage" class="profile-message"></div>
+        </div>
+
+        <div class="profile-edit">
+          <h3>Change Password</h3>
+          <input type="password" id="adminNewPassword" autocomplete="new-password" placeholder="Enter your new password">
+          <button class="action-button" onclick="changeAdminPassword()">CHANGE PASSWORD</button>
+          <div id="adminPasswordMessage" class="profile-message"></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    "use strict";
+
+    const ORDER_STATUSES = [
+      "awaiting_confirmation", "confirmed", "not_received",
+      "processing", "completed", "cancelled", "unconfirmed"
+    ];
+    const PAYMENT_STATUSES = ["payment_pending", "not_paid", "paid"];
+
+    let cachedOrders = [];
+    let cachedBrands = [];
+
+    function escapeHtml(value) {
+      return String(value ?? "").replace(/[&<>"']/g, char => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;",
+        '"': "&quot;", "'": "&#39;"
+      })[char]);
     }
 
+    function niceStatus(value) {
+      return String(value || "").replaceAll("_", " ").replace(/\b\w/g, c => c.toUpperCase());
+    }
 
-    // ==================================================
-    // PENDING REVIEWS
-    // ==================================================
+    function formatDate(value) {
+      if (!value) return "—";
+      const date = new Date(value);
+      return Number.isNaN(date.getTime()) ? "—" :
+        date.toLocaleString("en-NG", {
+          day: "numeric", month: "short", year: "numeric",
+          hour: "2-digit", minute: "2-digit"
+        });
+    }
 
-    function renderPendingReviews(
-      reviews
-    ) {
+    function money(value) {
+      const number = Number(value);
+      return Number.isFinite(number)
+        ? "₦" + number.toLocaleString("en-NG", { maximumFractionDigits: 2 })
+        : "Not specified";
+    }
 
-      const container =
-        document.getElementById(
-          "pendingList"
+    function showMessage(id, message) {
+      const element = document.getElementById(id);
+      if (element) element.textContent = message;
+    }
+
+    async function checkAdminAccess() {
+      const accessMessage = document.getElementById("accessMessage");
+      const adminApp = document.getElementById("adminApp");
+
+      try {
+        const { data: { session }, error: sessionError } =
+          await supabaseClient.auth.getSession();
+
+        if (sessionError) throw sessionError;
+
+        if (!session) {
+          window.location.href = "account.html";
+          return;
+        }
+
+        const { data, error } = await supabaseClient
+          .from("admin_users")
+          .select("user_id")
+          .eq("user_id", session.user.id)
+          .maybeSingle();
+
+        if (error || !data) {
+          accessMessage.innerHTML = `
+            <div>
+              <h2>Access Denied</h2>
+              <p>You do not have permission to access this page.</p>
+              <button class="action-button" onclick="window.location.href='index.html'">BACK TO SHOP</button>
+            </div>`;
+          return;
+        }
+
+        accessMessage.classList.add("hidden");
+        adminApp.classList.remove("hidden");
+
+        await Promise.allSettled([
+          loadAdminReviews(),
+          loadAdminProfile(),
+          loadBrandOrders()
+        ]);
+      } catch (error) {
+        console.error("Admin access error:", error);
+        accessMessage.textContent = "Could not verify admin access. Please refresh or sign in again.";
+      }
+    }
+
+    // ---------------- BRAND ORDERS ----------------
+
+    async function loadBrandOrders() {
+      showMessage("ordersMessage", "Loading brand requests...");
+      document.getElementById("ordersList").innerHTML = "";
+
+      try {
+        const [brandsResult, ordersResult] = await Promise.all([
+          supabaseClient.from("brands").select("id, name").order("name"),
+          supabaseClient.from("brand_orders")
+            .select(`
+              id, order_number, brand_id, customer_name, customer_phone,
+              delivery_address, items_total, delivery_fee, total_amount,
+              request_type, request_details, order_status, payment_status,
+              cancellation_reason, vendor_note, checkout_initiated_at,
+              vendor_response_at, created_at, updated_at
+            `)
+            .order("created_at", { ascending: false })
+            .limit(500)
+        ]);
+
+        if (brandsResult.error) throw brandsResult.error;
+        if (ordersResult.error) throw ordersResult.error;
+
+        cachedBrands = brandsResult.data || [];
+        cachedOrders = ordersResult.data || [];
+
+        // Load item rows separately so the dashboard does not depend on
+        // a particular nested-relationship alias.
+        if (cachedOrders.length) {
+          const orderIds = cachedOrders.map(order => order.id);
+          const { data: items, error: itemError } = await supabaseClient
+            .from("brand_order_items")
+            .select("id, order_id, product_name, quantity, unit_price, line_total")
+            .in("order_id", orderIds);
+
+          if (itemError) {
+            console.warn("Could not load order items:", itemError.message);
+          }
+
+          const itemMap = new Map();
+          (items || []).forEach(item => {
+            if (!itemMap.has(item.order_id)) itemMap.set(item.order_id, []);
+            itemMap.get(item.order_id).push(item);
+          });
+
+          cachedOrders.forEach(order => {
+            order.items = itemMap.get(order.id) || [];
+          });
+        }
+
+        populateBrandFilter();
+        updateOrderStats();
+        renderBrandOrders();
+      } catch (error) {
+        console.error("Brand orders loading error:", error);
+        showMessage(
+          "ordersMessage",
+          "Could not load orders. Confirm that the database columns and admin row-level security policies are configured."
         );
+      }
+    }
 
+    function populateBrandFilter() {
+      const select = document.getElementById("orderBrandFilter");
+      const previous = select.value;
+      select.innerHTML = '<option value="">All brands</option>';
 
+      cachedBrands.forEach(brand => {
+        const option = document.createElement("option");
+        option.value = brand.id;
+        option.textContent = brand.name;
+        select.appendChild(option);
+      });
+
+      if ([...select.options].some(option => option.value === previous)) {
+        select.value = previous;
+      }
+    }
+
+    function updateOrderStats() {
+      const awaiting = cachedOrders.filter(order =>
+        order.order_status === "awaiting_confirmation"
+      ).length;
+
+      const overdue = cachedOrders.filter(order =>
+        ["unconfirmed", "not_received"].includes(order.order_status) ||
+        (
+          order.order_status === "awaiting_confirmation" &&
+          Date.now() - new Date(order.created_at).getTime() >= 48 * 60 * 60 * 1000
+        )
+      ).length;
+
+      document.getElementById("ordersTotal").textContent = cachedOrders.length;
+      document.getElementById("ordersAwaiting").textContent = awaiting;
+      document.getElementById("ordersOverdue").textContent = overdue;
+    }
+
+    function renderBrandOrders() {
+      const search = document.getElementById("orderSearch").value.trim().toLowerCase();
+      const brandFilter = document.getElementById("orderBrandFilter").value;
+      const statusFilter = document.getElementById("orderStatusFilter").value;
+      const paymentFilter = document.getElementById("orderPaymentFilter").value;
+      const list = document.getElementById("ordersList");
+
+      const filtered = cachedOrders.filter(order => {
+        const brand = cachedBrands.find(item => item.id === order.brand_id);
+        const haystack = [
+          order.order_number, order.customer_name, order.customer_phone,
+          brand?.name, order.request_details, order.vendor_note
+        ].join(" ").toLowerCase();
+
+        return (!search || haystack.includes(search)) &&
+          (!brandFilter || order.brand_id === brandFilter) &&
+          (!statusFilter || order.order_status === statusFilter) &&
+          (!paymentFilter || order.payment_status === paymentFilter);
+      });
+
+      list.innerHTML = "";
+
+      if (!filtered.length) {
+        showMessage("ordersMessage", cachedOrders.length
+          ? "No requests match these filters."
+          : "No brand requests have been recorded yet.");
+        return;
+      }
+
+      showMessage("ordersMessage", `${filtered.length} request(s) shown.`);
+
+      filtered.forEach(order => {
+        const brand = cachedBrands.find(item => item.id === order.brand_id);
+        const card = document.createElement("article");
+        card.className = "order-card";
+
+        const itemsHtml = order.items?.length
+          ? order.items.map(item =>
+              `<div class="detail">${escapeHtml(item.product_name)} — Qty ${escapeHtml(item.quantity)} — ${money(item.line_total)}</div>`
+            ).join("")
+          : `<div class="detail">No itemised products recorded. Check the request details below.</div>`;
+
+        card.innerHTML = `
+          <div class="order-top">
+            <div>
+              <span class="status-badge">${escapeHtml(niceStatus(order.order_status))}</span>
+              <h3>${escapeHtml(order.order_number || "Request")}</h3>
+              <div class="muted">${escapeHtml(brand?.name || "Unknown brand")} · ${escapeHtml(niceStatus(order.request_type || "order"))}</div>
+            </div>
+            <div class="muted">Created: ${escapeHtml(formatDate(order.created_at))}</div>
+          </div>
+
+          <div class="order-grid">
+            <div class="detail"><strong>Customer</strong><br>${escapeHtml(order.customer_name)}</div>
+            <div class="detail"><strong>Phone</strong><br><a style="color:#e8c786" href="tel:${escapeHtml(order.customer_phone)}">${escapeHtml(order.customer_phone)}</a></div>
+            <div class="detail"><strong>Delivery address</strong><br>${escapeHtml(order.delivery_address || "Not supplied")}</div>
+            <div class="detail"><strong>Vendor response</strong><br>${escapeHtml(formatDate(order.vendor_response_at))}</div>
+          </div>
+
+          <div style="margin-top:16px">
+            <div class="detail"><strong>Customer request</strong></div>
+            <div class="detail" style="white-space:pre-wrap;margin-top:6px">${escapeHtml(order.request_details || "No request details recorded.")}</div>
+          </div>
+
+          <div style="margin-top:16px">
+            <div class="detail"><strong>Recorded items</strong></div>
+            <div style="margin-top:7px">${itemsHtml}</div>
+          </div>
+
+          <div class="order-grid">
+            <div class="detail"><strong>Items total</strong><br>${money(order.items_total)}</div>
+            <div class="detail"><strong>Delivery fee</strong><br>${money(order.delivery_fee)}</div>
+            <div class="detail"><strong>Total</strong><br>${money(order.total_amount)}</div>
+            <div class="detail"><strong>Payment status</strong><br>${escapeHtml(niceStatus(order.payment_status))}</div>
+          </div>
+
+          <div class="order-controls">
+            <label>
+              <span class="control-label">Order status</span>
+              <select id="status-${escapeHtml(order.id)}">
+                ${ORDER_STATUSES.map(status =>
+                  `<option value="${status}" ${order.order_status === status ? "selected" : ""}>${escapeHtml(niceStatus(status))}</option>`
+                ).join("")}
+              </select>
+            </label>
+            <label>
+              <span class="control-label">Payment status</span>
+              <select id="payment-${escapeHtml(order.id)}">
+                ${PAYMENT_STATUSES.map(status =>
+                  `<option value="${status}" ${order.payment_status === status ? "selected" : ""}>${escapeHtml(niceStatus(status))}</option>`
+                ).join("")}
+              </select>
+            </label>
+          </div>
+
+          <label>
+            <span class="control-label" style="margin-top:14px">Admin / vendor note</span>
+            <textarea id="note-${escapeHtml(order.id)}" maxlength="3000" placeholder="Add a note or update...">${escapeHtml(order.vendor_note || "")}</textarea>
+          </label>
+
+          <div class="review-actions">
+            <button class="action-button save-order" onclick="saveOrder('${escapeHtml(order.id)}')">SAVE ORDER UPDATE</button>
+            <button class="small-button" onclick="copyOrderReference('${escapeHtml(order.order_number || "")}')">COPY REFERENCE</button>
+          </div>
+        `;
+
+        list.appendChild(card);
+      });
+    }
+
+    async function saveOrder(orderId) {
+      const status = document.getElementById(`status-${orderId}`).value;
+      const paymentStatus = document.getElementById(`payment-${orderId}`).value;
+      const note = document.getElementById(`note-${orderId}`).value.trim();
+
+      if (!ORDER_STATUSES.includes(status) || !PAYMENT_STATUSES.includes(paymentStatus)) {
+        alert("Invalid status selected.");
+        return;
+      }
+
+      const previous = cachedOrders.find(order => order.id === orderId);
+      if (!previous) {
+        alert("Order not found. Refresh the list.");
+        return;
+      }
+
+      const { error } = await supabaseClient
+        .from("brand_orders")
+        .update({
+          order_status: status,
+          payment_status: paymentStatus,
+          vendor_note: note,
+          updated_at: new Date().toISOString(),
+          ...(status !== previous.order_status &&
+              ["confirmed", "not_received", "processing", "completed", "cancelled", "unconfirmed"].includes(status)
+            ? { vendor_response_at: new Date().toISOString() }
+            : {})
+        })
+        .eq("id", orderId);
+
+      if (error) {
+        console.error("Order update failed:", error);
+        alert("Could not update this order. Check your admin database policies.");
+        return;
+      }
+
+      // Save an audit event. The order update remains the main operation.
+      if (status !== previous.order_status || paymentStatus !== previous.payment_status) {
+        const { error: eventError } = await supabaseClient
+          .from("brand_order_events")
+          .insert({
+            order_id: orderId,
+            previous_status: previous.order_status,
+            new_status: status,
+            payment_status: paymentStatus,
+            actor_type: "admin",
+            note: note || "Admin updated order"
+          });
+
+        if (eventError) console.warn("Order updated, but audit event failed:", eventError.message);
+      }
+
+      alert("Order updated.");
+      await loadBrandOrders();
+    }
+
+    async function copyOrderReference(reference) {
+      try {
+        await navigator.clipboard.writeText(reference);
+        alert("Reference copied.");
+      } catch {
+        alert("Copy failed. Reference: " + reference);
+      }
+    }
+
+    // ---------------- REVIEWS ----------------
+
+    async function loadAdminReviews() {
+      const { data, error } = await supabaseClient
+        .from("reviews")
+        .select(`
+          id, rating, review_text, status, created_at, user_id,
+          profiles ( full_name )
+        `)
+        .order("created_at", { ascending: false });
+
+      if (error) {
+        console.error("Review loading error:", error);
+        document.getElementById("pendingList").innerHTML =
+          '<div class="empty-message">Could not load reviews.</div>';
+        document.getElementById("allReviewsList").innerHTML =
+          '<div class="empty-message">Could not load reviews.</div>';
+        return;
+      }
+
+      updateReviewStats(data || []);
+      renderPendingReviews(data || []);
+      renderAllReviews(data || []);
+    }
+
+    function updateReviewStats(reviews) {
+      document.getElementById("totalReviews").textContent = reviews.length;
+      document.getElementById("pendingReviews").textContent =
+        reviews.filter(review => review.status === "pending").length;
+      document.getElementById("approvedReviews").textContent =
+        reviews.filter(review => review.status === "approved").length;
+    }
+
+    function createReviewCard(review) {
+      const name = review.profiles?.full_name || "Saint Leo's Mart Customer";
+      const rating = Math.max(0, Math.min(5, Number(review.rating) || 0));
+      const stars = "★".repeat(rating) + "☆".repeat(5 - rating);
+      const card = document.createElement("article");
+      card.className = "review-card";
+
+      card.innerHTML = `
+        <div class="review-top">
+          <span class="review-name">${escapeHtml(name)}</span>
+          <span class="review-stars">${stars}</span>
+        </div>
+        <p class="review-text">${escapeHtml(review.review_text)}</p>
+        <span class="review-date">${escapeHtml(formatDate(review.created_at))}</span>
+        <span class="status-badge status-${escapeHtml(review.status)}">${escapeHtml(niceStatus(review.status))}</span>
+        <div class="review-actions">
+          ${review.status !== "approved" ? `<button class="approve-button" onclick="updateReviewStatus('${escapeHtml(review.id)}','approved')">APPROVE</button>` : ""}
+          ${review.status !== "rejected" ? `<button class="reject-button" onclick="updateReviewStatus('${escapeHtml(review.id)}','rejected')">REJECT</button>` : ""}
+          <button class="delete-button" onclick="deleteReview('${escapeHtml(review.id)}')">DELETE</button>
+        </div>
+      `;
+      return card;
+    }
+
+    function renderPendingReviews(reviews) {
+      const container = document.getElementById("pendingList");
       container.innerHTML = "";
-
-
-      const pending =
-        reviews.filter(
-          review =>
-            review.status ===
-            "pending"
-        );
-
+      const pending = reviews.filter(review => review.status === "pending");
 
       if (!pending.length) {
-
-        container.innerHTML = `
-          <div class="empty-message">
-            No pending reviews.
-          </div>
-        `;
-
+        container.innerHTML = '<div class="empty-message">No pending reviews.</div>';
         return;
-
       }
-
-
-      pending.forEach(
-        review => {
-
-          container.appendChild(
-            createReviewCard(
-              review
-            )
-          );
-
-        }
-      );
-
+      pending.forEach(review => container.appendChild(createReviewCard(review)));
     }
 
-
-    // ==================================================
-    // ALL REVIEWS
-    // ==================================================
-
-    function renderAllReviews(
-      reviews
-    ) {
-
-      const container =
-        document.getElementById(
-          "allReviewsList"
-        );
-
-
+    function renderAllReviews(reviews) {
+      const container = document.getElementById("allReviewsList");
       container.innerHTML = "";
 
-
       if (!reviews.length) {
-
-        container.innerHTML = `
-          <div class="empty-message">
-            No reviews yet.
-          </div>
-        `;
-
+        container.innerHTML = '<div class="empty-message">No reviews yet.</div>';
         return;
-
       }
-
-
-      reviews.forEach(
-        review => {
-
-          container.appendChild(
-            createReviewCard(
-              review
-            )
-          );
-
-        }
-      );
-
+      reviews.forEach(review => container.appendChild(createReviewCard(review)));
     }
 
+    async function updateReviewStatus(reviewId, newStatus) {
+      if (!["approved", "rejected", "pending"].includes(newStatus)) return;
 
-    // ==================================================
-    // UPDATE REVIEW STATUS
-    // ==================================================
-
-    async function updateReviewStatus(
-      reviewId,
-      newStatus
-    ) {
-
-      const { error } =
-        await supabaseClient
-          .from("reviews")
-          .update({
-            status: newStatus
-          })
-          .eq(
-            "id",
-            reviewId
-          );
-
+      const { error } = await supabaseClient
+        .from("reviews")
+        .update({ status: newStatus })
+        .eq("id", reviewId);
 
       if (error) {
-
-        console.error(
-          "Status update error:",
-          error
-        );
-
-        alert(
-          "Could not update review."
-        );
-
+        console.error("Review update error:", error);
+        alert("Could not update review.");
         return;
-
       }
-
-
-      loadAdminReviews();
-
+      await loadAdminReviews();
     }
 
+    async function deleteReview(reviewId) {
+      if (!confirm("Delete this review permanently?")) return;
 
-    // ==================================================
-    // DELETE REVIEW
-    // ==================================================
-
-    async function deleteReview(
-      reviewId
-    ) {
-
-      const confirmed =
-        confirm(
-          "Delete this review permanently?"
-        );
-
-
-      if (!confirmed) return;
-
-
-      const { error } =
-        await supabaseClient
-          .from("reviews")
-          .delete()
-          .eq(
-            "id",
-            reviewId
-          );
-
+      const { error } = await supabaseClient
+        .from("reviews")
+        .delete()
+        .eq("id", reviewId);
 
       if (error) {
-
-        console.error(
-          "Delete error:",
-          error
-        );
-
-        alert(
-          "Could not delete review."
-        );
-
+        console.error("Review deletion error:", error);
+        alert("Could not delete review.");
         return;
+      }
+      await loadAdminReviews();
+    }
 
+    // ---------------- ADMIN PROFILE ----------------
+
+    async function loadAdminProfile() {
+      const { data: { session } } = await supabaseClient.auth.getSession();
+      if (!session) return;
+
+      document.getElementById("adminProfileEmail").textContent =
+        session.user.email || "—";
+
+      const { data: profile, error } = await supabaseClient
+        .from("profiles")
+        .select("full_name")
+        .eq("id", session.user.id)
+        .maybeSingle();
+
+      if (error) {
+        console.error("Profile loading error:", error);
+        return;
       }
 
-
-      loadAdminReviews();
-
+      document.getElementById("adminProfileName").textContent =
+        profile?.full_name || "Saint Leo's Mart Admin";
     }
 
+    async function changeAdminName() {
+      const newName = document.getElementById("adminNewName").value.trim();
+      const message = document.getElementById("adminNameMessage");
 
-    // ==================================================
-// LOAD ADMIN PROFILE
-// ==================================================
+      if (!newName) {
+        message.textContent = "Please enter your new name.";
+        return;
+      }
 
-async function loadAdminProfile() {
+      const { data: { session } } = await supabaseClient.auth.getSession();
+      if (!session) {
+        message.textContent = "Please sign in again.";
+        return;
+      }
 
-  const {
-    data: {
-      session
+      message.textContent = "Updating...";
+      const { error } = await supabaseClient
+        .from("profiles")
+        .update({ full_name: newName })
+        .eq("id", session.user.id);
+
+      if (error) {
+        console.error("Name update error:", error);
+        message.textContent = "Could not update your name.";
+        return;
+      }
+
+      await supabaseClient.auth.updateUser({ data: { full_name: newName } });
+      document.getElementById("adminProfileName").textContent = newName;
+      document.getElementById("adminNewName").value = "";
+      message.textContent = "Name updated successfully.";
     }
-  } =
-    await supabaseClient.auth.getSession();
 
+    async function changeAdminPassword() {
+      const newPassword = document.getElementById("adminNewPassword").value;
+      const message = document.getElementById("adminPasswordMessage");
 
-  if (!session) {
-    return;
-  }
+      if (!newPassword) {
+        message.textContent = "Please enter a new password.";
+        return;
+      }
+      if (newPassword.length < 8) {
+        message.textContent = "Use at least 8 characters.";
+        return;
+      }
 
+      const { data: { session } } = await supabaseClient.auth.getSession();
+      if (!session) {
+        message.textContent = "Please sign in again.";
+        return;
+      }
 
-  document.getElementById(
-    "adminProfileEmail"
-  ).innerText =
-    session.user.email;
+      message.textContent = "Updating...";
+      const { error } = await supabaseClient.auth.updateUser({ password: newPassword });
 
+      if (error) {
+        console.error("Password update error:", error);
+        message.textContent = error.message;
+        return;
+      }
 
-  const {
-    data: profile,
-    error
-  } =
-    await supabaseClient
-      .from("profiles")
-      .select("full_name")
-      .eq(
-        "id",
-        session.user.id
-      )
-      .maybeSingle();
-
-
-  if (error) {
-
-    console.error(
-      "Could not load admin profile:",
-      error
-    );
-
-    return;
-
-  }
-
-
-  const name =
-    profile?.full_name ||
-    "Saint Leo's Mart Admin";
-
-
-  document.getElementById(
-    "adminProfileName"
-  ).innerText =
-    name;
-
-}
-
-
-// ==================================================
-// CHANGE ADMIN NAME
-// ==================================================
-
-async function changeAdminName() {
-
-  const newName =
-    document.getElementById(
-      "adminNewName"
-    )
-      .value
-      .trim();
-
-
-  const message =
-    document.getElementById(
-      "adminNameMessage"
-    );
-
-
-  if (!newName) {
-
-    message.innerText =
-      "Please enter your new name.";
-
-    return;
-
-  }
-
-
-  const {
-    data: {
-      session
+      document.getElementById("adminNewPassword").value = "";
+      message.textContent = "Password updated successfully.";
     }
-  } =
-    await supabaseClient.auth.getSession();
-
-
-  if (!session) {
-
-    message.innerText =
-      "Please sign in again.";
-
-    return;
-
-  }
-
-
-  message.innerText =
-    "Updating your name...";
-
-
-  const {
-    error
-  } =
-    await supabaseClient
-      .from("profiles")
-      .update({
-        full_name: newName
-      })
-      .eq(
-        "id",
-        session.user.id
-      );
-
-
-  if (error) {
-
-    console.error(
-      "Admin name update error:",
-      error
-    );
-
-    message.innerText =
-      "Could not update your name.";
-
-    return;
-
-  }
-
-
-  await supabaseClient.auth.updateUser({
-    data: {
-      full_name: newName
-    }
-  });
-
-
-  document.getElementById(
-    "adminProfileName"
-  ).innerText =
-    newName;
-
-
-  document.getElementById(
-    "adminNewName"
-  ).value = "";
-
-
-  message.innerText =
-    "Name updated successfully.";
-
-}
-
-
-// ==================================================
-// CHANGE ADMIN PASSWORD
-// ==================================================
-
-async function changeAdminPassword() {
-
-  const newPassword =
-    document.getElementById(
-      "adminNewPassword"
-    ).value;
-
-
-  const message =
-    document.getElementById(
-      "adminPasswordMessage"
-    );
-
-
-  if (!newPassword) {
-
-    message.innerText =
-      "Please enter a new password.";
-
-    return;
-
-  }
-
-
-  if (newPassword.length < 6) {
-
-    message.innerText =
-      "Password must be at least 6 characters.";
-
-    return;
-
-  }
-
-
-  const {
-    data: {
-      session
-    }
-  } =
-    await supabaseClient.auth.getSession();
-
-
-  if (!session) {
-
-    message.innerText =
-      "Please sign in again.";
-
-    return;
-
-  }
-
-
-  message.innerText =
-    "Updating your password...";
-
-
-  const {
-    error
-  } =
-    await supabaseClient.auth.updateUser({
-      password: newPassword
-    });
-
-
-  if (error) {
-
-    console.error(
-      "Admin password update error:",
-      error
-    );
-
-    message.innerText =
-      error.message;
-
-    return;
-
-  }
-
-
-  document.getElementById(
-    "adminNewPassword"
-  ).value = "";
-
-
-  message.innerText =
-    "Password updated successfully.";
-
-}
-
-
-    // ==================================================
-    // LOG OUT
-    // ==================================================
 
     async function adminLogout() {
-
       await supabaseClient.auth.signOut();
-
-      window.location.href =
-        "account.html";
-
+      window.location.href = "account.html";
     }
-
-
-    // ==================================================
-    // HTML ESCAPE
-    // ==================================================
-
-    function escapeHtml(
-      text
-    ) {
-
-      const div =
-        document.createElement(
-          "div"
-        );
-
-      div.textContent =
-        text;
-
-      return div.innerHTML;
-
-    }
-
-
-    // ==================================================
-    // START
-    // ==================================================
 
     checkAdminAccess();
-
   </script>
-
-
 </body>
-
 </html>
