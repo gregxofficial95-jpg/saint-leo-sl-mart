@@ -2762,3 +2762,19 @@ color: var(--gold);
   color: inherit;
 }
 
+.intro-slogan {
+  color: #D6AD66;
+  font-size: 1.15rem;
+  font-weight: 600;
+  text-align: center;
+  margin: 18px 0 8px;
+}
+
+.intro-categories {
+  color: #F5F1E8;
+  font-size: 0.78rem;
+  text-align: center;
+  line-height: 1.8;
+  margin: 0;
+  padding: 0 12px;
+}
