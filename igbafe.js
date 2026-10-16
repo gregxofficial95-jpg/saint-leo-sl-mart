@@ -233,3 +233,241 @@ const currentYear = document.getElementById("currentYear");
 if (currentYear) {
   currentYear.textContent = new Date().getFullYear();
 }
+
+
+/* CUSTOM DAILY PLATE BUILDER */
+
+const dailyFoodMenu = {
+  Monday: [
+    ["White Rice and Stew", 700],
+    ["Moi Moi", 500],
+    ["Vegetable Soup and Swallow", 1300],
+    ["Jollof Rice", 700],
+    ["Fried Rice", 700],
+    ["Salad", 400],
+    ["Plantain", 200],
+    ["White Beans", 300]
+  ],
+
+  Tuesday: [
+    ["White Rice and Stew", 700],
+    ["White Beans", 300],
+    ["White Spaghetti", 400],
+    ["Jollof Rice", 700],
+    ["Salad", 400],
+    ["Plantain", 200],
+    ["Egusi and Akpu/Eba", 1300]
+  ],
+
+  Wednesday: [
+    ["Yam Porridge", 1000],
+    ["Oil Rice", 700],
+    ["Plantain", 200],
+    ["White Rice and Stew", 700],
+    ["Ogbono Soup with Swallow", 1300]
+  ],
+
+  Thursday: [
+    ["Fried Rice", 700],
+    ["Jollof Rice", 700],
+    ["White Rice and Stew", 700],
+    ["Moi Moi", 500],
+    ["Salad", 200],
+    ["Plantain", 200],
+    ["Jollof Spaghetti", 700]
+  ],
+
+  Friday: [
+    ["Chips with Fried Egg, Ketchup or Sauce", 2000],
+    ["Jollof Rice", 700],
+    ["Fried Rice", 700],
+    ["Plantain", 200],
+    ["Banga Soup with Swallow", 1300],
+    ["Vegetable Soup with Starch/Fufu/Eba", 1300],
+    ["Goat Meat Pepper Soup", 1500],
+    ["Assorted Pepper Soup", 1500]
+  ],
+
+  Saturday: [
+    ["Oil Beans", 1000],
+    ["Plantain", 200],
+    ["Potato", 500],
+    ["Yam and Egg", 1500],
+    ["Catfish Pepper Soup", 2000],
+    ["Chicken Pepper Soup", 2000],
+    ["White Rice and Stew", 700]
+  ],
+
+  Sunday: [
+    ["White Rice and Stew", 700],
+    ["Jollof Rice", 700],
+    ["White Beans", 300],
+    ["Plantain", 200]
+  ]
+};
+
+const foodDay = document.getElementById("foodDay");
+const plateCount = document.getElementById("plateCount");
+const plateCustomisations = document.getElementById("plateCustomisations");
+const platesTotal = document.getElementById("platesTotal");
+const plateOrderMessage = document.getElementById("plateOrderMessage");
+
+
+
+function renderPlateCustomisations() {
+  if (!foodDay || !plateCount || !plateCustomisations) return;
+
+  const count = Math.max(
+    1,
+    Math.min(20, Number.parseInt(plateCount.value, 10) || 1)
+  );
+
+  plateCount.value = count;
+  plateCustomisations.innerHTML = "";
+
+  for (let plateNumber = 1; plateNumber <= count; plateNumber++) {
+    const card = document.createElement("div");
+    card.className = "plate-card";
+
+    const heading = document.createElement("h4");
+    heading.textContent = `Plate ${plateNumber}`;
+    card.appendChild(heading);
+
+    const list = document.createElement("div");
+    list.className = "plate-food-list";
+
+    dailyFoodMenu[foodDay.value].forEach(([name, price], index) => {
+      const label = document.createElement("label");
+      label.className = "plate-food-option";
+
+      const checkbox = document.createElement("input");
+      checkbox.type = "checkbox";
+      checkbox.className = "plate-food-checkbox";
+      checkbox.dataset.plate = plateNumber;
+      checkbox.dataset.name = name;
+      checkbox.dataset.price = price;
+      checkbox.addEventListener("change", updatePlateTotal);
+
+
+      const info = document.createElement("span");
+      info.className = "plate-food-info";
+
+      const foodTitle = document.createElement("strong");
+      foodTitle.textContent = name;
+
+      const foodPrice = document.createElement("small");
+      foodPrice.textContent = `₦${price.toLocaleString("en-NG")}`;
+
+      info.append(foodTitle, foodPrice);
+      label.append(checkbox, info);
+      list.appendChild(label);
+    });
+
+    card.appendChild(list);
+    plateCustomisations.appendChild(card);
+  }
+
+  updatePlateTotal();
+}
+
+function updatePlateTotal() {
+  let total = 0;
+
+  document.querySelectorAll(".plate-food-checkbox:checked").forEach(box => {
+    total += Number(box.dataset.price);
+  });
+
+  if (platesTotal) {
+    platesTotal.textContent = `₦${total.toLocaleString("en-NG")}`;
+  }
+
+  if (plateOrderMessage) {
+    plateOrderMessage.textContent = "";
+  }
+}
+
+if (foodDay && plateCount && plateCustomisations) {
+  foodDay.addEventListener("change", renderPlateCustomisations);
+  plateCount.addEventListener("input", renderPlateCustomisations);
+
+  renderPlateCustomisations();
+}
+
+document.getElementById("addPlatesToOrder")?.addEventListener("click", () => {
+  const selected = [...document.querySelectorAll(".plate-food-checkbox:checked")];
+
+  if (!selected.length) {
+    plateOrderMessage.textContent =
+      "Please select at least one food for your plates.";
+    return;
+  }
+
+  const plateOrders = {};
+
+  selected.forEach(box => {
+    const plate = box.dataset.plate;
+
+    if (!plateOrders[plate]) {
+      plateOrders[plate] = [];
+    }
+
+    plateOrders[plate].push({
+      name: box.dataset.name,
+      price: Number(box.dataset.price)
+    });
+  });
+
+  const orderLines = Object.entries(plateOrders).map(([plate, foods]) => {
+    const foodLines = foods.map(food =>
+      `  - ${food.name}: ₦${food.price.toLocaleString("en-NG")}`
+    );
+
+    const plateTotal = foods.reduce((sum, food) => sum + food.price, 0);
+
+    return [
+      `PLATE ${plate}:`,
+      ...foodLines,
+      `  Plate total: ₦${plateTotal.toLocaleString("en-NG")}`
+    ].join("\n");
+  });
+
+  const total = selected.reduce(
+    (sum, box) => sum + Number(box.dataset.price),
+    0
+  );
+
+  const message = [
+    "Hello Igbafe Bakes and Frames!",
+    `Daily menu: ${foodDay.value}`,
+    "",
+    ...orderLines,
+    "",
+    `TOTAL FOR CUSTOM PLATES: ₦${total.toLocaleString("en-NG")}`,
+    "",
+    "Please confirm my order."
+  ].join("\n");
+
+  // Add the customised plates to the existing order/cart as one item.
+  if (typeof cart !== "undefined" && cart instanceof Map) {
+    const key = `Custom Plates - ${foodDay.value} - ${Date.now()}`;
+
+    cart.set(key, {
+      name: `Custom Plates (${Object.keys(plateOrders).length})`,
+      price: total,
+      quantity: 1,
+      details: message
+    });
+
+    if (typeof renderCart === "function") {
+      renderCart();
+    } else if (typeof updateCart === "function") {
+      updateCart();
+    }
+  }
+
+  plateOrderMessage.textContent =
+    "Your customised plates have been prepared. Please review your order before checkout.";
+
+  // Keep a copy of the full plate breakdown for checkout.
+  window.igbafeCustomPlateOrder = message;
+});
