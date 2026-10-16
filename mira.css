@@ -1512,3 +1512,53 @@ input:focus-visible {
     transition-duration: 0.01ms !important;
   }
 }
+
+
+/* NEW PRODUCTS 10 AND 11 FIX */
+
+#productGrid .product-info > label,
+.product-card label {
+  display: block;
+  margin-top: 12px;
+  margin-bottom: 7px;
+  color: #69535f;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.product-card select {
+  width: 100%;
+  min-height: 43px;
+  padding: 10px 11px;
+  background: #fffafd;
+  border: 1px solid #ecd9e3;
+  border-radius: 0;
+  color: #58414d;
+  font-size: 11px;
+}
+
+.product-card select:focus {
+  border-color: var(--pink-dark);
+  outline: none;
+}
+
+.product-card .product-price {
+  line-height: 1.4;
+}
+
+.product-card .quantity-control {
+  max-width: 150px;
+}
+
+@media (max-width: 760px) {
+  .product-card select {
+    min-height: 40px;
+    padding: 9px 7px;
+    font-size: 10px;
+  }
+
+  .product-card .product-info > label,
+  .product-card label {
+    font-size: 9px;
+  }
+}
