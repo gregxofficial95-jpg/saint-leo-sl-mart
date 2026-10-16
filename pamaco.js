@@ -198,14 +198,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 16 — 20: FOOTWEAR AND WATCHES
     {
-      id: 16, name: "Balenciaga Corporate Shoes", price: 45000,
-      category: "footwear", categoryLabel: "Corporate Shoes", tag: "Unisex",
-      description: "Balenciaga corporate shoes. Shoe box included.",
-      sizes: [40, 41, 42, 43, 44, 45, 46],
-      boxIncluded: true,
-      variants: [{ name: "Design 1", image: "pamaco-16.jpeg" }]
-    },
-    {
       id: 17, name: "Herms Slippers", price: 45000,
       category: "footwear", categoryLabel: "Slippers", tag: "4 Types",
       description: "Herms slippers in four available designs.",
@@ -320,8 +312,74 @@ document.addEventListener("DOMContentLoaded", () => {
       category: "apparel", categoryLabel: "T-Shirts", tag: "Featured",
       description: "Ringer tees from the Pamaco collection.",
       variants: [{ name: "Available Design", image: "pamaco-28.jpeg" }]
-    }
-  ];
+    },
+      {
+    id: 29,
+    name: "Quality Long Sleeve Shirt",
+    price: 28000,
+    category: "apparel",
+    categoryLabel: "Apparel",
+    tag: "Long Sleeve",
+    description: "Quality long sleeve shirt from the Pamaco collection.",
+    variants: [
+      { name: "Available Design", image: "pamaco-29.jpeg" }
+    ]
+  },
+  {
+    id: 30,
+    name: "Puma Speedcats",
+    price: 35000,
+    category: "footwear",
+    categoryLabel: "Sneakers",
+    tag: "All Colours Available",
+    description: "Puma Speedcats sneakers. All colours are available. Select your preferred design and shoe size.",
+    sizes: [39, 40, 41, 42, 43, 44, 45],
+    boxOptional: true,
+    boxIncluded: false,
+    variants: [
+      { name: "Available Design", image: "pamaco-30.jpeg" }
+    ]
+  },
+  {
+    id: 31,
+    name: "Palazzo",
+    price: 25000,
+    category: "apparel",
+    categoryLabel: "Apparel",
+    tag: "Featured",
+    description: "Palazzo trousers from the Pamaco collection.",
+    variants: [
+      { name: "Available Design", image: "pamaco-31.jpeg" }
+    ]
+  },
+  {
+    id: 32,
+    name: "Tees",
+    price: 25000,
+    category: "apparel",
+    categoryLabel: "T-Shirts",
+    tag: "Featured",
+    description: "Tees from the Pamaco collection.",
+    variants: [
+      { name: "Available Design", image: "pamaco-32.jpeg" }
+    ]
+  },
+  {
+    id: 33,
+    name: "Adidas Sambas",
+    price: 27000,
+    category: "footwear",
+    categoryLabel: "Sneakers",
+    tag: "Unisex",
+    description: "Adidas Sambas sneakers. Available in EU sizes 39–45.",
+    sizes: [39, 40, 41, 42, 43, 44, 45],
+    boxOptional: true,
+    boxIncluded: false,
+    variants: [
+      { name: "Available Design", image: "pamaco-33.jpeg" }
+    ]
+  }
+];
 
   const $ = (selector) => document.querySelector(selector);
 
