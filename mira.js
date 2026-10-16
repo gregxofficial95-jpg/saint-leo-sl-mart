@@ -168,6 +168,25 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
+
+// PRODUCT 10 PRICE SELECTOR
+
+const miraType10 = document.getElementById("miraType10");
+const miraPrice10 = document.getElementById("miraPrice10");
+
+if (miraType10 && miraPrice10) {
+  miraType10.addEventListener("change", () => {
+    if (miraType10.value === "Bag") {
+      miraPrice10.textContent = "₦23,000";
+    } else if (miraType10.value === "Shoe") {
+      miraPrice10.textContent = "₦25,000";
+    } else {
+      miraPrice10.textContent = "Choose an item";
+    }
+  });
+}
+
+
   // WHATSAPP CHECKOUT
 
   function orderProduct(productId) {
@@ -182,8 +201,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const sizeElement = document.getElementById(product.sizeId);
     const quantityElement = document.getElementById(product.quantityId);
 
-    const colour = colourElement.value;
-    const size = sizeElement.value;
+const colour = colourElement ? colourElement.value : "";
+const size = sizeElement ? sizeElement.value : "";
+const typeElement = document.getElementById(product.typeId);
+const selectedType = typeElement ? typeElement.value : "";
 
     const quantityValue = Number.parseInt(quantityElement.value, 10);
     const quantity = Number.isFinite(quantityValue)
@@ -198,6 +219,12 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
+    if (product.needsType && !selectedType) {
+  alert("Please choose either the bag or the shoe.");
+  typeElement.focus();
+  return;
+}
+
     if (product.needsSize && !size) {
       alert("Please select your shoe size.");
       sizeElement.focus();
@@ -210,16 +237,31 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    const total = product.price * quantity;
+    let unitPrice = product.price;
+
+if (product.needsType) {
+  unitPrice = selectedType === "Bag" ? 23000 : 25000;
+}
+
+const total = unitPrice * quantity;
 
     const messageLines = [
-      "Hello Mira's Nova Luxe! ♡",
-      "",
-      "I'd like to place an order:",
-      "",
-      "Product: " + product.name,
-      "Category: " + product.category
-    ];
+  "Hello Mira's Nova Luxe! ♡",
+  "",
+  "I'd like to place an order:",
+  "",
+  "Product: " + product.name,
+  "Category: " + product.category
+];
+
+// ADD THE NEW CODE HERE
+if (product.needsType) {
+  messageLines.push("Selected item: " + selectedType);
+}
+
+if (product.includesBox) {
+  messageLines.push("Shoe box: Included");
+}
 
     if (product.needsColour) {
       messageLines.push("Preferred colour/print: " + colour);
@@ -234,13 +276,15 @@ document.addEventListener("DOMContentLoaded", () => {
       );
     }
 
-    messageLines.push(
-      "Quantity: " + quantity,
-      "Unit price: " + formatPrice(product.price),
-      "Total: " + formatPrice(total),
-      "",
-      "Please confirm availability and the next steps. Thank you!"
-    );
+  
+messageLines.push(
+  "Quantity: " + quantity,
+  "Unit price: " + formatPrice(unitPrice),
+  "Total: " + formatPrice(total),
+  "",
+  "Please confirm availability and the next steps. Thank you!"
+);
+
 
     const message = messageLines.join("\n");
 
