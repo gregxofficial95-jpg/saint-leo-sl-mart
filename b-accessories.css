@@ -1194,3 +1194,147 @@ footer {
   }
 
 }
+
+/* B ACCESSORIES ORDER MODAL */
+
+#bOrderModal {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+  background: rgba(0, 0, 0, 0.82);
+  overflow-y: auto;
+}
+
+#bOrderModal.active {
+  display: flex;
+}
+
+.b-order-box {
+  position: relative;
+  width: 100%;
+  max-width: 460px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 30px;
+  background: #F8FAFF;
+  color: #111522;
+}
+
+.b-order-close {
+  position: absolute;
+  top: 12px;
+  right: 17px;
+  border: none;
+  background: transparent;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+.b-order-eyebrow {
+  color: #1746C7;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+.b-order-box h2 {
+  margin: 8px 0 20px;
+  font-family: "Playfair Display", serif;
+  font-size: 30px;
+  font-weight: 400;
+}
+
+.b-selected-product {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px;
+  margin-bottom: 20px;
+  background: #DCE7FF;
+}
+
+.b-selected-product img {
+  width: 65px;
+  height: 70px;
+  object-fit: cover;
+}
+
+.b-selected-product strong,
+.b-selected-product span {
+  display: block;
+  font-size: 12px;
+}
+
+.b-selected-product span {
+  margin-top: 5px;
+  color: #1746C7;
+  font-weight: 700;
+}
+
+#bOrderForm {
+  display: grid;
+  gap: 10px;
+}
+
+#bOrderForm label {
+  font-size: 11px;
+  font-weight: 800;
+}
+
+#bOrderForm input {
+  width: 100%;
+  padding: 13px;
+  border: 1px solid #C7CCD6;
+  background: white;
+  color: #111522;
+  font-family: "Manrope", sans-serif;
+  font-size: 12px;
+  outline: none;
+}
+
+#bOrderForm input:focus {
+  border-color: #1746C7;
+}
+
+.b-order-total {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px 0;
+  font-size: 13px;
+}
+
+.b-order-total strong {
+  color: #1746C7;
+}
+
+#bSubmitOrder {
+  width: 100%;
+  padding: 15px;
+  border: none;
+  background: #1746C7;
+  color: white;
+  font-family: "Manrope", sans-serif;
+  font-size: 11px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+#bSubmitOrder:disabled {
+  opacity: 0.6;
+}
+
+#bOrderMessage {
+  color: #1746C7;
+  font-size: 11px;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 500px) {
+  .b-order-box {
+    padding: 24px 18px;
+  }
+}
