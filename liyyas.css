@@ -740,3 +740,153 @@ footer a:hover {
   }
 
 }
+
+
+/* LIYYA'S ORDER MODAL */
+
+#liyyasOrderModal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0, 0, 0, 0.75);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  overflow-y: auto;
+}
+
+#liyyasOrderModal.show {
+  display: flex;
+}
+
+.liyyas-order-box {
+  background: var(--white);
+  width: 100%;
+  max-width: 480px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 28px;
+  position: relative;
+  border-top: 4px solid var(--gold);
+}
+
+.liyyas-order-box h2 {
+  font-size: 1.8rem;
+  margin-bottom: 5px;
+}
+
+.liyyas-subtitle {
+  color: var(--ink-soft);
+  font-size: 0.85rem;
+  margin-bottom: 20px;
+}
+
+.liyyas-close {
+  position: absolute;
+  right: 15px;
+  top: 10px;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  color: var(--black);
+}
+
+.liyyas-selected-product {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: #f0ece4;
+  padding: 12px;
+  margin-bottom: 20px;
+}
+
+.liyyas-selected-product img {
+  width: 75px;
+  height: 75px;
+  object-fit: cover;
+}
+
+.liyyas-selected-product h3 {
+  font-size: 1rem;
+}
+
+.liyyas-selected-product p {
+  color: var(--gold);
+  font-weight: 700;
+  margin-top: 5px;
+}
+
+#liyyasOrderForm {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+#liyyasOrderForm label {
+  font-size: 0.82rem;
+  font-weight: 700;
+  margin-top: 8px;
+}
+
+#liyyasOrderForm input,
+#liyyasOrderForm textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd6c9;
+  background: white;
+  color: var(--black);
+  font: inherit;
+  font-size: 0.9rem;
+  outline: none;
+  border-radius: 2px;
+}
+
+#liyyasOrderForm input:focus,
+#liyyasOrderForm textarea:focus {
+  border-color: var(--gold);
+}
+
+.liyyas-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 0;
+  margin-top: 10px;
+  border-top: 1px solid #ddd6c9;
+  font-weight: 700;
+}
+
+.liyyas-total strong {
+  font-family: "Fraunces", serif;
+  font-size: 1.2rem;
+}
+
+.liyyas-submit {
+  background: var(--black);
+  color: var(--gold-bright);
+  border: none;
+  padding: 14px;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.liyyas-submit:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.liyyas-disclaimer {
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+  text-align: center;
+  margin-top: 8px;
+}
+
+@media (max-width: 480px) {
+  .liyyas-order-box {
+    padding: 22px 17px;
+  }
+}
