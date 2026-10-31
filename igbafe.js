@@ -1,12 +1,18 @@
+/* ================= CONFIG ================= */
+
+const BRAND_ID = "da57bfad-b7ff-45aa-9ab2-ae3793555c13";
+const VENDOR_WHATSAPP = "2349075964045";
+const ORDER_ENDPOINT =
+  "https://tzjckojpgamjwigxmdja.supabase.co/functions/v1/submit-brand-order";
+
+
 /* ================= INTRO SCREEN ================= */
 
 const introScreen = document.getElementById("introScreen");
 
 if (introScreen) {
   window.addEventListener("load", () => {
-    setTimeout(() => {
-      introScreen.classList.add("hide");
-    }, 3000);
+    setTimeout(() => introScreen.classList.add("hide"), 3000);
   });
 }
 
@@ -16,44 +22,34 @@ if (introScreen) {
 const menuToggle = document.getElementById("menuToggle");
 const mobileMenu = document.getElementById("mobileMenu");
 const mobileClose = document.getElementById("mobileClose");
-const mobileLinks = document.querySelectorAll(".mobile-menu a");
-
-function openMobileMenu() {
-  if (!mobileMenu || !menuToggle) return;
-
-  mobileMenu.classList.add("open");
-  document.body.classList.add("menu-open");
-  menuToggle.setAttribute("aria-expanded", "true");
-}
 
 function closeMobileMenu() {
-  if (!mobileMenu || !menuToggle) return;
-
-  mobileMenu.classList.remove("open");
+  mobileMenu?.classList.remove("open");
   document.body.classList.remove("menu-open");
-  menuToggle.setAttribute("aria-expanded", "false");
+  menuToggle?.setAttribute("aria-expanded", "false");
 }
 
-if (menuToggle) {
-  menuToggle.addEventListener("click", openMobileMenu);
-}
+menuToggle?.addEventListener("click", () => {
+  mobileMenu?.classList.add("open");
+  document.body.classList.add("menu-open");
+  menuToggle.setAttribute("aria-expanded", "true");
+});
 
-if (mobileClose) {
-  mobileClose.addEventListener("click", closeMobileMenu);
-}
+mobileClose?.addEventListener("click", closeMobileMenu);
 
-mobileLinks.forEach((link) => {
+document.querySelectorAll(".mobile-menu a").forEach(link => {
   link.addEventListener("click", closeMobileMenu);
 });
 
-document.addEventListener("keydown", (event) => {
+document.addEventListener("keydown", event => {
   if (event.key === "Escape") {
     closeMobileMenu();
+    closeOrderModal();
   }
 });
 
 
-/* ================= DIGITAL MENU CART ================= */
+/* ================= CART ================= */
 
 const menuItems = document.querySelectorAll(".menu-item");
 const cartItemsContainer = document.getElementById("cartItems");
@@ -63,11 +59,19 @@ const placeOrderBtn = document.getElementById("placeOrderBtn");
 
 const cart = new Map();
 
-
 function formatNaira(amount) {
-  return `₦${amount.toLocaleString("en-NG")}`;
+  return `₦${Number(amount).toLocaleString("en-NG")}`;
 }
 
+function getCartTotal() {
+  let total = 0;
+
+  cart.forEach(item => {
+    total += item.price * item.quantity;
+  });
+
+  return total;
+}
 
 function updateCart() {
   if (!cartItemsContainer || !cartCount || !cartTotal) return;
@@ -75,68 +79,71 @@ function updateCart() {
   cartItemsContainer.innerHTML = "";
 
   let totalItems = 0;
-  let totalPrice = 0;
 
   if (cart.size === 0) {
-    cartItemsContainer.innerHTML = `
-      <p class="empty-cart">
-        Your order is empty. Tap a menu item to begin.
-      </p>
-    `;
+    cartItemsContainer.innerHTML =
+      `<p class="empty-cart">Your order is empty. Tap a menu item to begin.</p>`;
   }
 
   cart.forEach((item, key) => {
     totalItems += item.quantity;
-    totalPrice += item.price * item.quantity;
 
     const cartItem = document.createElement("div");
     cartItem.className = "cart-item";
 
-    cartItem.innerHTML = `
-      <div class="cart-item-info">
-        <span class="cart-item-name">${item.name}</span>
-        <span class="cart-item-price">
-          ${formatNaira(item.price * item.quantity)}
-        </span>
-      </div>
+    const info = document.createElement("div");
+    info.className = "cart-item-info";
 
-      <div class="cart-item-controls">
-        <button type="button" data-action="decrease" data-key="${key}">
-          −
-        </button>
+    const name = document.createElement("span");
+    name.className = "cart-item-name";
+    name.textContent = item.name;
 
-        <span>${item.quantity}</span>
+    const price = document.createElement("span");
+    price.className = "cart-item-price";
+    price.textContent = formatNaira(item.price * item.quantity);
 
-        <button type="button" data-action="increase" data-key="${key}">
-          +
-        </button>
+    info.append(name, price);
 
-        <button type="button" data-action="remove" data-key="${key}">
-          ×
-        </button>
-      </div>
+    if (item.details) {
+      const details = document.createElement("small");
+      details.className = "cart-custom-details";
+      details.textContent = "Customised plate details included";
+      info.appendChild(details);
+    }
+
+    const controls = document.createElement("div");
+    controls.className = "cart-item-controls";
+
+    controls.innerHTML = `
+      <button type="button" data-action="decrease">−</button>
+      <span>${item.quantity}</span>
+      <button type="button" data-action="increase">+</button>
+      <button type="button" data-action="remove">×</button>
     `;
 
+    controls.querySelectorAll("button").forEach(button => {
+      button.dataset.key = key;
+    });
+
+    cartItem.append(info, controls);
     cartItemsContainer.appendChild(cartItem);
   });
 
-  cartCount.textContent = `${totalItems} ${
-    totalItems === 1 ? "item" : "items"
-  }`;
+  cartCount.textContent =
+    `${totalItems} ${totalItems === 1 ? "item" : "items"}`;
 
-  cartTotal.textContent = formatNaira(totalPrice);
+  cartTotal.textContent = formatNaira(getCartTotal());
 
-  document.querySelectorAll(".menu-item").forEach((button) => {
+  menuItems.forEach(button => {
     const key = `${button.dataset.name}-${button.dataset.price}`;
-
     button.classList.toggle("selected", cart.has(key));
   });
 }
 
 
-/* ================= ADD ITEMS TO CART ================= */
+/* ================= ADD MENU ITEMS ================= */
 
-menuItems.forEach((button) => {
+menuItems.forEach(button => {
   button.addEventListener("click", () => {
     const name = button.dataset.name;
     const price = Number(button.dataset.price);
@@ -145,11 +152,7 @@ menuItems.forEach((button) => {
     if (cart.has(key)) {
       cart.get(key).quantity += 1;
     } else {
-      cart.set(key, {
-        name,
-        price,
-        quantity: 1
-      });
+      cart.set(key, { name, price, quantity: 1 });
     }
 
     updateCart();
@@ -159,71 +162,279 @@ menuItems.forEach((button) => {
 
 /* ================= CART CONTROLS ================= */
 
-if (cartItemsContainer) {
-  cartItemsContainer.addEventListener("click", (event) => {
-    const button = event.target.closest("button");
+cartItemsContainer?.addEventListener("click", event => {
+  const button = event.target.closest("button");
+  if (!button) return;
 
-    if (!button) return;
+  const key = button.dataset.key;
+  const action = button.dataset.action;
 
-    const action = button.dataset.action;
-    const key = button.dataset.key;
+  if (!cart.has(key)) return;
 
-    if (!cart.has(key)) return;
+  const item = cart.get(key);
 
-    const item = cart.get(key);
+  if (action === "increase") item.quantity++;
 
-    if (action === "increase") {
-      item.quantity += 1;
-    }
+  if (action === "decrease") {
+    item.quantity--;
+    if (item.quantity <= 0) cart.delete(key);
+  }
 
-    if (action === "decrease") {
-      item.quantity -= 1;
+  if (action === "remove") cart.delete(key);
 
-      if (item.quantity <= 0) {
-        cart.delete(key);
-      }
-    }
+  updateCart();
+});
 
-    if (action === "remove") {
-      cart.delete(key);
-    }
 
-    updateCart();
-  });
+/* ================= ORDER MODAL ================= */
+
+const orderModal = document.createElement("div");
+orderModal.className = "igbafe-order-modal";
+
+orderModal.innerHTML = `
+  <div class="igbafe-order-panel">
+    <button type="button" class="igbafe-modal-close" aria-label="Close">×</button>
+
+    <p class="igbafe-modal-label">IGBAFE BAKES & FRAMES</p>
+    <h2>Complete Your Order</h2>
+    <p class="igbafe-modal-description">
+      Enter your details so we can process your order.
+    </p>
+
+    <div class="igbafe-modal-summary">
+      <div id="igbafeModalItems"></div>
+      <div class="igbafe-modal-total">
+        <span>Order total</span>
+        <strong id="igbafeModalTotal">₦0</strong>
+      </div>
+    </div>
+
+    <form id="igbafeOrderForm">
+      <label for="igbafeCustomerName">Full name</label>
+      <input
+        id="igbafeCustomerName"
+        name="customer_name"
+        type="text"
+        placeholder="Enter your full name"
+        required
+      >
+
+      <label for="igbafeCustomerPhone">Phone number</label>
+      <input
+        id="igbafeCustomerPhone"
+        name="customer_phone"
+        type="tel"
+        placeholder="Enter your phone number"
+        required
+      >
+
+      <label for="igbafeAddress">Delivery address / Hostel</label>
+      <input
+        id="igbafeAddress"
+        name="delivery_address"
+        type="text"
+        placeholder="Enter your delivery location"
+        required
+      >
+
+      <label for="igbafeNotes">Additional notes (optional)</label>
+      <textarea
+        id="igbafeNotes"
+        name="notes"
+        rows="3"
+        placeholder="Any extra instructions?"
+      ></textarea>
+
+      <button type="submit" id="igbafeSubmitOrder">
+        Submit Order & Continue to WhatsApp ↗
+      </button>
+
+      <p class="igbafe-form-message" id="igbafeFormMessage"></p>
+    </form>
+  </div>
+`;
+
+document.body.appendChild(orderModal);
+
+function closeOrderModal() {
+  orderModal.classList.remove("show");
 }
 
+function openOrderModal() {
+  if (cart.size === 0) {
+    alert("Please select at least one item before placing your order.");
+    return;
+  }
 
-/* ================= WHATSAPP ORDER ================= */
+  const itemsContainer = document.getElementById("igbafeModalItems");
+  const totalElement = document.getElementById("igbafeModalTotal");
 
-if (placeOrderBtn) {
-  placeOrderBtn.addEventListener("click", () => {
+  itemsContainer.innerHTML = "";
 
-    if (cart.size === 0) {
-      alert("Please select at least one item before placing your order.");
-      return;
-    }
+  cart.forEach(item => {
+    const line = document.createElement("div");
+    line.className = "igbafe-summary-item";
 
-    let message = "Hello Igbafe Bakes and Frames!%0A%0A";
-    message += "*My Order:*%0A";
+    const name = document.createElement("span");
+    name.textContent = `${item.quantity} × ${item.name}`;
 
-    let totalPrice = 0;
+    const price = document.createElement("strong");
+    price.textContent = formatNaira(item.price * item.quantity);
 
-    cart.forEach((item) => {
-      const itemTotal = item.price * item.quantity;
-      totalPrice += itemTotal;
+    line.append(name, price);
+    itemsContainer.appendChild(line);
+  });
 
-      message += `${item.quantity}x ${item.name} — ${formatNaira(itemTotal)}%0A`;
+  totalElement.textContent = formatNaira(getCartTotal());
+  document.getElementById("igbafeFormMessage").textContent = "";
+
+  orderModal.classList.add("show");
+}
+
+orderModal.querySelector(".igbafe-modal-close")
+  .addEventListener("click", closeOrderModal);
+
+orderModal.addEventListener("click", event => {
+  if (event.target === orderModal) closeOrderModal();
+});
+
+placeOrderBtn?.addEventListener("click", openOrderModal);
+
+
+/* ================= SUBMIT ORDER ================= */
+
+document.getElementById("igbafeOrderForm").addEventListener("submit", async event => {
+  event.preventDefault();
+
+  if (cart.size === 0) {
+    alert("Your order is empty.");
+    closeOrderModal();
+    return;
+  }
+
+  const form = event.currentTarget;
+  const submitButton = document.getElementById("igbafeSubmitOrder");
+  const messageElement = document.getElementById("igbafeFormMessage");
+  const formData = new FormData(form);
+
+  const customerName = formData.get("customer_name").trim();
+  const customerPhone = formData.get("customer_phone").trim();
+  const deliveryAddress = formData.get("delivery_address").trim();
+  const notes = formData.get("notes").trim();
+
+  if (!customerName || !customerPhone || !deliveryAddress) {
+    messageElement.textContent = "Please complete all required fields.";
+    return;
+  }
+
+  const orderItems = [];
+  const detailLines = [];
+
+  cart.forEach(item => {
+    orderItems.push({
+      product_name: item.name,
+      quantity: item.quantity,
+      unit_price: item.price
     });
 
-    message += `%0A*Total: ${formatNaira(totalPrice)}*%0A%0A`;
-    message += "I would like to place this order. Please confirm availability.";
+    detailLines.push(
+      `${item.quantity} × ${item.name} — ${formatNaira(item.price * item.quantity)}`
+    );
+
+    if (item.details) {
+      detailLines.push(item.details);
+    }
+  });
+
+  const total = getCartTotal();
+
+  const payload = {
+    brand_id: BRAND_ID,
+    customer_name: customerName,
+    customer_phone: customerPhone,
+    delivery_address: deliveryAddress,
+    request_type: "order",
+    request_details: [
+      "Customer order:",
+      ...detailLines,
+      `Total: ${formatNaira(total)}`,
+      notes ? `Additional notes: ${notes}` : ""
+    ].filter(Boolean).join("\n"),
+    items: orderItems,
+    website: ""
+  };
+
+  submitButton.disabled = true;
+  submitButton.textContent = "Submitting your order...";
+  messageElement.textContent = "";
+
+  // Open a tab now so the browser does not block the WhatsApp handoff.
+  const whatsappWindow = window.open("about:blank", "_blank");
+
+  try {
+    const response = await fetch(ORDER_ENDPOINT, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(payload)
+    });
+
+    const result = await response.json().catch(() => ({}));
+
+console.log("IGBAFE ORDER RESPONSE:", result);
+
+    if (!response.ok || !result.success) {
+      throw new Error(result.message || "Your order could not be submitted.");
+    }
+
+    const reference = result.order_number || result.reference;
+
+    if (!reference) {
+      throw new Error("Order saved, but no order reference was returned.");
+    }
+
+    const whatsappMessage = [
+      "Hello Igbafe Bakes and Frames!",
+      "",
+      `Order Reference: ${reference}`,
+      `Name: ${customerName}`,
+      `Phone: ${customerPhone}`,
+      `Delivery address: ${deliveryAddress}`,
+      "",
+      "MY ORDER",
+      ...detailLines,
+      "",
+      `TOTAL: ${formatNaira(total)}`,
+      notes ? `Notes: ${notes}` : "",
+      "",
+      "My order has been submitted. Please confirm availability."
+    ].filter(Boolean).join("\n");
 
     const whatsappURL =
-      `https://wa.me/2349075964045?text=${message}`;
+      `https://wa.me/${VENDOR_WHATSAPP}?text=${encodeURIComponent(whatsappMessage)}`;
 
-    window.open(whatsappURL, "_blank");
-  });
-}
+    if (whatsappWindow) {
+      whatsappWindow.location.href = whatsappURL;
+    } else {
+      window.location.href = whatsappURL;
+    }
+
+    cart.clear();
+    updateCart();
+    form.reset();
+    closeOrderModal();
+
+  } catch (error) {
+    if (whatsappWindow) whatsappWindow.close();
+
+    messageElement.textContent =
+      error.message || "Something went wrong. Please try again.";
+
+    submitButton.disabled = false;
+    submitButton.textContent = "Submit Order & Continue to WhatsApp ↗";
+  }
+});
 
 
 /* ================= CURRENT YEAR ================= */
@@ -235,7 +446,7 @@ if (currentYear) {
 }
 
 
-/* CUSTOM DAILY PLATE BUILDER */
+/* ================= DAILY PLATE BUILDER ================= */
 
 const dailyFoodMenu = {
   Monday: [
@@ -248,7 +459,6 @@ const dailyFoodMenu = {
     ["Plantain", 200],
     ["White Beans", 300]
   ],
-
   Tuesday: [
     ["White Rice and Stew", 700],
     ["White Beans", 300],
@@ -258,7 +468,6 @@ const dailyFoodMenu = {
     ["Plantain", 200],
     ["Egusi and Akpu/Eba", 1300]
   ],
-
   Wednesday: [
     ["Yam Porridge", 1000],
     ["Oil Rice", 700],
@@ -266,7 +475,6 @@ const dailyFoodMenu = {
     ["White Rice and Stew", 700],
     ["Ogbono Soup with Swallow", 1300]
   ],
-
   Thursday: [
     ["Fried Rice", 700],
     ["Jollof Rice", 700],
@@ -276,7 +484,6 @@ const dailyFoodMenu = {
     ["Plantain", 200],
     ["Jollof Spaghetti", 700]
   ],
-
   Friday: [
     ["Chips with Fried Egg, Ketchup or Sauce", 2000],
     ["Jollof Rice", 700],
@@ -287,7 +494,6 @@ const dailyFoodMenu = {
     ["Goat Meat Pepper Soup", 1500],
     ["Assorted Pepper Soup", 1500]
   ],
-
   Saturday: [
     ["Oil Beans", 1000],
     ["Plantain", 200],
@@ -297,7 +503,6 @@ const dailyFoodMenu = {
     ["Chicken Pepper Soup", 2000],
     ["White Rice and Stew", 700]
   ],
-
   Sunday: [
     ["White Rice and Stew", 700],
     ["Jollof Rice", 700],
@@ -312,7 +517,16 @@ const plateCustomisations = document.getElementById("plateCustomisations");
 const platesTotal = document.getElementById("platesTotal");
 const plateOrderMessage = document.getElementById("plateOrderMessage");
 
+function updatePlateTotal() {
+  let total = 0;
 
+  document.querySelectorAll(".plate-food-checkbox:checked").forEach(box => {
+    total += Number(box.dataset.price);
+  });
+
+  if (platesTotal) platesTotal.textContent = formatNaira(total);
+  if (plateOrderMessage) plateOrderMessage.textContent = "";
+}
 
 function renderPlateCustomisations() {
   if (!foodDay || !plateCount || !plateCustomisations) return;
@@ -331,12 +545,11 @@ function renderPlateCustomisations() {
 
     const heading = document.createElement("h4");
     heading.textContent = `Plate ${plateNumber}`;
-    card.appendChild(heading);
 
     const list = document.createElement("div");
     list.className = "plate-food-list";
 
-    dailyFoodMenu[foodDay.value].forEach(([name, price], index) => {
+    dailyFoodMenu[foodDay.value].forEach(([name, price]) => {
       const label = document.createElement("label");
       label.className = "plate-food-option";
 
@@ -348,53 +561,40 @@ function renderPlateCustomisations() {
       checkbox.dataset.price = price;
       checkbox.addEventListener("change", updatePlateTotal);
 
-
       const info = document.createElement("span");
       info.className = "plate-food-info";
 
-      const foodTitle = document.createElement("strong");
-      foodTitle.textContent = name;
+      const title = document.createElement("strong");
+      title.textContent = name;
 
       const foodPrice = document.createElement("small");
-      foodPrice.textContent = `₦${price.toLocaleString("en-NG")}`;
+      foodPrice.textContent = formatNaira(price);
 
-      info.append(foodTitle, foodPrice);
+      info.append(title, foodPrice);
       label.append(checkbox, info);
       list.appendChild(label);
     });
 
-    card.appendChild(list);
+    card.append(heading, list);
     plateCustomisations.appendChild(card);
   }
 
   updatePlateTotal();
 }
 
-function updatePlateTotal() {
-  let total = 0;
-
-  document.querySelectorAll(".plate-food-checkbox:checked").forEach(box => {
-    total += Number(box.dataset.price);
-  });
-
-  if (platesTotal) {
-    platesTotal.textContent = `₦${total.toLocaleString("en-NG")}`;
-  }
-
-  if (plateOrderMessage) {
-    plateOrderMessage.textContent = "";
-  }
-}
-
 if (foodDay && plateCount && plateCustomisations) {
   foodDay.addEventListener("change", renderPlateCustomisations);
   plateCount.addEventListener("input", renderPlateCustomisations);
-
   renderPlateCustomisations();
 }
 
+
+/* ================= ADD CUSTOM PLATES TO CART ================= */
+
 document.getElementById("addPlatesToOrder")?.addEventListener("click", () => {
-  const selected = [...document.querySelectorAll(".plate-food-checkbox:checked")];
+  const selected = [
+    ...document.querySelectorAll(".plate-food-checkbox:checked")
+  ];
 
   if (!selected.length) {
     plateOrderMessage.textContent =
@@ -407,9 +607,7 @@ document.getElementById("addPlatesToOrder")?.addEventListener("click", () => {
   selected.forEach(box => {
     const plate = box.dataset.plate;
 
-    if (!plateOrders[plate]) {
-      plateOrders[plate] = [];
-    }
+    if (!plateOrders[plate]) plateOrders[plate] = [];
 
     plateOrders[plate].push({
       name: box.dataset.name,
@@ -419,7 +617,7 @@ document.getElementById("addPlatesToOrder")?.addEventListener("click", () => {
 
   const orderLines = Object.entries(plateOrders).map(([plate, foods]) => {
     const foodLines = foods.map(food =>
-      `  - ${food.name}: ₦${food.price.toLocaleString("en-NG")}`
+      `- ${food.name}: ${formatNaira(food.price)}`
     );
 
     const plateTotal = foods.reduce((sum, food) => sum + food.price, 0);
@@ -427,7 +625,7 @@ document.getElementById("addPlatesToOrder")?.addEventListener("click", () => {
     return [
       `PLATE ${plate}:`,
       ...foodLines,
-      `  Plate total: ₦${plateTotal.toLocaleString("en-NG")}`
+      `Plate total: ${formatNaira(plateTotal)}`
     ].join("\n");
   });
 
@@ -436,38 +634,22 @@ document.getElementById("addPlatesToOrder")?.addEventListener("click", () => {
     0
   );
 
-  const message = [
-    "Hello Igbafe Bakes and Frames!",
+  const details = [
     `Daily menu: ${foodDay.value}`,
-    "",
-    ...orderLines,
-    "",
-    `TOTAL FOR CUSTOM PLATES: ₦${total.toLocaleString("en-NG")}`,
-    "",
-    "Please confirm my order."
+    ...orderLines
   ].join("\n");
 
-  // Add the customised plates to the existing order/cart as one item.
-  if (typeof cart !== "undefined" && cart instanceof Map) {
-    const key = `Custom Plates - ${foodDay.value} - ${Date.now()}`;
+  const key = `Custom Plates - ${foodDay.value} - ${Date.now()}`;
 
-    cart.set(key, {
-      name: `Custom Plates (${Object.keys(plateOrders).length})`,
-      price: total,
-      quantity: 1,
-      details: message
-    });
+  cart.set(key, {
+    name: `Custom Plates (${Object.keys(plateOrders).length})`,
+    price: total,
+    quantity: 1,
+    details
+  });
 
-    if (typeof renderCart === "function") {
-      renderCart();
-    } else if (typeof updateCart === "function") {
-      updateCart();
-    }
-  }
+  updateCart();
 
   plateOrderMessage.textContent =
-    "Your customised plates have been prepared. Please review your order before checkout.";
-
-  // Keep a copy of the full plate breakdown for checkout.
-  window.igbafeCustomPlateOrder = message;
+    "Your customised plates have been added to your order. Review your cart before checkout.";
 });
