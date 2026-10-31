@@ -695,35 +695,244 @@
   </footer>
 
 <script>
-  const filterButtons = document.querySelectorAll(".filter-btn");
-  const productCards = document.querySelectorAll(".product-card");
+const SUPABASE_URL = "https://tzjckojpgamjwigxmdja.supabase.co";
+const BRAND_ID = "b84fe9aa-62eb-4499-a973-1e6bc194c38a";
+const WHATSAPP_NUMBER = "2347044860478";
 
-  filterButtons.forEach(button => {
-    button.addEventListener("click", () => {
+const filterButtons = document.querySelectorAll(".filter-btn");
+const productCards = document.querySelectorAll(".product-card");
 
-      const selectedCategory = button.dataset.category;
+// PRODUCT FILTERS
+filterButtons.forEach(button => {
+  button.addEventListener("click", () => {
+    const category = button.dataset.category;
 
-      filterButtons.forEach(btn => {
-        btn.classList.remove("active");
-      });
+    filterButtons.forEach(btn => btn.classList.remove("active"));
+    button.classList.add("active");
 
-      button.classList.add("active");
-
-      productCards.forEach(card => {
-        const cardCategory = card.dataset.category;
-
-        if (
-          selectedCategory === "all" ||
-          cardCategory === selectedCategory
-        ) {
-          card.style.display = "block";
-        } else {
-          card.style.display = "none";
-        }
-      });
-
+    productCards.forEach(card => {
+      card.style.display =
+        category === "all" || card.dataset.category === category
+          ? "block"
+          : "none";
     });
   });
+});
+
+
+// CREATE ORDER MODAL
+const modal = document.createElement("div");
+modal.id = "bOrderModal";
+
+modal.innerHTML = `
+  <div class="b-order-box">
+    <button type="button" class="b-order-close">&times;</button>
+
+    <p class="b-order-eyebrow">B ACCESSORIES & WEARS</p>
+    <h2>Complete Your Order</h2>
+
+    <div class="b-selected-product">
+      <img id="bProductImage" src="" alt="">
+      <div>
+        <strong id="bProductName"></strong>
+        <span id="bProductPrice"></span>
+      </div>
+    </div>
+
+    <form id="bOrderForm">
+      <label>Full Name</label>
+      <input id="bCustomerName" type="text" placeholder="Your full name" required>
+
+      <label>Phone Number</label>
+      <input id="bCustomerPhone" type="tel" placeholder="Your phone number" required>
+
+      <label>Delivery Address / Hostel</label>
+      <input id="bCustomerAddress" type="text" placeholder="Where should we deliver?" required>
+
+      <label>Quantity</label>
+      <input id="bQuantity" type="number" min="1" value="1" required>
+
+      <div class="b-order-total">
+        Total: <strong id="bOrderTotal"></strong>
+      </div>
+
+      <button type="submit" id="bSubmitOrder">
+        Submit Order
+      </button>
+
+      <p id="bOrderMessage" role="status"></p>
+    </form>
+  </div>
+`;
+
+document.body.appendChild(modal);
+
+let selectedProduct = null;
+
+const closeModal = () => {
+  modal.classList.remove("active");
+  document.body.style.overflow = "";
+};
+
+modal.querySelector(".b-order-close").addEventListener("click", closeModal);
+
+modal.addEventListener("click", event => {
+  if (event.target === modal) closeModal();
+});
+
+document.addEventListener("keydown", event => {
+  if (event.key === "Escape") closeModal();
+});
+
+
+// OPEN PRODUCT ORDER FORM
+document.querySelectorAll(".product-info a").forEach(link => {
+  link.addEventListener("click", event => {
+    event.preventDefault();
+
+    const card = link.closest(".product-card");
+    const name = card.querySelector("h3").textContent.trim();
+    const priceText = card.querySelector("strong").textContent.trim();
+    const price = Number(priceText.replace(/[^\d]/g, ""));
+    const image = card.querySelector("img").src;
+
+    selectedProduct = {
+      name,
+      price,
+      image
+    };
+
+    document.getElementById("bProductName").textContent = name;
+    document.getElementById("bProductPrice").textContent = priceText;
+    document.getElementById("bProductImage").src = image;
+    document.getElementById("bQuantity").value = 1;
+
+    updateTotal();
+
+    document.getElementById("bOrderMessage").textContent = "";
+
+    modal.classList.add("active");
+    document.body.style.overflow = "hidden";
+  });
+});
+
+
+// UPDATE TOTAL
+function updateTotal() {
+  if (!selectedProduct) return;
+
+  const quantity = Math.max(
+    1,
+    Number(document.getElementById("bQuantity").value) || 1
+  );
+
+  const total = selectedProduct.price * quantity;
+
+  document.getElementById("bOrderTotal").textContent =
+    "₦" + total.toLocaleString("en-NG");
+}
+
+document.getElementById("bQuantity").addEventListener("input", updateTotal);
+
+
+// SUBMIT ORDER
+document.getElementById("bOrderForm").addEventListener("submit", async event => {
+  event.preventDefault();
+
+  if (!selectedProduct) return;
+
+  const customer = {
+    name: document.getElementById("bCustomerName").value.trim(),
+    phone: document.getElementById("bCustomerPhone").value.trim(),
+    address: document.getElementById("bCustomerAddress").value.trim()
+  };
+
+  const quantity = Math.max(
+    1,
+    Number(document.getElementById("bQuantity").value) || 1
+  );
+
+  const total = selectedProduct.price * quantity;
+
+  const submitButton = document.getElementById("bSubmitOrder");
+  const message = document.getElementById("bOrderMessage");
+
+  // Open synchronously to avoid popup blockers
+  const whatsappTab = window.open("about:blank", "_blank");
+
+  submitButton.disabled = true;
+  submitButton.textContent = "Submitting...";
+  message.textContent = "Please wait...";
+
+  try {
+    const response = await fetch(
+      `${SUPABASE_URL}/functions/v1/submit-brand-order`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          brand_id: BRAND_ID,
+          customer_name: customer.name,
+          customer_phone: customer.phone,
+          delivery_address: customer.address,
+          request_type: "order",
+          request_details:
+            "Order submitted through B Accessories & Wears website.",
+          items: [
+            {
+              product_name: selectedProduct.name,
+              quantity: quantity,
+              unit_price: selectedProduct.price
+            }
+          ],
+          website: ""
+        })
+      }
+    );
+
+    const result = await response.json();
+
+    if (!response.ok || !result.success) {
+      throw new Error(result.error || "Unable to submit your order.");
+    }
+
+    const reference = result.order_number || result.reference || "Submitted";
+
+    const whatsappMessage =
+      `Hello B Accessories & Wears! I'd like to confirm my order.\n\n` +
+      `Order Reference: ${reference}\n\n` +
+      `Product: ${selectedProduct.name}\n` +
+      `Quantity: ${quantity}\n` +
+      `Unit Price: ₦${selectedProduct.price.toLocaleString("en-NG")}\n` +
+      `Total: ₦${total.toLocaleString("en-NG")}\n\n` +
+      `Customer Name: ${customer.name}\n` +
+      `Phone: ${customer.phone}\n` +
+      `Delivery Address: ${customer.address}\n\n` +
+      `Please confirm availability and delivery details. Thank you!`;
+
+    if (whatsappTab) {
+      whatsappTab.location.href =
+        `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(whatsappMessage)}`;
+    }
+
+    message.textContent =
+      `Order submitted! Reference: ${reference}. Please send your WhatsApp message.`;
+
+    document.getElementById("bOrderForm").reset();
+
+    setTimeout(closeModal, 3500);
+
+  } catch (error) {
+    if (whatsappTab) whatsappTab.close();
+
+    message.textContent = error.message || "Something went wrong.";
+  } finally {
+    submitButton.disabled = false;
+    submitButton.textContent = "Submit Order";
+  }
+});
 </script>
 
 </body>
