@@ -110,31 +110,19 @@
         </div>
       </section>
 
-      <!-- BRAND ORDERS -->
-      <section class="admin-section" id="brandOrdersSection">
-        <div class="toolbar">
-          <h2>Brand Orders & Requests</h2>
-          <button class="small-button" onclick="loadBrandOrders()">REFRESH ORDERS</button>
-        </div>
-        <p class="section-intro">
-          Track customer requests across your marketplace. WhatsApp requests are recorded as initiated;
-          they are not proof that a customer sent the message or completed payment.
-        </p>
-
-        <section class="stats-grid">
-          <div class="stat-card">
-            <span class="stat-label">TOTAL REQUESTS</span>
-            <strong id="ordersTotal" class="stat-number">0</strong>
-          </div>
-          <div class="stat-card">
-            <span class="stat-label">AWAITING VENDOR</span>
-            <strong id="ordersAwaiting" class="stat-number">0</strong>
-          </div>
-          <div class="stat-card">
-            <span class="stat-label">OVERDUE / UNCONFIRMED</span>
-            <strong id="ordersOverdue" class="stat-number">0</strong>
-          </div>
-        </section>
+<!-- BRAND ORDERS LINK -->
+<section class="admin-section">
+  <div class="panel">
+    <h2>Brand Orders</h2>
+    <p class="section-intro">
+      View, manage, update and delete customer orders submitted through marketplace brands.
+    </p>
+    <a href="admin-orders.html" class="action-button"
+       style="display:inline-block;text-decoration:none;">
+      VIEW BRAND ORDERS →
+    </a>
+  </div>
+</section>
 
         <div class="filters">
           <input id="orderSearch" placeholder="Search reference, customer, phone..." oninput="renderBrandOrders()">
@@ -287,10 +275,9 @@
         adminApp.classList.remove("hidden");
 
         await Promise.allSettled([
-          loadAdminReviews(),
-          loadAdminProfile(),
-          loadBrandOrders()
-        ]);
+  loadAdminReviews(),
+  loadAdminProfile()
+]);
       } catch (error) {
         console.error("Admin access error:", error);
         accessMessage.textContent = "Could not verify admin access. Please refresh or sign in again.";
