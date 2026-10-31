@@ -1502,3 +1502,169 @@ img {
     }
 
 }
+
+/* =========================================
+   NTB ORDER MODAL
+========================================= */
+
+#ntbOrderModal {
+    position: fixed;
+    inset: 0;
+    z-index: 5000;
+    background: rgba(0, 0, 0, 0.78);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 18px;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: 0.3s ease;
+}
+
+#ntbOrderModal.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.ntb-order-box {
+    position: relative;
+    background: #f7f2ed;
+    width: 100%;
+    max-width: 480px;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 32px;
+    transform: translateY(20px);
+    transition: 0.3s ease;
+}
+
+#ntbOrderModal.active .ntb-order-box {
+    transform: translateY(0);
+}
+
+.ntb-close {
+    position: absolute;
+    top: 12px;
+    right: 17px;
+    background: none;
+    border: none;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.ntb-order-eyebrow {
+    color: #f52278;
+    font-size: 10px;
+    letter-spacing: 2px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.ntb-order-box h2 {
+    font-family: "Playfair Display", serif;
+    font-size: 32px;
+    font-weight: 400;
+    margin-bottom: 20px;
+}
+
+.ntb-selected-product {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: white;
+    padding: 12px;
+    margin-bottom: 22px;
+}
+
+.ntb-selected-product img {
+    width: 75px;
+    height: 85px;
+    object-fit: cover;
+}
+
+.ntb-selected-product div {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.ntb-selected-product strong {
+    font-size: 14px;
+}
+
+.ntb-selected-product span {
+    color: #777;
+    font-size: 11px;
+}
+
+#ntbOrderForm {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
+
+#ntbOrderForm label {
+    font-size: 12px;
+    font-weight: 600;
+    margin-top: 7px;
+}
+
+#ntbOrderForm input,
+#ntbOrderForm textarea {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #ddd;
+    background: white;
+    font-family: inherit;
+    font-size: 13px;
+    outline: none;
+}
+
+#ntbOrderForm input:focus,
+#ntbOrderForm textarea:focus {
+    border-color: #f52278;
+}
+
+#ntbOrderForm textarea {
+    resize: vertical;
+}
+
+#ntbSubmitOrder {
+    background: #f52278;
+    color: white;
+    border: none;
+    padding: 16px;
+    margin-top: 12px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    cursor: pointer;
+}
+
+#ntbSubmitOrder:hover {
+    background: #090909;
+}
+
+#ntbSubmitOrder:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+#ntbOrderMessage {
+    font-size: 12px;
+    line-height: 1.5;
+    color: #f52278;
+    text-align: center;
+}
+
+@media (max-width: 480px) {
+    .ntb-order-box {
+        padding: 25px 20px;
+    }
+
+    .ntb-order-box h2 {
+        font-size: 27px;
+    }
+}
