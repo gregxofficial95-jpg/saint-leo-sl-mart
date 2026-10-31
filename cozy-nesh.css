@@ -1542,3 +1542,69 @@ h1, h2, h3 {
     animation: none;
   }
 }
+
+
+
+/* =========================================
+   COZY NESH — INTRO SCREEN MOBILE FIX
+========================================= */
+
+.intro-screen {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+
+  display: grid;
+  place-items: center;
+
+  padding: 0;
+  margin: 0;
+}
+
+.intro-content {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  margin: 0 auto;
+  padding: 24px;
+
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.intro-logo-wrap {
+  margin: 0 auto;
+  flex-shrink: 0;
+}
+
+@media (max-width: 480px) {
+  .intro-screen {
+    height: 100vh;
+    height: 100dvh;
+  }
+
+  .intro-content {
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    gap: 20px;
+  }
+
+  .intro-logo-wrap {
+    width: 140px;
+    height: 140px;
+    margin: 0 auto;
+  }
+
+  .intro-tagline {
+    text-align: center;
+  }
+}
