@@ -248,30 +248,78 @@
 
 
   <!-- BOOKING -->
-  <section id="booking" class="booking-section">
+<section id="booking" class="booking-section">
 
-    <p class="section-eyebrow">
-      READY FOR YOUR NEXT SET?
-    </p>
+  <p class="section-eyebrow">READY FOR YOUR NEXT SET?</p>
 
-    <h2>
-      Let's create something beautiful.
-    </h2>
+  <h2>Let's create something beautiful.</h2>
 
-    <p>
-      Contact Estees Nail Haven on WhatsApp to ask questions,
-      check availability, and book your appointment.
-    </p>
+  <p>
+    Choose your preferred service, date and time.
+    Estees will contact you to confirm availability.
+  </p>
 
-    <a
-      href="https://wa.me/2349079465090"
-      class="primary-btn"
-      target="_blank"
+  <form id="esteesBookingForm" class="booking-form">
+
+    <input
+      type="text"
+      id="bookingName"
+      placeholder="Your full name"
+      required
     >
-      Book on WhatsApp
-    </a>
 
-  </section>
+    <input
+      type="tel"
+      id="bookingPhone"
+      placeholder="Phone number"
+      required
+    >
+
+    <select id="bookingService" required>
+      <option value="">Select a service</option>
+      <option>Stick-On Nails (Gel)</option>
+      <option>Acrylic</option>
+      <option>Builder Gel</option>
+      <option>BIAB</option>
+      <option>Acrylic Toenails</option>
+      <option>Acrylic Overlay</option>
+      <option>Gel Toenails</option>
+    </select>
+
+    <input
+      type="date"
+      id="bookingDate"
+      required
+    >
+
+    <select id="bookingTime" required>
+      <option value="">Preferred appointment time</option>
+      <option>9:00 AM</option>
+      <option>10:00 AM</option>
+      <option>11:00 AM</option>
+      <option>12:00 PM</option>
+      <option>1:00 PM</option>
+      <option>2:00 PM</option>
+      <option>3:00 PM</option>
+      <option>4:00 PM</option>
+      <option>5:00 PM</option>
+    </select>
+
+    <textarea
+      id="bookingNotes"
+      placeholder="Additional notes (optional)"
+      rows="4"
+    ></textarea>
+
+    <button type="submit" class="primary-btn" id="bookingSubmit">
+      Submit Booking Request
+    </button>
+
+    <p id="bookingMessage" role="status"></p>
+
+  </form>
+
+</section>
 
 
   <!-- FOOTER -->
@@ -286,6 +334,7 @@
     </a>
 
   </footer>
+
 <!-- IMAGE LIGHTBOX -->
 <div class="image-lightbox" id="imageLightbox" role="dialog" aria-modal="true" aria-label="Enlarged nail inspiration image">
   <button class="lightbox-close" id="lightboxClose" aria-label="Close image">&times;</button>
@@ -293,87 +342,188 @@
 </div>
 
 <script>
-  const whatsappNumber = "2349079465090";
+const SUPABASE_URL = "https://tzjckojpgamjwigxmdja.supabase.co";
+const BRAND_ID = "d0540062-4775-423d-b38d-53330b007c2c";
+const WHATSAPP_NUMBER = "2349079465090";
 
-  // Make service cards open WhatsApp without a prewritten message
-  document.querySelectorAll(".service-card").forEach(card => {
-    card.setAttribute("role", "link");
-    card.setAttribute("tabindex", "0");
-    card.setAttribute("aria-label", "Contact Estees Nail Haven");
+const bookingForm = document.getElementById("esteesBookingForm");
+const bookingMessage = document.getElementById("bookingMessage");
+const bookingSubmit = document.getElementById("bookingSubmit");
+const bookingDate = document.getElementById("bookingDate");
 
-    function openWhatsApp() {
-      window.open(
-        "https://wa.me/" + whatsappNumber,
-        "_blank",
-        "noopener,noreferrer"
-      );
-    }
+// Prevent past dates
+const today = new Date();
+const localToday = new Date(
+  today.getTime() - today.getTimezoneOffset() * 60000
+).toISOString().split("T")[0];
 
-    card.addEventListener("click", openWhatsApp);
+bookingDate.min = localToday;
 
-    card.addEventListener("keydown", event => {
-      if (event.key === "Enter" || event.key === " ") {
-        event.preventDefault();
-        openWhatsApp();
-      }
+// Service cards select the service and move to booking
+document.querySelectorAll(".service-card").forEach(card => {
+  card.addEventListener("click", () => {
+    const service = card.querySelector("h3")?.textContent.trim();
+    const serviceSelect = document.getElementById("bookingService");
+
+    if (service) serviceSelect.value = service;
+
+    document.getElementById("booking").scrollIntoView({
+      behavior: "smooth"
     });
   });
+});
 
-  // Make gallery images clickable
-  const lightbox = document.getElementById("imageLightbox");
-  const lightboxImage = document.getElementById("lightboxImage");
-  const closeButton = document.getElementById("lightboxClose");
+// Booking submission
+bookingForm.addEventListener("submit", async event => {
+  event.preventDefault();
 
-  document.querySelectorAll(".gallery-image img").forEach(image => {
-    image.style.cursor = "pointer";
-    image.tabIndex = 0;
+  const customer = {
+    name: document.getElementById("bookingName").value.trim(),
+    phone: document.getElementById("bookingPhone").value.trim(),
+    service: document.getElementById("bookingService").value,
+    date: bookingDate.value,
+    time: document.getElementById("bookingTime").value,
+    notes: document.getElementById("bookingNotes").value.trim()
+  };
 
-    function showImage() {
-      lightboxImage.src = image.src;
-      lightboxImage.alt = image.alt;
-      lightbox.classList.add("active");
-      document.body.style.overflow = "hidden";
-      closeButton.focus();
-    }
-
-    image.addEventListener("click", showImage);
-
-    image.addEventListener("keydown", event => {
-      if (event.key === "Enter" || event.key === " ") {
-        event.preventDefault();
-        showImage();
-      }
-    });
-  });
-
-  function closeLightbox() {
-    lightbox.classList.remove("active");
-    lightboxImage.src = "";
-    document.body.style.overflow = "";
+  if (customer.date < localToday) {
+    bookingMessage.textContent = "Please select a valid future date.";
+    return;
   }
 
-  closeButton.addEventListener("click", closeLightbox);
+  // Open a tab immediately to avoid popup blockers
+  const whatsappTab = window.open("about:blank", "_blank");
 
-  lightbox.addEventListener("click", event => {
-    if (event.target === lightbox) {
-      closeLightbox();
+  bookingSubmit.disabled = true;
+  bookingSubmit.textContent = "Submitting...";
+  bookingMessage.textContent = "Please wait while we submit your request.";
+
+  try {
+    const response = await fetch(
+      `${SUPABASE_URL}/functions/v1/submit-brand-order`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          brand_id: BRAND_ID,
+          customer_name: customer.name,
+          customer_phone: customer.phone,
+          delivery_address: "Appointment booking",
+          request_type: "enquiry",
+          request_details:
+            `APPOINTMENT BOOKING REQUEST\n` +
+            `Service: ${customer.service}\n` +
+            `Preferred date: ${customer.date}\n` +
+            `Preferred time: ${customer.time}\n` +
+            `Additional notes: ${customer.notes || "None"}\n` +
+            `Please confirm appointment availability.`,
+          items: [
+            {
+              product_name: customer.service,
+              quantity: 1,
+              unit_price: 0
+            }
+          ],
+          website: ""
+        })
+      }
+    );
+
+    const result = await response.json();
+
+    if (!response.ok || !result.success) {
+      throw new Error(result.error || "Booking submission failed.");
+    }
+
+    const reference =
+      result.order_number || result.reference || "Submitted";
+
+    const message =
+      `Hello Estees Nail Haven! I have submitted an appointment request.\n\n` +
+      `Booking reference: ${reference}\n` +
+      `Name: ${customer.name}\n` +
+      `Phone: ${customer.phone}\n` +
+      `Service: ${customer.service}\n` +
+      `Preferred date: ${customer.date}\n` +
+      `Preferred time: ${customer.time}\n` +
+      `Notes: ${customer.notes || "None"}\n\n` +
+      `Please confirm availability. Thank you!`;
+
+    if (whatsappTab) {
+      whatsappTab.location.href =
+        `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+    }
+
+    bookingMessage.textContent =
+      `Request submitted! Reference: ${reference}. Please send your WhatsApp message.`;
+
+    bookingForm.reset();
+
+  } catch (error) {
+    if (whatsappTab) whatsappTab.close();
+
+    bookingMessage.textContent =
+      error.message || "Something went wrong. Please try again.";
+
+  } finally {
+    bookingSubmit.disabled = false;
+    bookingSubmit.textContent = "Submit Booking Request";
+  }
+});
+
+
+// Gallery lightbox
+const lightbox = document.getElementById("imageLightbox");
+const lightboxImage = document.getElementById("lightboxImage");
+const closeButton = document.getElementById("lightboxClose");
+
+document.querySelectorAll(".gallery-image img").forEach(image => {
+  image.style.cursor = "pointer";
+  image.tabIndex = 0;
+
+  function showImage() {
+    lightboxImage.src = image.src;
+    lightboxImage.alt = image.alt;
+    lightbox.classList.add("active");
+    document.body.style.overflow = "hidden";
+    closeButton.focus();
+  }
+
+  image.addEventListener("click", showImage);
+
+  image.addEventListener("keydown", event => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      showImage();
     }
   });
+});
 
-  document.addEventListener("keydown", event => {
-    if (event.key === "Escape") {
-      closeLightbox();
-    }
-  });
+function closeLightbox() {
+  lightbox.classList.remove("active");
+  lightboxImage.src = "";
+  document.body.style.overflow = "";
+}
 
-  /* REMOVE INTRO AFTER ANIMATION */
+closeButton.addEventListener("click", closeLightbox);
+
+lightbox.addEventListener("click", event => {
+  if (event.target === lightbox) closeLightbox();
+});
+
+document.addEventListener("keydown", event => {
+  if (event.key === "Escape") closeLightbox();
+});
+
+
+// Intro animation
 window.addEventListener("load", () => {
   const intro = document.getElementById("esteesIntro");
 
   if (intro) {
-    setTimeout(() => {
-      intro.remove();
-    }, 3700);
+    setTimeout(() => intro.remove(), 3700);
   }
 });
 </script>
