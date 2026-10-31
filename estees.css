@@ -819,3 +819,66 @@ h2 {
     animation: none;
   }
 }
+
+/* APPOINTMENT BOOKING FORM */
+
+.booking-form {
+  width: 100%;
+  max-width: 520px;
+  margin: 30px auto 0;
+  display: grid;
+  gap: 14px;
+}
+
+.booking-form input,
+.booking-form select,
+.booking-form textarea {
+  width: 100%;
+  padding: 15px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--ivory);
+  color: var(--cocoa);
+  font-family: "Manrope", sans-serif;
+  font-size: 13px;
+  outline: none;
+}
+
+.booking-form input:focus,
+.booking-form select:focus,
+.booking-form textarea:focus {
+  border-color: var(--champagne);
+}
+
+.booking-form textarea {
+  resize: vertical;
+}
+
+.booking-form button {
+  width: 100%;
+  border: none;
+  cursor: pointer;
+}
+
+.booking-form button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+#bookingMessage {
+  color: var(--muted-rose);
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 600px) {
+  .booking-form {
+    gap: 12px;
+  }
+
+  .booking-form input,
+  .booking-form select,
+  .booking-form textarea {
+    font-size: 12px;
+  }
+}
