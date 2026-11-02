@@ -761,59 +761,143 @@ document.addEventListener("DOMContentLoaded", () => {
 
   boxCheckbox.addEventListener("change", updateTotal);
 
-  // WHATSAPP ORDERING
+   // SUPABASE ORDER TRACKING
 
-  $("#orderButton").addEventListener("click", () => {
+  const SUPABASE_ORDER_URL =
+    "https://tzjckojpgamjwigxmdja.supabase.co/functions/v1/submit-brand-order";
+
+  const PAMACO_BRAND_ID =
+    "b69e4678-5a0c-4844-b792-964de54bf00e";
+
+  $("#orderButton").addEventListener("click", async () => {
     if (!activeProduct) return;
 
     const product = activeProduct;
     const selectedVariant = product.variants[activeVariantIndex];
     const quantity = getQuantity();
 
+    const customerName = $("#pamacoCustomerName").value.trim();
+    const customerPhone = $("#pamacoCustomerPhone").value.trim();
+    const deliveryAddress = $("#pamacoCustomerAddress").value.trim();
+
     const selectedSize = product.sizes ? sizeSelect.value : "";
     const wantsBox = product.boxOptional && boxCheckbox.checked;
 
+    if (!customerName || !customerPhone || !deliveryAddress) {
+      showToast("Please complete all customer details.");
+      return;
+    }
+
     if (product.sizes && !selectedSize) {
       showToast("Please select your shoe size first.");
-
       sizeSelect.focus();
       return;
     }
 
-    const unitPrice =
-      product.price + (wantsBox ? BOX_PRICE : 0);
-
+    const unitPrice = product.price + (wantsBox ? BOX_PRICE : 0);
     const total = unitPrice * quantity;
 
-    const orderLines = [
-      "Hello Pamaco! I'd like to place an order.",
-      "",
-      "PRODUCT DETAILS",
+    const boxDetails = product.boxIncluded
+      ? "Included"
+      : wantsBox
+        ? "Yes (+₦1,000 each)"
+        : product.boxOptional
+          ? "No"
+          : "Not applicable";
+
+    const productDetails = [
       `Product: ${product.name}`,
       `Type: ${selectedVariant.name}`,
       ...(selectedSize ? [`Shoe size: EU ${selectedSize}`] : []),
-      `Shoe box: ${
-        product.boxIncluded
-          ? "Included"
-          : wantsBox
-            ? "Yes (+₦1,000 each)"
-            : product.boxOptional
-              ? "No"
-              : "Not applicable"
-      }`,
+      `Shoe box: ${boxDetails}`,
       `Quantity: ${quantity}`,
       `Unit price: ${formatPrice(unitPrice)}`,
-      `TOTAL: ${formatPrice(total)}`,
-      "",
-      "Please confirm availability and provide ordering/delivery details. Thank you!"
-    ];
+      `Total: ${formatPrice(total)}`
+    ].join("\n");
 
-    const whatsappURL =
-      `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(orderLines.join("\n"))}`;
+    const button = $("#orderButton");
 
-    window.open(whatsappURL, "_blank", "noopener,noreferrer");
+    // Open WhatsApp window before awaiting the request.
+    const whatsappWindow = window.open("about:blank", "_blank");
+
+    if (!whatsappWindow) {
+      showToast("Please allow pop-ups to continue.");
+      return;
+    }
+
+    button.disabled = true;
+    button.textContent = "Submitting order...";
+
+    try {
+      const response = await fetch(SUPABASE_ORDER_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          brand_id: PAMACO_BRAND_ID,
+          customer_name: customerName,
+          customer_phone: customerPhone,
+          delivery_address: deliveryAddress,
+          request_type: "order",
+          request_details: productDetails,
+          items: [
+            {
+              product_name: `${product.name} — ${selectedVariant.name}${
+                selectedSize ? ` — EU ${selectedSize}` : ""
+              } — Shoe box: ${boxDetails}`,
+              quantity: quantity,
+              unit_price: unitPrice
+            }
+          ],
+          website: ""
+        })
+      });
+
+      const result = await response.json();
+
+      if (!response.ok || !result.success || !result.order_number) {
+        throw new Error(
+          result.message || "Your order could not be recorded."
+        );
+      }
+
+      const whatsappMessage = [
+        "Hello Pamaco! I've submitted an order through your website.",
+        "",
+        `Order reference: ${result.order_number}`,
+        "",
+        "CUSTOMER DETAILS",
+        `Name: ${customerName}`,
+        `Phone: ${customerPhone}`,
+        `Delivery location: ${deliveryAddress}`,
+        "",
+        "ORDER DETAILS",
+        productDetails,
+        "",
+        "Please confirm my order. Thank you!"
+      ].join("\n");
+
+      const whatsappURL =
+        `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(whatsappMessage)}`;
+
+      whatsappWindow.location.href = whatsappURL;
+
+      showToast(`Order ${result.order_number} recorded successfully.`);
+
+    } catch (error) {
+      whatsappWindow.close();
+
+      console.error("Pamaco order error:", error);
+
+      showToast(error.message || "Unable to submit your order. Please try again.");
+
+    } finally {
+      button.disabled = false;
+      button.innerHTML = 'Order via WhatsApp <span>↗</span>';
+    }
   });
-
+  
   // MOBILE NAVIGATION
 
   const menuToggle = $("#menuToggle");
