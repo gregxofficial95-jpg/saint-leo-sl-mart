@@ -2607,3 +2607,224 @@ a {
   align-items: center;
   text-align: center;
 }
+
+/* =========================================================
+   ORDER SUCCESS POPUP
+========================================================= */
+
+#maryannSuccessModal {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+
+  opacity: 0;
+  visibility: hidden;
+
+  transition: 0.3s ease;
+}
+
+#maryannSuccessModal.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.maryann-success-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(35, 19, 15, 0.75);
+}
+
+.maryann-success-card {
+  position: relative;
+  z-index: 2;
+
+  width: min(440px, 100%);
+
+  padding: 40px 30px;
+
+  background: var(--soft);
+  text-align: center;
+
+  box-shadow: var(--shadow);
+
+  transform: translateY(20px);
+  transition: transform 0.3s ease;
+}
+
+#maryannSuccessModal.open .maryann-success-card {
+  transform: translateY(0);
+}
+
+.maryann-success-icon {
+  width: 58px;
+  height: 58px;
+
+  display: grid;
+  place-items: center;
+
+  margin: 0 auto 24px;
+
+  border-radius: 50%;
+
+  background: var(--brown);
+  color: var(--cream);
+
+  font-size: 27px;
+}
+
+.maryann-success-kicker {
+  color: var(--rose-dark);
+
+  font-size: 9px;
+  font-weight: 700;
+
+  letter-spacing: 0.18em;
+}
+
+.maryann-success-card h2 {
+  margin-top: 15px;
+
+  font-family: var(--serif);
+  font-size: 52px;
+  font-weight: 500;
+}
+
+.maryann-success-card h2 span {
+  color: var(--rose-dark);
+  font-style: italic;
+}
+
+.maryann-success-card > p {
+  margin-top: 15px;
+
+  color: var(--muted);
+
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+.maryann-reference {
+  margin-top: 25px;
+  padding: 17px;
+
+  background: var(--cream-2);
+}
+
+.maryann-reference small {
+  display: block;
+
+  color: var(--muted);
+
+  font-size: 9px;
+  letter-spacing: 0.14em;
+}
+
+.maryann-reference strong {
+  display: block;
+
+  margin-top: 8px;
+
+  color: var(--brown);
+
+  font-size: 17px;
+  letter-spacing: 0.06em;
+}
+
+#maryannContinueWhatsApp {
+  width: 100%;
+  min-height: 54px;
+
+  margin-top: 22px;
+
+  border: 0;
+
+  background: var(--brown-dark);
+  color: var(--cream);
+
+  font-size: 10px;
+  font-weight: 700;
+
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.maryann-success-close {
+  margin-top: 17px;
+
+  border: 0;
+  background: none;
+
+  color: var(--muted);
+
+  font-size: 11px;
+}
+
+@media (max-width: 480px) {
+
+  .maryann-success-card {
+    padding: 35px 22px;
+  }
+
+  .maryann-success-card h2 {
+    font-size: 44px;
+  }
+
+}
+
+/* =========================================================
+   IMPROVED ORDER DRAWER SCROLLING
+========================================================= */
+
+.order-drawer {
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+}
+
+/* Items section */
+.order-body {
+  flex: 1 1 50%;
+  min-height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Customer details and checkout section */
+.order-footer {
+  flex: 1 1 50%;
+  min-height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Keep scrolling smooth */
+.order-body,
+.order-footer {
+  scrollbar-width: thin;
+  scrollbar-color: var(--rose-soft) transparent;
+}
+
+/* Mobile adjustment */
+@media (max-width: 620px) {
+
+  .order-header {
+    flex-shrink: 0;
+  }
+
+  .order-body,
+  .order-footer {
+    flex: 1 1 50%;
+    min-height: 0;
+  }
+
+  .order-footer {
+    padding-bottom: 25px;
+  }
+
+}
