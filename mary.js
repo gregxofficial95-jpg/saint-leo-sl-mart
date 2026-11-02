@@ -15,6 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.body.classList.remove("no-scroll");
   }, 2600);
 
+ensureMaryannPhoneFields();
 
   /* =======================================================
      HEADER SCROLL
@@ -194,43 +195,100 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("specialOrderForm");
 
 
-  specialOrderForm.addEventListener("submit", event => {
+  specialOrderForm.addEventListener("submit", async event => {
 
-    event.preventDefault();
+  event.preventDefault();
+
+  const name =
+    document.getElementById("specialName").value.trim();
+
+  const phone =
+    document.getElementById("specialPhone")?.value.trim();
+
+  const address =
+  document.getElementById("specialAddress")?.value.trim();
+
+  const need =
+    document.getElementById("specialNeed").value.trim();
+
+  const details =
+    document.getElementById("specialDetails").value.trim();
 
 
-    const name =
-      document.getElementById("specialName")
-        .value.trim();
+  if (!name || !phone || !address || !need || !details) {
+
+    alert("Please complete all fields.");
+
+    return;
+
+  }
 
 
-    const need =
-      document.getElementById("specialNeed")
-        .value.trim();
+  const button = specialOrderForm.querySelector("button[type='submit']");
+
+  if (button) {
+    button.disabled = true;
+    button.textContent = "Submitting...";
+  }
 
 
-    const details =
-      document.getElementById("specialDetails")
-        .value.trim();
+  const whatsappMessage =
+    `Hello Maryann's Cakes & Pastries,\n\n` +
+    `I'd like to make a special order.\n\n` +
+    `Name: ${name}\n` +
+    `Phone: ${phone}\n` +
+    `Hostel / Delivery Address: ${address}\n` +
+    `What I need: ${need}\n` +
+    `Details: ${details}\n\n`;
 
 
-    if (!name || !need || !details) {
-      return;
+  try {
+
+    const result = await submitMaryannRequest({
+
+      customer_name: name,
+
+      customer_phone: phone,
+
+      delivery_address: address,
+
+      request_type: "quote",
+
+      request_details:
+        `Special order request\n\nWhat is needed: ${need}\nDetails: ${details}`,
+
+      items: []
+
+    });
+
+
+    closeSpecialOrder();
+
+    specialOrderForm.reset();
+
+    showMaryannSuccess(
+
+      result.order_number,
+
+      whatsappMessage +
+      `Order Reference: ${result.order_number}\n\nThank you.`
+
+    );
+
+  } catch (error) {
+
+    alert(error.message || "Unable to submit your request.");
+
+  } finally {
+
+    if (button) {
+      button.disabled = false;
+      button.textContent = "Send Request →";
     }
 
+  }
 
-    const message =
-      `Hello Maryann's Cakes & Pastries,%0A%0A` +
-      `I'd like to make a special order.%0A%0A` +
-      `Name: ${name}%0A` +
-      `What I need: ${need}%0A` +
-      `Details: ${details}%0A%0A` +
-      `Thank you.`;
-
-
-    openWhatsApp(message);
-
-  });
+});
 
 
 });
@@ -587,37 +645,260 @@ function scrollToMenu() {
 
 
 /* =========================================================
-   WHATSAPP CHECKOUT
-   ========================================================= */
+   SUPABASE ORDER TRACKING
+========================================================= */
 
-function checkoutWhatsApp() {
+const MARYANN_BRAND_ID = "df40e518-0833-4cba-b137-007eaf9d8219";
+
+const MARYANN_ORDER_ENDPOINT =
+  "https://tzjckojpgamjwigxmdja.supabase.co/functions/v1/submit-brand-order";
+
+
+function ensureMaryannPhoneFields() {
+
+  const orderFields = document.querySelector(".order-fields");
+
+  if (
+    orderFields &&
+    !document.getElementById("customerPhone")
+  ) {
+
+    const phoneLabel = document.createElement("label");
+
+    phoneLabel.innerHTML = `
+      Phone Number
+      <input
+        type="tel"
+        id="customerPhone"
+        placeholder="Enter your phone number"
+        required
+      >
+    `;
+
+    const nameField = document.getElementById("customerName");
+
+    if (nameField?.parentElement) {
+      nameField.parentElement.after(phoneLabel);
+    } else {
+      orderFields.prepend(phoneLabel);
+    }
+  }
+
+  const addressLabel = document.createElement("label");
+
+addressLabel.innerHTML = `
+  Hostel / Delivery Address
+  <input
+    type="text"
+    id="customerAddress"
+    placeholder="Enter your hostel or delivery address"
+    required
+  >
+`;
+
+document.getElementById("customerPhone")
+  .parentElement.after(addressLabel);
+
+
+  const specialForm = document.getElementById("specialOrderForm");
+
+  if (
+    specialForm &&
+    !document.getElementById("specialPhone")
+  ) {
+
+    const phoneLabel = document.createElement("label");
+
+    phoneLabel.innerHTML = `
+      Phone Number
+      <input
+        type="tel"
+        id="specialPhone"
+        placeholder="Enter your phone number"
+        required
+      >
+    `;
+
+    
+
+    const submitButton = specialForm.querySelector("button[type='submit']");
+
+    specialForm.insertBefore(phoneLabel, submitButton);
+
+    const addressLabel = document.createElement("label");
+
+addressLabel.innerHTML = `
+  Hostel / Delivery Address
+  <input
+    type="text"
+    id="specialAddress"
+    placeholder="Enter your hostel or delivery address"
+    required
+  >
+`;
+
+specialForm.insertBefore(addressLabel, submitButton);
+  }
+
+}
+
+
+function showMaryannSuccess(orderNumber, whatsappMessage) {
+
+  let modal = document.getElementById("maryannSuccessModal");
+
+  if (!modal) {
+
+    modal = document.createElement("div");
+
+    modal.id = "maryannSuccessModal";
+
+    modal.innerHTML = `
+      <div class="maryann-success-backdrop"></div>
+
+      <div class="maryann-success-card">
+
+        <div class="maryann-success-icon">✓</div>
+
+        <span class="maryann-success-kicker">
+          MARYANN'S CAKES & PASTRIES
+        </span>
+
+        <h2>Order <span>Received.</span></h2>
+
+        <p>
+          Your request has been recorded successfully.
+          Continue to WhatsApp to discuss confirmation with Maryann.
+        </p>
+
+        <div class="maryann-reference">
+          <small>YOUR ORDER REFERENCE</small>
+          <strong id="maryannOrderReference"></strong>
+        </div>
+
+        <button id="maryannContinueWhatsApp">
+          Continue to WhatsApp →
+        </button>
+
+        <button
+          class="maryann-success-close"
+          id="maryannCloseSuccess"
+        >
+          Close
+        </button>
+
+      </div>
+    `;
+
+    document.body.appendChild(modal);
+
+    modal.querySelector(".maryann-success-backdrop")
+      .addEventListener("click", closeMaryannSuccess);
+
+    document.getElementById("maryannCloseSuccess")
+      .addEventListener("click", closeMaryannSuccess);
+  }
+
+  document.getElementById("maryannOrderReference").textContent =
+    orderNumber;
+
+  document.getElementById("maryannContinueWhatsApp").onclick = () => {
+
+    const url =
+      `https://wa.me/${WHATSAPP_NUMBER}?text=` +
+      encodeURIComponent(whatsappMessage);
+
+    window.open(url, "_blank");
+
+    closeMaryannSuccess();
+  };
+
+  modal.classList.add("open");
+  document.body.classList.add("no-scroll");
+
+}
+
+
+function closeMaryannSuccess() {
+
+  const modal = document.getElementById("maryannSuccessModal");
+
+  if (modal) {
+    modal.classList.remove("open");
+  }
+
+  document.body.classList.remove("no-scroll");
+
+}
+
+
+async function submitMaryannRequest(payload) {
+
+  const response = await fetch(MARYANN_ORDER_ENDPOINT, {
+
+    method: "POST",
+
+    headers: {
+      "Content-Type": "application/json"
+    },
+
+    body: JSON.stringify({
+      ...payload,
+      brand_id: MARYANN_BRAND_ID,
+      website: ""
+    })
+
+  });
+
+  const result = await response.json();
+
+  if (
+    !response.ok ||
+    !result.success ||
+    !result.order_number
+  ) {
+
+    throw new Error(
+      result.message || "Unable to record your request. Please try again."
+    );
+
+  }
+
+  return result;
+
+}
+
+
+/* =========================================================
+   TRACKED WHATSAPP CHECKOUT
+========================================================= */
+
+async function checkoutWhatsApp() {
 
   if (order.length === 0) {
 
-    alert(
-      "Please add at least one item to your order."
-    );
+    alert("Please add at least one item to your order.");
 
     return;
 
   }
 
-
   const customerName =
-    document.getElementById("customerName")
-      .value.trim();
+    document.getElementById("customerName").value.trim();
 
+  const customerPhone =
+    document.getElementById("customerPhone")?.value.trim();
+
+  const customerAddress =
+  document.getElementById("customerAddress")?.value.trim();
 
   const customerNote =
-    document.getElementById("customerNote")
-      .value.trim();
+    document.getElementById("customerNote").value.trim();
 
 
   if (!customerName) {
 
-    alert(
-      "Please enter your name before placing the order."
-    );
+    alert("Please enter your name.");
 
     document.getElementById("customerName").focus();
 
@@ -626,45 +907,125 @@ function checkoutWhatsApp() {
   }
 
 
-  const itemsText =
-    order.map(item => {
+  if (!customerPhone) {
 
-      return (
-        `${item.name} x${item.quantity} — ` +
-        `${formatNaira(item.price * item.quantity)}`
-      );
+    alert("Please enter your phone number.");
 
-    }).join("\n");
+    document.getElementById("customerPhone").focus();
 
+    return;
 
-  const total =
-    formatNaira(
-      calculateTotal()
+  }
+  
+  if (!customerAddress) {
+
+  alert("Please enter your hostel or delivery address.");
+
+  document.getElementById("customerAddress").focus();
+
+  return;
+
+}
+
+  const itemsText = order.map(item => {
+
+    return (
+      `${item.name} x${item.quantity} — ` +
+      `${formatNaira(item.price * item.quantity)}`
     );
 
+  }).join("\n");
 
-  let message =
+
+  const total = formatNaira(calculateTotal());
+
+
+  const requestDetails =
+    `ORDER DETAILS\n\n${itemsText}\n\n` +
+    `Total: ${total}\n` +
+    `Customer note: ${customerNote || "None"}`;
+
+
+  const whatsappMessage =
     `Hello Maryann's Cakes & Pastries,\n\n` +
     `I'd like to place an order.\n\n` +
     `${itemsText}\n\n` +
     `Total: ${total}\n\n` +
-    `Name: ${customerName}`;
+    `Name: ${customerName}\n` +
+    `Phone: ${customerPhone}\n` +
+    `Hostel / Delivery Address: ${customerAddress}\n` +
+    `Note / Delivery Details: ${customerNote || "Not provided"}\n\n`;
 
 
-  if (customerNote) {
+  const button = document.querySelector(".checkout-button");
 
-    message +=
-      `\n` +
-      `Note / Delivery Details: ${customerNote}`;
-
+  if (button) {
+    button.disabled = true;
+    button.textContent = "Submitting Order...";
   }
 
 
-  message +=
-    `\n\nThank you.`;
+  try {
+
+    const result = await submitMaryannRequest({
+
+      customer_name: customerName,
+
+      customer_phone: customerPhone,
+
+      delivery_address: customerAddress,
+
+      request_type: "order",
+
+      request_details: requestDetails,
+
+      items: order.map(item => ({
+
+        product_name: item.name,
+
+        quantity: item.quantity,
+
+        unit_price: item.price
+
+      }))
+
+    });
 
 
-  openWhatsApp(message);
+    const finalMessage =
+      whatsappMessage +
+      `Order Reference: ${result.order_number}\n\n` +
+      `Thank you.`;
+
+
+    order = [];
+
+    updateOrderUI();
+
+    document.getElementById("customerName").value = "";
+    document.getElementById("customerPhone").value = "";
+    document.getElementById("customerAddress").value = "";
+    document.getElementById("customerNote").value = "";
+
+    closeOrderPanel();
+
+    showMaryannSuccess(
+      result.order_number,
+      finalMessage
+    );
+
+  } catch (error) {
+
+    alert(error.message || "Something went wrong. Please try again.");
+
+  } finally {
+
+    if (button) {
+      button.disabled = false;
+      button.innerHTML = "Place Order →";
+    }
+
+  }
 
 }
 
