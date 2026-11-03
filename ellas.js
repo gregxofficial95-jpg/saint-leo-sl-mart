@@ -1,6 +1,7 @@
 
 /* =====================================================
    ELLA'S SIGNATURE — THE WIG SPA
+   Existing functionality + Supabase enquiry tracking
 ===================================================== */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -23,7 +24,6 @@ document.addEventListener("DOMContentLoaded", () => {
     document.body.classList.remove("no-scroll");
   }
 
-  // Keep the welcome screen brief and elegant.
   window.setTimeout(hideIntro, 2800);
 
 
@@ -47,7 +47,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (menuToggle && navLinks) {
 
-        // Always keep the mobile menu closed when the page loads
     closeMenu();
 
     menuToggle.addEventListener("click", () => {
@@ -76,11 +75,8 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     document.addEventListener("keydown", (event) => {
-      if (event.key === "Escape") {
-        closeMenu();
-      }
+      if (event.key === "Escape") closeMenu();
     });
-
   }
 
 
@@ -173,7 +169,6 @@ document.addEventListener("DOMContentLoaded", () => {
       lightboxCaption.textContent =
         `${imageTitle} · ${String(currentImageIndex + 1).padStart(2, "0")} / ${galleryItems.length}`;
     }
-
   }
 
   function openLightbox(index) {
@@ -189,10 +184,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document.body.classList.add("no-scroll");
 
-    if (lightboxClose) {
-      lightboxClose.focus();
-    }
-
+    if (lightboxClose) lightboxClose.focus();
   }
 
   function closeLightbox() {
@@ -207,15 +199,12 @@ document.addEventListener("DOMContentLoaded", () => {
     if (previousFocus && typeof previousFocus.focus === "function") {
       previousFocus.focus();
     }
-
   }
 
   galleryItems.forEach((item, index) => {
-
     item.addEventListener("click", () => {
       openLightbox(index);
     });
-
   });
 
   if (lightboxClose) {
@@ -237,18 +226,14 @@ document.addEventListener("DOMContentLoaded", () => {
   if (lightbox) {
 
     lightbox.addEventListener("click", (event) => {
-      if (event.target === lightbox) {
-        closeLightbox();
-      }
+      if (event.target === lightbox) closeLightbox();
     });
 
     document.addEventListener("keydown", (event) => {
 
       if (!lightbox.classList.contains("open")) return;
 
-      if (event.key === "Escape") {
-        closeLightbox();
-      }
+      if (event.key === "Escape") closeLightbox();
 
       if (event.key === "ArrowLeft") {
         showGalleryImage(currentImageIndex - 1);
@@ -257,15 +242,12 @@ document.addEventListener("DOMContentLoaded", () => {
       if (event.key === "ArrowRight") {
         showGalleryImage(currentImageIndex + 1);
       }
-
     });
-
   }
 
 
   /* ===================================================
      IMAGE FALLBACKS
-     Keep missing images from breaking the layout.
   =================================================== */
 
   document.querySelectorAll("img").forEach((image) => {
@@ -280,60 +262,177 @@ document.addEventListener("DOMContentLoaded", () => {
 
   });
 
-  
-/* =========================================
-   ELLA'S SIGNATURE WHATSAPP ENQUIRY
-========================================= */
 
-const ellaEnquiryForm = document.getElementById("ellaEnquiryForm");
+  /* ===================================================
+     ELLA'S SIGNATURE — SUPABASE ENQUIRY TRACKING
+  =================================================== */
 
-if (ellaEnquiryForm) {
-  ellaEnquiryForm.addEventListener("submit", function (event) {
-    event.preventDefault();
+  const ELLA_BRAND_ID = "36a55185-4c0c-4448-a845-8466a2fea50a";
 
-    const customerName =
-      document.getElementById("ellaCustomerName").value.trim();
+  const ELLA_ORDER_FUNCTION_URL =
+    "https://tzjckojpgamjwigxmdja.supabase.co/functions/v1/submit-brand-order";
 
-    const customerPhone =
-      document.getElementById("ellaCustomerPhone").value.trim();
+  const ELLA_WHATSAPP_NUMBER = "2348119879899";
 
-    const service =
-      document.getElementById("ellaService").value;
+  const ellaEnquiryForm = document.getElementById("ellaEnquiryForm");
 
-    const message =
-      document.getElementById("ellaEnquiryMessage").value.trim();
+  if (ellaEnquiryForm) {
 
-    if (!customerName || !customerPhone || !service || !message) {
-      alert("Please complete all fields before sending your enquiry.");
-      return;
-    }
+    ellaEnquiryForm.addEventListener("submit", async (event) => {
 
-    const ellaWhatsAppNumber = "2348119879899";
+      event.preventDefault();
 
-    const whatsappMessage = [
-      "HELLO ELLA'S SIGNATURE",
-      "",
-      "I'd like to make an enquiry about your services.",
-      "",
-      "Name: " + customerName,
-      "My WhatsApp Number: " + customerPhone,
-      "Service Needed: " + service,
-      "",
-      "Enquiry Details:",
-      message,
-      "",
-      "Sent through the Ella's Signature website."
-    ].join("\n");
+      if (!ellaEnquiryForm.checkValidity()) {
+        ellaEnquiryForm.reportValidity();
+        return;
+      }
 
-    const whatsappURL =
-      "https://wa.me/" +
-      ellaWhatsAppNumber +
-      "?text=" +
-      encodeURIComponent(whatsappMessage);
+      const customerName =
+        document.getElementById("ellaCustomerName").value.trim();
 
-    window.open(whatsappURL, "_blank", "noopener,noreferrer");
-  });
-}
+      const customerPhone =
+        document.getElementById("ellaCustomerPhone").value.trim();
 
+        const customerAddress =
+  document.getElementById("ellaCustomerAddress").value.trim();
+
+      const service =
+        document.getElementById("ellaService").value;
+
+      const enquiryMessage =
+        document.getElementById("ellaEnquiryMessage").value.trim();
+
+      const submitButton =
+        ellaEnquiryForm.querySelector(".enquiry-submit");
+
+      const enquiryNote =
+        ellaEnquiryForm.querySelector(".enquiry-note");
+
+      if (
+        !customerName ||
+        !customerPhone ||
+        !service ||
+        !enquiryMessage
+      ) {
+        alert("Please complete all fields before sending your enquiry.");
+        return;
+      }
+
+      if (!/^[0-9+\s()-]{7,25}$/.test(customerPhone)) {
+        alert("Please enter a valid phone number.");
+        document.getElementById("ellaCustomerPhone").focus();
+        return;
+      }
+
+      const originalButtonHTML = submitButton.innerHTML;
+      const originalNote = enquiryNote.textContent;
+
+      // Open a blank tab before the network request to avoid popup blocking.
+      const whatsappTab = window.open("about:blank", "_blank");
+
+      submitButton.disabled = true;
+      submitButton.innerHTML = "<span>SUBMITTING ENQUIRY...</span>";
+
+      if (enquiryNote) {
+        enquiryNote.textContent = "Please wait while we submit your enquiry...";
+      }
+
+      try {
+
+        const response = await fetch(ELLA_ORDER_FUNCTION_URL, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            brand_id: ELLA_BRAND_ID,
+            customer_name: customerName,
+customer_phone: customerPhone,
+delivery_address: customerAddress,
+request_type: "enquiry",
+            request_details: [
+              "Service needed: " + service,
+              "Enquiry details: " + enquiryMessage
+            ].join("\n"),
+            items: [],
+            website: ""
+          })
+        });
+
+        const result = await response.json();
+
+        if (
+          !response.ok ||
+          result.success !== true ||
+          !result.order_number
+        ) {
+          throw new Error(
+            result.message || "Could not submit your enquiry."
+          );
+        }
+
+        const whatsappMessage = [
+          "HELLO ELLA'S SIGNATURE",
+          "",
+          "I'd like to make an enquiry about your services.",
+          "",
+          "Enquiry Reference: " + result.order_number,
+          "",
+          "Name: " + customerName,
+"My WhatsApp Number: " + customerPhone,
+"Hostel / Location: " + customerAddress,
+"Service Needed: " + service,
+          "",
+          "Enquiry Details:",
+          enquiryMessage,
+          "",
+          "Sent through the Ella's Signature website."
+        ].join("\n");
+
+        const whatsappURL =
+          "https://wa.me/" +
+          ELLA_WHATSAPP_NUMBER +
+          "?text=" +
+          encodeURIComponent(whatsappMessage);
+
+        if (whatsappTab) {
+          whatsappTab.location.href = whatsappURL;
+        } else {
+          window.location.href = whatsappURL;
+        }
+
+        if (enquiryNote) {
+          enquiryNote.textContent =
+            "Your enquiry has been submitted. Please send the WhatsApp message to complete your enquiry.";
+        }
+
+      } catch (error) {
+
+        if (whatsappTab) {
+          whatsappTab.close();
+        }
+
+        console.error("Ella's Signature enquiry error:", error);
+
+        alert(
+          error.message ||
+          "Your enquiry could not be submitted. Please try again."
+        );
+
+        if (enquiryNote) {
+          enquiryNote.textContent =
+            "Your enquiry could not be submitted. Please try again.";
+        }
+
+      } finally {
+
+        submitButton.disabled = false;
+        submitButton.innerHTML = originalButtonHTML;
+
+      }
+
+    });
+
+  }
 
 });
