@@ -981,11 +981,68 @@
 
     </footer>
 
+<!-- PRESHIE ORDER DETAILS MODAL -->
+<div class="order-modal" id="orderModal" hidden>
 
+    <div class="order-modal-content">
+
+        <button type="button" class="modal-close" id="closeOrderModal">
+            &times;
+        </button>
+
+        <p class="section-label">COMPLETE YOUR ORDER</p>
+
+        <h2>Almost yours.</h2>
+
+        <p class="modal-product" id="modalProductName"></p>
+
+        <form id="preshieOrderForm">
+
+            <label>
+                Full Name
+                <input
+                    type="text"
+                    id="preshieCustomerName"
+                    placeholder="Enter your full name"
+                    required
+                >
+            </label>
+
+            <label>
+                Phone Number
+                <input
+                    type="tel"
+                    id="preshieCustomerPhone"
+                    placeholder="Enter your phone number"
+                    required
+                >
+            </label>
+
+            <label>
+                Hostel / Delivery Address
+                <input
+                    type="text"
+                    id="preshieCustomerAddress"
+                    placeholder="Enter your hostel or delivery address"
+                    required
+                >
+            </label>
+
+            <p id="preshieOrderError" class="order-error"></p>
+
+            <button type="submit" id="preshieSubmitButton">
+                SUBMIT ORDER & CONTINUE
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
 
     <script src="preshie.js"></script>
 
 </body>
 
 </html>
-```
+
