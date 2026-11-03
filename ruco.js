@@ -7,6 +7,15 @@ const WHATSAPP_NUMBER = "2347068586599";
 const CART_STORAGE_KEY = "rucoTreatsCart";
 
 /* =========================================
+   SUPABASE EMAIL TRACKING
+========================================= */
+
+const RUCO_BRAND_ID = "c97e4a55-65bd-423e-adfa-d50fb21ca248";
+
+const ORDER_FUNCTION_URL =
+  "https://tzjckojpgamjwigxmdja.supabase.co/functions/v1/submit-brand-order";
+
+/* =========================================
    INTRO
 ========================================= */
 
@@ -466,39 +475,121 @@ closeCartButton.addEventListener("click", closeCart);
 cartOverlay.addEventListener("click", closeCart);
 
 /* =========================================
-   WHATSAPP CHECKOUT
+   EMAIL TRACKING + WHATSAPP CHECKOUT
 ========================================= */
 
-function checkoutOnWhatsApp() {
+async function checkoutOnWhatsApp() {
   if (cart.length === 0) {
     showToast("Your cart is empty. Add a treat first.");
     return;
   }
 
-  const lines = cart.map((item, index) =>
-    `${index + 1}. ${item.name} — ${item.variant} × ${item.quantity} = ${naira(item.unitPrice * item.quantity)}`
-  );
+  const customerName =
+    document.getElementById("rucoCustomerName").value.trim();
 
-  const message = `Hello Ruco Treats 👋
+  const customerPhone =
+    document.getElementById("rucoCustomerPhone").value.trim();
 
-I'd like to place an order:
+  const customerAddress =
+    document.getElementById("rucoCustomerAddress").value.trim();
 
+  if (!customerName || !customerPhone || !customerAddress) {
+    showToast("Please complete all your delivery details.");
+    return;
+  }
+
+  const originalButtonText = checkoutButton.innerHTML;
+
+  checkoutButton.disabled = true;
+  checkoutButton.textContent = "SUBMITTING ORDER...";
+
+  // Open a blank tab immediately to avoid popup blocking.
+  const whatsappWindow = window.open("about:blank", "_blank");
+
+  try {
+    const response = await fetch(ORDER_FUNCTION_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        brand_id: RUCO_BRAND_ID,
+        customer_name: customerName,
+        customer_phone: customerPhone,
+        delivery_address: customerAddress,
+        request_type: "order",
+
+        items: cart.map(item => ({
+          product_name: `${item.name} (${item.variant})`,
+          quantity: item.quantity,
+          unit_price: item.unitPrice
+        })),
+
+        website: ""
+      })
+    });
+
+    const result = await response.json();
+
+    if (
+      !response.ok ||
+      result.success !== true ||
+      !result.order_number
+    ) {
+      throw new Error(
+        result.message || "Order submission failed."
+      );
+    }
+
+    // Prepare WhatsApp order message.
+    const lines = cart.map((item, index) =>
+      `${index + 1}. ${item.name} — ${item.variant} × ${item.quantity} = ${naira(item.unitPrice * item.quantity)}`
+    );
+
+    const message = `Hello Ruco Treats 👋
+
+I'd like to place an order.
+
+ORDER REFERENCE: ${result.order_number}
+
+CUSTOMER DETAILS
+Name: ${customerName}
+Phone: ${customerPhone}
+Delivery Address: ${customerAddress}
+
+ORDER ITEMS
 ${lines.join("\n")}
 
 TOTAL: ${naira(getCartTotal())}
 
 Please confirm my order and let me know the next step.`;
 
-  const whatsappURL =
-    `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+    const whatsappURL =
+      `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
 
-  const whatsappWindow = window.open(whatsappURL, "_blank");
+    showToast("Order submitted successfully!");
 
-  if (whatsappWindow) {
-    whatsappWindow.opener = null;
-  } else {
-    // Fallback if the browser blocks a new tab.
-    window.location.href = whatsappURL;
+    if (whatsappWindow) {
+      whatsappWindow.location.href = whatsappURL;
+      whatsappWindow.opener = null;
+    } else {
+      window.location.href = whatsappURL;
+    }
+
+  } catch (error) {
+    console.error("Ruco order submission error:", error);
+
+    if (whatsappWindow) {
+      whatsappWindow.close();
+    }
+
+    showToast(
+      "Could not submit your order. Please try again."
+    );
+
+  } finally {
+    checkoutButton.disabled = false;
+    checkoutButton.innerHTML = originalButtonText;
   }
 }
 
