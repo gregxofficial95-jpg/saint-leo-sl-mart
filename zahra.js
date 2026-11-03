@@ -608,19 +608,89 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   /* =======================================
-     WHATSAPP CHECKOUT
-  ======================================= */
+   SUPABASE + WHATSAPP CHECKOUT
+======================================= */
 
-  checkoutButton.addEventListener("click", () => {
+const ZAHRA_BRAND_ID = "bb0c549d-2f09-46da-9b64-f3c5580a0749";
 
-    if (cart.length === 0) {
-      showToast("Please add at least one fragrance.");
-      return;
-    }
+const ZAHRA_ORDER_FUNCTION_URL =
+  "https://tzjckojpgamjwigxmdja.supabase.co/functions/v1/submit-brand-order";
 
-    if (!/^234\d{10}$/.test(WHATSAPP_NUMBER)) {
-      showToast("Please add Zahra's WhatsApp number in zahra.js.");
-      return;
+checkoutButton.addEventListener("click", async () => {
+
+  if (cart.length === 0) {
+    showToast("Please add at least one fragrance.");
+    return;
+  }
+
+  const customerName =
+    document.getElementById("zahraCustomerName").value.trim();
+
+  const customerPhone =
+    document.getElementById("zahraCustomerPhone").value.trim();
+
+  const customerAddress =
+    document.getElementById("zahraCustomerAddress").value.trim();
+
+  if (!customerName || !customerPhone || !customerAddress) {
+    showToast("Please complete all customer details.");
+    return;
+  }
+
+  if (!/^[0-9+\s()-]{7,25}$/.test(customerPhone)) {
+    showToast("Please enter a valid phone number.");
+    return;
+  }
+
+  if (!/^234\d{10}$/.test(WHATSAPP_NUMBER)) {
+    showToast("Please check Zahra's WhatsApp number.");
+    return;
+  }
+
+  const originalButtonHTML = checkoutButton.innerHTML;
+
+  // Open tab before submitting to avoid popup blocking.
+  const whatsappTab = window.open("about:blank", "_blank");
+
+  checkoutButton.disabled = true;
+  checkoutButton.innerHTML = "SUBMITTING ORDER...";
+
+  try {
+
+    const response = await fetch(ZAHRA_ORDER_FUNCTION_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        brand_id: ZAHRA_BRAND_ID,
+        customer_name: customerName,
+        customer_phone: customerPhone,
+        delivery_address: customerAddress,
+        request_type: "order",
+
+        items: cart.map(item => ({
+          product_name: item.variant
+            ? `${item.name} - ${item.variant}`
+            : item.name,
+          quantity: item.quantity,
+          unit_price: item.price
+        })),
+
+        website: ""
+      })
+    });
+
+    const result = await response.json();
+
+    if (
+      !response.ok ||
+      result.success !== true ||
+      !result.order_number
+    ) {
+      throw new Error(
+        result.message || "Your order could not be submitted."
+      );
     }
 
     const orderLines = cart.map((item, index) => {
@@ -631,14 +701,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
       return (
         `${index + 1}. ${itemName}\n` +
-        `   Quantity: ${item.quantity}\n` +
-        `   Unit price: ${formatPrice(item.price)}\n` +
-        `   Subtotal: ${formatPrice(item.price * item.quantity)}`
+        `Quantity: ${item.quantity}\n` +
+        `Unit price: ${formatPrice(item.price)}\n` +
+        `Subtotal: ${formatPrice(item.price * item.quantity)}`
       );
+
     });
 
     const message = [
       "Hello Scents by Zahra! I'd like to place an order.",
+      "",
+      "ORDER REFERENCE: " + result.order_number,
+      "",
+      "CUSTOMER DETAILS",
+      "Name: " + customerName,
+      "Phone: " + customerPhone,
+      "Hostel / Delivery Address: " + customerAddress,
       "",
       "MY FRAGRANCE ORDER",
       "------------------------------",
@@ -654,9 +732,38 @@ document.addEventListener("DOMContentLoaded", () => {
     const whatsappURL =
       `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
 
-    window.open(whatsappURL, "_blank", "noopener,noreferrer");
-  });
+    if (whatsappTab) {
+      whatsappTab.location.href = whatsappURL;
+    } else {
+      window.location.href = whatsappURL;
+    }
 
+    showToast("Order submitted successfully!");
+
+    cart = [];
+    saveCart();
+    renderCart();
+
+  } catch (error) {
+
+    if (whatsappTab) {
+      whatsappTab.close();
+    }
+
+    console.error("Zahra order submission error:", error);
+
+    showToast(
+      error.message || "Order submission failed. Please try again."
+    );
+
+  } finally {
+
+    checkoutButton.disabled = false;
+    checkoutButton.innerHTML = originalButtonHTML;
+
+  }
+
+});
 
   /* =======================================
      SEARCH AND SORT
