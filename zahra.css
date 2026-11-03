@@ -1184,3 +1184,44 @@ select:focus-visible {
     animation-duration: 0.01ms !important;
   }
 }
+
+/* ZAHRA CHECKOUT CUSTOMER DETAILS */
+
+.zahra-checkout-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  margin: 20px 0;
+}
+
+.zahra-checkout-fields label {
+  color: var(--gold);
+  font-size: 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.zahra-checkout-fields input {
+  width: 100%;
+  min-height: 45px;
+  padding: 12px;
+  border: 1px solid rgba(190, 155, 91, 0.35);
+  background: #171510;
+  color: #fff;
+  outline: none;
+  font-family: inherit;
+  font-size: 12px;
+}
+
+.zahra-checkout-fields input::placeholder {
+  color: #999080;
+}
+
+.zahra-checkout-fields input:focus {
+  border-color: var(--gold);
+}
+
+.checkout-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
