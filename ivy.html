@@ -388,40 +388,116 @@
   </section>
 
 
-  <!-- BOOKING -->
-  <section id="booking" class="booking-section">
 
-    <div class="booking-decoration">✳</div>
+<!-- BOOKING -->
+<section id="booking" class="booking-section">
 
-    <p class="section-eyebrow">
-      03 / YOUR APPOINTMENT
-    </p>
+  <div class="booking-decoration">✳</div>
 
-    <h2>
-      Ready for your
-      <span>next set?</span>
-    </h2>
+  <p class="section-eyebrow">
+    03 / YOUR APPOINTMENT
+  </p>
 
-    <p>
-      Let's bring your next nail inspiration to life.
-      Reach out on WhatsApp to ask about prices,
-      discuss your preferred service and arrange your appointment.
-    </p>
+  <h2>
+    Ready for your
+    <span>next set?</span>
+  </h2>
 
-    <a
-      href="https://wa.me/2349157996155?text=Hello%20Ivy%2C%20I%27d%20like%20to%20make%20a%20nail%20or%20pedicure%20appointment."
-      class="primary-btn booking-btn"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      Book on WhatsApp <span>↗</span>
-    </a>
+  <p>
+    Let's bring your next nail inspiration to life.
+    Complete the form below to enquire about prices,
+    discuss your preferred service and arrange your appointment.
+  </p>
 
-    <span class="booking-caption">
-      YOUR NEXT BEAUTY MOMENT STARTS HERE
-    </span>
+  <form id="ivyBookingForm" class="ivy-booking-form">
 
-  </section>
+    <div class="ivy-form-group">
+      <label for="ivyCustomerName">Full Name</label>
+      <input
+        type="text"
+        id="ivyCustomerName"
+        name="customerName"
+        placeholder="Enter your full name"
+        maxlength="100"
+        required
+      >
+    </div>
+
+    <div class="ivy-form-group">
+      <label for="ivyCustomerPhone">Phone Number</label>
+      <input
+        type="tel"
+        id="ivyCustomerPhone"
+        name="customerPhone"
+        placeholder="Enter your phone number"
+        maxlength="25"
+        required
+      >
+    </div>
+
+    <div class="ivy-form-group">
+      <label for="ivyHostel">Hostel</label>
+      <input
+        type="text"
+        id="ivyHostel"
+        name="hostel"
+        placeholder="Enter your hostel"
+        maxlength="100"
+        required
+      >
+    </div>
+
+    <div class="ivy-form-group">
+      <label for="ivyService">Preferred Service</label>
+      <select id="ivyService" name="service" required>
+        <option value="">Select a service</option>
+        <option>Stick-On Nails</option>
+        <option>Acrylic Nails</option>
+        <option>Builder Gel</option>
+        <option>BIAB</option>
+        <option>Acrylic Toenails</option>
+        <option>Acrylic Overlay</option>
+        <option>Gel Toenails</option>
+        <option>Pedicure</option>
+        <option>Other / Special Request</option>
+      </select>
+    </div>
+
+    <div class="ivy-form-group">
+      <label for="ivyAppointmentDate">Preferred Appointment Date</label>
+      <input
+        type="date"
+        id="ivyAppointmentDate"
+        name="appointmentDate"
+      >
+    </div>
+
+    <div class="ivy-form-group">
+      <label for="ivyBookingDetails">Additional Details</label>
+      <textarea
+        id="ivyBookingDetails"
+        name="details"
+        rows="4"
+        maxlength="1500"
+        placeholder="Describe your preferred nail design or any questions..."
+        required
+      ></textarea>
+    </div>
+
+    <p id="ivyFormError" class="ivy-form-error" role="alert"></p>
+
+    <button type="submit" class="primary-btn booking-btn" id="ivyBookingButton">
+      Submit Appointment Enquiry <span>↗</span>
+    </button>
+
+  </form>
+
+  <span class="booking-caption">
+    YOUR NEXT BEAUTY MOMENT STARTS HERE
+  </span>
+
+</section>
+
 
 
   <!-- FOOTER -->
