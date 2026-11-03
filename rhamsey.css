@@ -677,3 +677,42 @@ footer .copyright {
     aspect-ratio: 1 / 0.75;
   }
 }
+
+/* RHAMSEY CHECKOUT FIELDS */
+.rhamsey-checkout-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  margin: 18px 0;
+}
+
+.rhamsey-checkout-fields label {
+  margin-top: 7px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--black);
+}
+
+.rhamsey-checkout-fields input {
+  width: 100%;
+  min-height: 45px;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  background: var(--white);
+  color: var(--black);
+  font: inherit;
+  font-size: 13px;
+  outline-color: var(--gold);
+}
+
+#rhamseyOrderError {
+  color: #b42318;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+#checkoutButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
