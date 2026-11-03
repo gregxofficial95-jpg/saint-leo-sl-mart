@@ -856,49 +856,185 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
 
-  /* ===================================================
-     WHATSAPP CHECKOUT
-  =================================================== */
+/* ===================================================
+   SUPABASE + WHATSAPP CHECKOUT
+=================================================== */
 
-  checkoutButton.addEventListener("click", () => {
+const APEX_BRAND_ID = "61869452-694f-467a-9355-9606d2fa829b";
 
-    if (cart.length === 0) {
-      showToast("Please add at least one fragrance.");
-      return;
+const APEX_ORDER_FUNCTION_URL =
+  "https://tzjckojpgamjwigxmdja.supabase.co/functions/v1/submit-brand-order";
+
+checkoutButton.addEventListener("click", async () => {
+
+  if (cart.length === 0) {
+    showToast("Please add at least one fragrance.");
+    return;
+  }
+
+  const customerName =
+    document.getElementById("apexCustomerName").value.trim();
+
+  const customerPhone =
+    document.getElementById("apexCustomerPhone").value.trim();
+
+  const customerAddress =
+    document.getElementById("apexCustomerAddress").value.trim();
+
+  if (!customerName || !customerPhone || !customerAddress) {
+    showToast("Please complete all customer details.");
+    return;
+  }
+
+  if (!/^[0-9+\s()-]{7,25}$/.test(customerPhone)) {
+    showToast("Please enter a valid phone number.");
+    return;
+  }
+
+  if (!/^234\d{10}$/.test(WHATSAPP_NUMBER)) {
+    showToast("Please check Apex's WhatsApp number.");
+    return;
+  }
+
+  const originalButtonHTML = checkoutButton.innerHTML;
+
+  const whatsappTab = window.open("about:blank", "_blank");
+
+  checkoutButton.disabled = true;
+  checkoutButton.innerHTML = "SUBMITTING ORDER...";
+
+  try {
+
+    const response = await fetch(APEX_ORDER_FUNCTION_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+
+        brand_id: APEX_BRAND_ID,
+        customer_name: customerName,
+        customer_phone: customerPhone,
+        delivery_address: customerAddress,
+        request_type: "order",
+
+        items: cart.map(item => {
+
+          const product = products.find(
+            product => product.id === item.id
+          );
+
+          return {
+            product_name: product
+              ? (
+                  item.variant
+                    ? `${product.name} - ${item.variant}`
+                    : product.name
+                )
+              : item.name,
+
+            quantity: item.quantity,
+            unit_price: item.price
+          };
+
+        }),
+
+        website: ""
+
+      })
+    });
+
+    const result = await response.json();
+
+    if (
+      !response.ok ||
+      result.success !== true ||
+      !result.order_number
+    ) {
+      throw new Error(
+        result.message || "Your order could not be submitted."
+      );
     }
 
-    const total = getCartTotal();
+    const orderLines = cart.map((item, index) => {
 
-    let message = "Hello Apex Scents! I would like to place an order.\n\n";
+      const product = products.find(
+        product => product.id === item.id
+      );
 
-    message += "MY FRAGRANCE ORDER\n";
-    message += "------------------------------\n";
+      const itemName = product
+        ? (
+            item.variant
+              ? `${product.name} - ${item.variant}`
+              : product.name
+          )
+        : item.name;
 
-    cart.forEach((item, index) => {
-
-      message += `${index + 1}. ${item.name}\n`;
-
-      if (item.variant) {
-        message += `   Variety: ${item.variant}\n`;
-      }
-
-      message += `   Quantity: ${item.quantity}\n`;
-      message += `   Unit price: ${formatPrice(item.price)}\n`;
-      message += `   Subtotal: ${formatPrice(item.price * item.quantity)}\n\n`;
+      return (
+        `${index + 1}. ${itemName}\n` +
+        `Quantity: ${item.quantity}\n` +
+        `Unit price: ${formatPrice(item.price)}\n` +
+        `Subtotal: ${formatPrice(item.price * item.quantity)}`
+      );
 
     });
 
-    message += "------------------------------\n";
-    message += `TOTAL: ${formatPrice(total)}\n\n`;
-    message += "Please confirm availability and delivery arrangements. Thank you!";
+    const message = [
+      "Hello Apex Scents! I'd like to place an order.",
+      "",
+      "ORDER REFERENCE: " + result.order_number,
+      "",
+      "CUSTOMER DETAILS",
+      "Name: " + customerName,
+      "Phone: " + customerPhone,
+      "Hostel / Delivery Address: " + customerAddress,
+      "",
+      "MY FRAGRANCE ORDER",
+      "------------------------------",
+      ...orderLines,
+      "",
+      "------------------------------",
+      "TOTAL: " + formatPrice(getCartTotal()),
+      "",
+      "Please confirm availability and delivery arrangements.",
+      "Thank you!"
+    ].join("\n");
 
     const whatsappURL =
       `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
 
-    window.open(whatsappURL, "_blank", "noopener,noreferrer");
+    if (whatsappTab) {
+      whatsappTab.location.href = whatsappURL;
+    } else {
+      window.location.href = whatsappURL;
+    }
 
-  });
+    cart = [];
+    saveCart();
+    renderCart();
 
+    showToast("Order submitted successfully!");
+
+  } catch (error) {
+
+    if (whatsappTab) {
+      whatsappTab.close();
+    }
+
+    console.error("Apex Scents order error:", error);
+
+    showToast(
+      error.message || "Order submission failed. Please try again."
+    );
+
+  } finally {
+
+    checkoutButton.disabled = false;
+    checkoutButton.innerHTML = originalButtonHTML;
+
+  }
+
+});
 
   /* ===================================================
      SEARCH AND SORT
