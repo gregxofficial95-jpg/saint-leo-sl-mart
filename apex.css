@@ -1701,3 +1701,45 @@ img {
   }
 
 }
+
+
+/* APEX CHECKOUT CUSTOMER DETAILS */
+
+.apex-checkout-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  margin: 20px 0;
+}
+
+.apex-checkout-fields label {
+  color: #c9a45c;
+  font-size: 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.apex-checkout-fields input {
+  width: 100%;
+  min-height: 45px;
+  padding: 12px;
+  border: 1px solid rgba(201, 164, 92, 0.35);
+  background: #111;
+  color: #fff;
+  outline: none;
+  font-family: inherit;
+  font-size: 12px;
+}
+
+.apex-checkout-fields input::placeholder {
+  color: #888;
+}
+
+.apex-checkout-fields input:focus {
+  border-color: #c9a45c;
+}
+
+.checkout-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
