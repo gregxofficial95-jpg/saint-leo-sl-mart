@@ -3,65 +3,97 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // REPLACE THIS WITH MIRA'S REAL WHATSAPP NUMBER.
   // Use country code + number without the + sign.
-  const WHATSAPP_NUMBER = "234XXXXXXXXXX";
+  const WHATSAPP_NUMBER = "2347026271132";
 
-  const products = {
-    1: {
-      name: "Miss Gail Rough Skin Leather Bag",
-      price: 45000,
-      category: "Bag",
-      colourId: "miraColor1",
-      sizeId: "miraSize1",
-      quantityId: "miraQty1",
-      needsColour: true,
-      needsSize: false
-    },
+  
+const products = {
+  1: {
+    name: "Miss Gail Rough Skin Leather Bag",
+    price: 45000,
+    category: "Bag",
+    colourId: "miraColor1",
+    quantityId: "miraQty1",
+    needsColour: true
+  },
+  2: {
+    name: "Miss Gail Duffle Bag with Side Pockets",
+    price: 47000,
+    category: "Bag",
+    colourId: "miraColor2",
+    quantityId: "miraQty2",
+    needsColour: true
+  },
+  3: {
+    name: "Reno Luxury Heel",
+    price: 60000,
+    category: "Shoes",
+    sizeId: "miraSize3",
+    quantityId: "miraQty3",
+    needsSize: true,
+    confirmSize: true
+  },
+  4: {
+    name: "Zara Sandal Heel",
+    price: 22000,
+    category: "Shoes",
+    sizeId: "miraSize4",
+    quantityId: "miraQty4",
+    needsSize: true
+  },
+  5: {
+    name: "Monochrome Zara Heels",
+    price: 22000,
+    category: "Shoes",
+    sizeId: "miraSize5",
+    quantityId: "miraQty5",
+    needsSize: true
+  },
+  6: {
+    name: "Bag",
+    price: 20000,
+    category: "Bag",
+    quantityId: "miraQty6"
+  },
+  7: {
+    name: "Product 7",
+    price: 23000,
+    category: "Other",
+    quantityId: "miraQty7"
+  },
+  8: {
+    name: "Product 8",
+    price: 23000,
+    category: "Other",
+    quantityId: "miraQty8"
+  },
+  9: {
+    name: "Product 9",
+    price: 25000,
+    category: "Other",
+    quantityId: "miraQty9"
+  },
+  10: {
+    name: "Bag or Shoe",
+    price: 23000,
+    category: "Other",
+    quantityId: "miraQty10",
+    needsType: true
+  },
+ 11: {
+  name: "Available Now",
+  price: 20000,
+  category: "Shoes",
+  quantityId: "miraQty11",
+  includesBox: true
+},
+  12: {
+    name: "Product 12",
+    price: 20000,
+    category: "Other",
+    quantityId: "miraQty12"
+  }
+};
 
-    2: {
-      name: "Miss Gail Duffle Bag with Side Pockets",
-      price: 47000,
-      category: "Bag",
-      colourId: "miraColor2",
-      sizeId: "miraSize2",
-      quantityId: "miraQty2",
-      needsColour: true,
-      needsSize: false
-    },
-
-    3: {
-      name: "Reno Luxury Heel",
-      price: 60000,
-      category: "Shoes",
-      colourId: "miraColor3",
-      sizeId: "miraSize3",
-      quantityId: "miraQty3",
-      needsColour: false,
-      needsSize: true,
-      confirmSize: true
-    },
-
-    4: {
-      name: "Zara Sandal Heel",
-      price: 22000,
-      category: "Shoes",
-      colourId: "miraColor4",
-      sizeId: "miraSize4",
-      quantityId: "miraQty4",
-      needsColour: false,
-      needsSize: true
-    },
-
-    5: {
-      name: "Monochrome Zara Heels",
-      price: 22000,
-      category: "Shoes",
-      colourId: "miraColor5",
-      sizeId: "miraSize5",
-      quantityId: "miraQty5",
-      needsColour: false,
-      needsSize: true
-    }
-  };
 
   const formatPrice = (amount) => {
     return "₦" + amount.toLocaleString("en-NG");
@@ -187,24 +219,56 @@ if (miraType10 && miraPrice10) {
 }
 
 
-  // WHATSAPP CHECKOUT
+  
+  // WHATSAPP CHECKOUT + SUPABASE ORDER TRACKING
 
-  function orderProduct(productId) {
-    const product = products[productId];
+  const MIRA_BRAND_ID = "4b83ff70-def9-4af3-a3d3-9c85a64a6038";
 
-    if (!product) {
-      alert("Sorry, this product could not be found.");
-      return;
+  const MIRA_ORDER_URL =
+    "https://tzjckojpgamjwigxmdja.supabase.co/functions/v1/submit-brand-order";
+
+  const miraOrderModal = document.getElementById("miraOrderModal");
+  const miraOrderForm = document.getElementById("miraOrderForm");
+  const miraModalClose = document.getElementById("miraModalClose");
+  const miraOrderError = document.getElementById("miraOrderError");
+  const miraSubmitOrder = document.getElementById("miraSubmitOrder");
+
+  let pendingMiraOrder = null;
+
+  function closeMiraModal() {
+    miraOrderModal.classList.remove("active");
+    miraOrderError.textContent = "";
+  }
+
+  miraModalClose.addEventListener("click", closeMiraModal);
+
+  miraOrderModal.addEventListener("click", (event) => {
+    if (event.target === miraOrderModal) {
+      closeMiraModal();
+    }
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && miraOrderModal.classList.contains("active")) {
+      closeMiraModal();
+    }
+  });
+
+  function getMiraProductDetails(productId, button) {
+    const card = button.closest(".product-card");
+
+    if (!card) {
+      throw new Error("Could not find this product.");
     }
 
-    const colourElement = document.getElementById(product.colourId);
-    const sizeElement = document.getElementById(product.sizeId);
-    const quantityElement = document.getElementById(product.quantityId);
+    const product = products[productId] || {};
+    const quantityElement = document.getElementById(
+      product.quantityId || `miraQty${productId}`
+    );
 
-const colour = colourElement ? colourElement.value : "";
-const size = sizeElement ? sizeElement.value : "";
-const typeElement = document.getElementById(product.typeId);
-const selectedType = typeElement ? typeElement.value : "";
+    if (!quantityElement) {
+      throw new Error("Could not find the quantity selector for this product.");
+    }
 
     const quantityValue = Number.parseInt(quantityElement.value, 10);
     const quantity = Number.isFinite(quantityValue)
@@ -213,102 +277,273 @@ const selectedType = typeElement ? typeElement.value : "";
 
     quantityElement.value = quantity;
 
-    if (product.needsColour && !colour) {
-      alert("Please select your preferred colour or print.");
-      colourElement.focus();
-      return;
+    const heading = card.querySelector("h3");
+    const image = card.querySelector("img");
+
+    let productName = product.name || heading?.textContent.trim() || "";
+
+    if (!product.name && (!productName || /^₦[\d,]+$/.test(productName))) {
+      productName = image?.alt?.trim() || `Product ${productId}`;
     }
 
-    if (product.needsType && !selectedType) {
-  alert("Please choose either the bag or the shoe.");
-  typeElement.focus();
-  return;
-}
+    const selections = [];
+    let unitPrice = product.price || 0;
 
-    if (product.needsSize && !size) {
-      alert("Please select your shoe size.");
-      sizeElement.focus();
-      return;
+    // Product 10: Bag or Shoe
+    if (productId === "10") {
+      const typeElement = document.getElementById("miraType10");
+      const selectedType = typeElement?.value || "";
+
+      if (!selectedType) {
+        throw new Error("Please choose either the bag or the shoe.");
+      }
+
+      productName = "Bag or Shoe";
+      selections.push("Selected item: " + selectedType);
+
+      unitPrice = selectedType === "Bag" ? 23000 : 25000;
     }
 
-    if (product.confirmSize && size !== "Confirm availability") {
-      alert("Please select the size confirmation option.");
-      sizeElement.focus();
-      return;
+    // Read colour and size selections
+    const colourElement = product.colourId
+      ? document.getElementById(product.colourId)
+      : null;
+
+    const sizeElement = product.sizeId
+      ? document.getElementById(product.sizeId)
+      : null;
+
+    if (product.needsColour && !colourElement?.value) {
+      throw new Error("Please select your preferred colour or print.");
     }
-
-    let unitPrice = product.price;
-
-if (product.needsType) {
-  unitPrice = selectedType === "Bag" ? 23000 : 25000;
-}
-
-const total = unitPrice * quantity;
-
-    const messageLines = [
-  "Hello Mira's Nova Luxe! ♡",
-  "",
-  "I'd like to place an order:",
-  "",
-  "Product: " + product.name,
-  "Category: " + product.category
-];
-
-// ADD THE NEW CODE HERE
-if (product.needsType) {
-  messageLines.push("Selected item: " + selectedType);
-}
-
-if (product.includesBox) {
-  messageLines.push("Shoe box: Included");
-}
 
     if (product.needsColour) {
-      messageLines.push("Preferred colour/print: " + colour);
+      selections.push("Colour/Print: " + colourElement.value);
     }
 
     if (product.needsSize) {
-      messageLines.push(
+      if (!sizeElement?.value) {
+        throw new Error("Please select your shoe size.");
+      }
+
+      if (
+        product.confirmSize &&
+        sizeElement.value !== "Confirm availability"
+      ) {
+        throw new Error("Please select the size confirmation option.");
+      }
+
+      selections.push(
         "Shoe size: " +
         (product.confirmSize
           ? "Please confirm available sizes"
-          : size)
+          : sizeElement.value)
       );
     }
 
-  
-messageLines.push(
-  "Quantity: " + quantity,
-  "Unit price: " + formatPrice(unitPrice),
-  "Total: " + formatPrice(total),
-  "",
-  "Please confirm availability and the next steps. Thank you!"
-);
+    // Product 11: colour and shoe size
+if (productId === "11") {
+  const selects = Array.from(card.querySelectorAll("select"));
 
+  if (selects.length < 2) {
+    throw new Error("Product 11 options could not be found.");
+  }
 
-    const message = messageLines.join("\n");
+  const colour = selects[0].value.trim();
+  const size = selects[1].value.trim();
 
-    if (!/^\d{10,15}$/.test(WHATSAPP_NUMBER)) {
-      alert(
-        "WhatsApp ordering is set up! Please replace the placeholder number in mira.js with Mira's real WhatsApp number to activate checkout."
-      );
-      return;
+  if (!colour || !size) {
+    throw new Error("Please select both colour and shoe size.");
+  }
+
+  selections.push("Colour: " + colour);
+  selections.push("Shoe size: " + size);
+  selections.push("Shoe box: Included");
+}
+
+    // Other products: read their displayed price
+    if (productId !== "10" && !unitPrice) {
+      const priceElement = card.querySelector(".product-price");
+      const priceText = priceElement?.textContent || "";
+      const parsedPrice = Number(priceText.replace(/[^\d]/g, ""));
+
+      unitPrice = Number.isFinite(parsedPrice) ? parsedPrice : 0;
     }
 
-    const whatsappURL =
-      "https://wa.me/" +
-      WHATSAPP_NUMBER +
-      "?text=" +
-      encodeURIComponent(message);
+    if (!unitPrice) {
+      throw new Error("Could not determine the price of this product.");
+    }
 
-    window.open(whatsappURL, "_blank", "noopener,noreferrer");
+    const total = unitPrice * quantity;
+
+    return {
+      productName,
+      category: product.category || card.dataset.category || "Other",
+      quantity,
+      unitPrice,
+      total,
+      selections
+    };
+  }
+
+  function orderProduct(productId, button) {
+    try {
+      pendingMiraOrder = getMiraProductDetails(productId, button);
+
+      miraOrderError.textContent = "";
+      miraOrderModal.classList.add("active");
+
+      document.getElementById("miraCustomerName").focus();
+    } catch (error) {
+      alert(error.message);
+    }
   }
 
   document.querySelectorAll("[data-order]").forEach((button) => {
     button.addEventListener("click", () => {
-      orderProduct(button.dataset.order);
+      orderProduct(button.dataset.order, button);
     });
   });
+
+  // SUBMIT ORDER TO SUPABASE, THEN OPEN WHATSAPP
+
+  miraOrderForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    if (!pendingMiraOrder) {
+      miraOrderError.textContent = "Please select a product first.";
+      return;
+    }
+
+    const customerName = document
+      .getElementById("miraCustomerName").value.trim();
+
+    const customerPhone = document
+      .getElementById("miraCustomerPhone").value.trim();
+
+    const customerAddress = document
+      .getElementById("miraCustomerAddress").value.trim();
+
+    if (!customerName || !customerPhone || !customerAddress) {
+      miraOrderError.textContent = "Please complete all your details.";
+      return;
+    }
+
+    if (!/^[0-9+\s()-]{7,25}$/.test(customerPhone)) {
+      miraOrderError.textContent = "Please enter a valid phone number.";
+      return;
+    }
+
+    if (!/^\d{10,15}$/.test(WHATSAPP_NUMBER)) {
+      miraOrderError.textContent = "The WhatsApp number is invalid.";
+      return;
+    }
+
+    const selectedOrder = { ...pendingMiraOrder };
+
+    const whatsappTab = window.open("", "_blank");
+
+    miraSubmitOrder.disabled = true;
+    miraSubmitOrder.textContent = "SUBMITTING ORDER...";
+
+    miraOrderError.textContent = "";
+
+    try {
+      const productDescription = [
+        selectedOrder.category,
+        ...selectedOrder.selections
+      ].join(" | ");
+
+      const response = await fetch(MIRA_ORDER_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          brand_id: MIRA_BRAND_ID,
+          customer_name: customerName,
+          customer_phone: customerPhone,
+          delivery_address: customerAddress,
+          request_type: "order",
+          request_details: productDescription,
+          items: [
+            {
+              product_name: selectedOrder.productName +
+                (selectedOrder.selections.length
+                  ? " (" + selectedOrder.selections.join(", ") + ")"
+                  : ""),
+              quantity: selectedOrder.quantity,
+              unit_price: selectedOrder.unitPrice
+            }
+          ],
+          website: ""
+        })
+      });
+
+      const result = await response.json();
+
+      if (
+        !response.ok ||
+        result.success !== true ||
+        !result.order_number
+      ) {
+        throw new Error(
+          result.message || "Your order could not be submitted. Please try again."
+        );
+      }
+
+      const messageLines = [
+        "Hello Mira's Nova Luxe! ♡",
+        "",
+        "I'd like to place an order.",
+        "",
+        "Order Reference: " + result.order_number,
+        "Customer: " + customerName,
+        "Phone: " + customerPhone,
+        "Hostel/Address: " + customerAddress,
+        "",
+        "Product: " + selectedOrder.productName,
+        "Category: " + selectedOrder.category,
+        ...selectedOrder.selections,
+        "Quantity: " + selectedOrder.quantity,
+        "Unit Price: " + formatPrice(selectedOrder.unitPrice),
+        "Total: " + formatPrice(selectedOrder.total),
+        "",
+        "Please confirm availability and the next steps. Thank you!"
+      ];
+
+      const whatsappURL =
+        "https://wa.me/" +
+        WHATSAPP_NUMBER +
+        "?text=" +
+        encodeURIComponent(messageLines.join("\n"));
+
+      closeMiraModal();
+      miraOrderForm.reset();
+      pendingMiraOrder = null;
+
+      if (whatsappTab) {
+        whatsappTab.location.href = whatsappURL;
+      } else {
+        window.location.href = whatsappURL;
+      }
+
+      alert("Order submitted successfully! Your reference is " + result.order_number);
+
+    } catch (error) {
+      if (whatsappTab) {
+        whatsappTab.close();
+      }
+
+      miraOrderError.textContent =
+        error.message || "Something went wrong. Please try again.";
+
+    } finally {
+      miraSubmitOrder.disabled = false;
+      miraSubmitOrder.textContent = "Continue to WhatsApp";
+    }
+  });
+
 
   // GENERAL WHATSAPP CONTACT
 
