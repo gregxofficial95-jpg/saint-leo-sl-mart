@@ -1684,3 +1684,66 @@ select:focus-visible {
     transition-duration: .01ms !important;
   }
 }
+
+/* =========================================
+   CHECKOUT CUSTOMER DETAILS
+========================================= */
+
+.checkout-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+  margin: 18px 0;
+}
+
+.checkout-fields label {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  color: #d4c1a3;
+  font-size: 9px;
+  letter-spacing: .08em;
+}
+
+.checkout-fields input {
+  width: 100%;
+  min-height: 43px;
+  padding: 11px 13px;
+  border: 1px solid rgba(212, 170, 96, .3);
+  border-radius: 0;
+  outline: none;
+  background: rgba(255, 255, 255, .04);
+  color: var(--cream);
+  font-family: var(--sans);
+  font-size: 11px;
+}
+
+.checkout-fields input::placeholder {
+  color: #897761;
+}
+
+.checkout-fields input:focus {
+  border-color: var(--light-gold);
+}
+
+.checkout-button:disabled {
+  opacity: .6;
+  cursor: not-allowed;
+}
+
+/* Keep cart items and checkout details scrollable */
+.cart-items {
+  flex: 1 1 auto;
+  min-height: 100px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.cart-bottom {
+  flex: 0 1 auto;
+  max-height: 58%;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: var(--gold) transparent;
+}
