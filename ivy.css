@@ -1333,3 +1333,92 @@ h1 span {
     animation-duration: 0.3s;
   }
 }
+
+
+
+/* =========================
+   IVY BOOKING FORM
+========================= */
+
+.ivy-booking-form {
+  width: 100%;
+  max-width: 520px;
+  margin: 35px auto 0;
+  display: flex;
+  flex-direction: column;
+  gap: 17px;
+  text-align: left;
+}
+
+.ivy-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.ivy-form-group label {
+  color: var(--gold-light);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.ivy-form-group input,
+.ivy-form-group select,
+.ivy-form-group textarea {
+  width: 100%;
+  min-height: 48px;
+  padding: 13px 14px;
+  border: 1px solid var(--border);
+  border-radius: 0;
+  outline: none;
+  background: var(--black-card);
+  color: var(--white);
+  font-family: var(--body-font);
+  font-size: 12px;
+}
+
+.ivy-form-group textarea {
+  min-height: 110px;
+  resize: vertical;
+}
+
+.ivy-form-group input:focus,
+.ivy-form-group select:focus,
+.ivy-form-group textarea:focus {
+  border-color: var(--gold);
+}
+
+.ivy-form-group input::placeholder,
+.ivy-form-group textarea::placeholder {
+  color: #827d72;
+}
+
+.ivy-form-group select option {
+  background: var(--black-card);
+  color: var(--white);
+}
+
+.ivy-form-error {
+  min-height: 0;
+  margin: 0;
+  color: #ff8585;
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+.ivy-form-error:empty {
+  display: none;
+}
+
+.ivy-booking-form button:disabled {
+  opacity: .6;
+  cursor: not-allowed;
+}
+
+@media (max-width: 600px) {
+  .ivy-booking-form {
+    margin-top: 28px;
+  }
+}
