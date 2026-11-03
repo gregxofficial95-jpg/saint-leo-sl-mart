@@ -386,43 +386,128 @@ function renderBag() {
   document.getElementById("checkoutButton").disabled = bag.length === 0;
 }
 
-function checkoutOnWhatsApp() {
-  if (bag.length === 0) {
-    alert("Your shopping bag is empty.");
+async function checkoutOnWhatsApp() {
+  const errorBox = document.getElementById("rhamseyOrderError");
+  const button = document.getElementById("checkoutButton");
+
+  errorBox.textContent = "";
+
+  if (!bag.length) {
+    errorBox.textContent = "Please add at least one item to your bag.";
     return;
   }
 
-  const lines = bag.map((item, index) => {
-    return [
-      `${index + 1}. ${item.name}`,
-      `   Style/Colour: ${item.variantName}`,
-      `   Size: EU ${item.size}`,
-      `   Quantity: ${item.quantity}`,
-      `   Unit price: ${formatPrice(item.price)}`,
-      `   Subtotal: ${formatPrice(item.price * item.quantity)}`
+  const customerName = document
+    .getElementById("rhamseyCustomerName").value.trim();
+
+  const customerPhone = document
+    .getElementById("rhamseyCustomerPhone").value.trim();
+
+  const customerAddress = document
+    .getElementById("rhamseyCustomerAddress").value.trim();
+
+  if (!customerName || !customerPhone || !customerAddress) {
+    errorBox.textContent = "Please complete all checkout fields.";
+    return;
+  }
+
+  if (!/^[0-9+\s()-]{7,25}$/.test(customerPhone)) {
+    errorBox.textContent = "Please enter a valid phone number.";
+    return;
+  }
+
+  // Open WhatsApp tab before the async request to avoid popup blocking.
+  const whatsappTab = window.open("", "_blank");
+
+  button.disabled = true;
+  button.textContent = "SUBMITTING ORDER...";
+
+  try {
+    const response = await fetch(
+      "https://tzjckojpgamjwigxmdja.supabase.co/functions/v1/submit-brand-order",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          brand_id: "412d3cc3-cb41-44fc-9286-27758865b3dc",
+          customer_name: customerName,
+          customer_phone: customerPhone,
+          delivery_address: customerAddress,
+          request_type: "order",
+          request_details: "Rhamsey Store shopping bag order",
+          items: bag.map(item => ({
+            product_name: `${item.name} (${item.variantName}; EU ${item.size})`,
+            quantity: item.quantity,
+            unit_price: item.price
+          })),
+          website: ""
+        })
+      }
+    );
+
+    const result = await response.json();
+
+    if (!response.ok || result.success !== true || !result.order_number) {
+      throw new Error(result.message || "Order submission failed.");
+    }
+
+    const total = bag.reduce(
+      (sum, item) => sum + item.price * item.quantity,
+      0
+    );
+
+    const message = [
+      "Hello Rhamsey Store! I'd like to place an order.",
+      "",
+      `Order Reference: ${result.order_number}`,
+      `Customer: ${customerName}`,
+      `Phone: ${customerPhone}`,
+      `Hostel/Address: ${customerAddress}`,
+      "",
+      "ORDER DETAILS:",
+      ...bag.map(item =>
+        `${item.name} - ${item.variantName} - EU ${item.size} x ${item.quantity} = ${formatPrice(item.price * item.quantity)}`
+      ),
+      "",
+      `TOTAL: ${formatPrice(total)}`,
+      "",
+      "Please confirm availability and delivery arrangements. Thank you!"
     ].join("\n");
-  });
 
-  const total = bag.reduce(
-    (sum, item) => sum + item.price * item.quantity,
-    0
-  );
+    const whatsappURL =
+      `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
 
-  const message = [
-    "Hello Rhamsey Footwear! I'd like to place an order.",
-    "",
-    ...lines,
-    "",
-    `TOTAL: ${formatPrice(total)}`,
-    "",
-    "Please confirm availability and delivery/pickup arrangements.",
-    "Thank you!"
-  ].join("\n");
+    // Clear the bag and customer details only after successful submission.
+    bag = [];
+    updateBagCount();
+    renderBag();
 
-  const url =
-    `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+    document.getElementById("rhamseyCustomerName").value = "";
+    document.getElementById("rhamseyCustomerPhone").value = "";
+    document.getElementById("rhamseyCustomerAddress").value = "";
 
-  window.open(url, "_blank", "noopener,noreferrer");
+    closeOverlay(bagOverlay);
+
+    if (whatsappTab) {
+      whatsappTab.location.href = whatsappURL;
+    } else {
+      window.location.href = whatsappURL;
+    }
+
+    alert(`Order submitted successfully!\nReference: ${result.order_number}`);
+
+  } catch (error) {
+    if (whatsappTab) whatsappTab.close();
+
+    errorBox.textContent =
+      error.message || "Unable to submit your order. Please try again.";
+
+  } finally {
+    button.disabled = bag.length === 0;
+    button.textContent = "ORDER ON WHATSAPP ↗";
+  }
 }
 
 productGrid.addEventListener("click", event => {
