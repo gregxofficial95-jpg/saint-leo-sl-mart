@@ -1,7 +1,7 @@
 
 /* =========================================================
    MARYAM'S KITCHEN & EVENT PLANNING
-   Website interactions
+   Website interactions + Supabase Enquiry Tracking
    ========================================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -241,7 +241,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   /* =======================================================
-     ENQUIRY FORM AND WHATSAPP
+     ENQUIRY FORM + SUPABASE + WHATSAPP
   ======================================================= */
 
   const enquiryForm = document.getElementById("enquiryForm");
@@ -249,8 +249,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const WHATSAPP_NUMBER = "2349039736571";
 
+  const MARYAM_BRAND_ID =
+    "e7c83721-2a09-424c-8679-81251ebe8bab";
+
+  const ORDER_FUNCTION_URL =
+    "https://tzjckojpgamjwigxmdja.supabase.co/functions/v1/submit-brand-order";
+
+
   if (enquiryForm) {
-    enquiryForm.addEventListener("submit", event => {
+
+    enquiryForm.addEventListener("submit", async event => {
+
       event.preventDefault();
 
       if (formError) {
@@ -288,6 +297,9 @@ document.addEventListener("DOMContentLoaded", () => {
         formData.get("details") || ""
       ).trim();
 
+
+      /* VALIDATION */
+
       if (!name || !phone || !service || !details) {
         if (formError) {
           formError.textContent =
@@ -307,6 +319,9 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
+
+      /* FORMAT CUSTOMER DETAILS */
+
       const formattedDate = eventDate
         ? new Date(eventDate + "T12:00:00").toLocaleDateString(
             "en-GB",
@@ -320,7 +335,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const formattedBudget = budget || "Open to discussion";
 
-      const message = [
+
+      /* PREPARE WHATSAPP MESSAGE */
+
+      let message = [
         "Hello Mary's Kitchen & Event Planning! ✨",
         "",
         "I'd like to make an enquiry.",
@@ -337,36 +355,176 @@ document.addEventListener("DOMContentLoaded", () => {
         "MY REQUIREMENTS",
         details,
         "",
-        "Please let me know the availability, pricing and next steps.",
-        "",
         "Thank you!"
       ].join("\n");
 
-      const whatsappURL =
-        "https://wa.me/" +
-        WHATSAPP_NUMBER +
-        "?text=" +
-        encodeURIComponent(message);
 
-      const whatsappWindow = window.open(
-        whatsappURL,
-        "_blank",
-        "noopener,noreferrer"
+      /* OPEN A TAB BEFORE ASYNC SUBMISSION */
+
+      const whatsappWindow = window.open("", "_blank");
+
+
+      /* PREPARE SUBMIT BUTTON */
+
+      const submitButton = enquiryForm.querySelector(
+        'button[type="submit"], input[type="submit"]'
       );
 
-      if (!whatsappWindow) {
-        if (formError) {
-          formError.textContent =
-            "WhatsApp could not open automatically. Please allow pop-ups and try again.";
+      const originalButtonText = submitButton
+        ? (
+            submitButton.tagName === "INPUT"
+              ? submitButton.value
+              : submitButton.innerHTML
+          )
+        : "";
+
+      if (submitButton) {
+        submitButton.disabled = true;
+
+        if (submitButton.tagName === "INPUT") {
+          submitButton.value = "Submitting enquiry...";
+        } else {
+          submitButton.textContent = "Submitting enquiry...";
+        }
+      }
+
+
+      try {
+
+        /* SUBMIT ENQUIRY TO SUPABASE */
+
+        const response = await fetch(ORDER_FUNCTION_URL, {
+          method: "POST",
+
+          headers: {
+            "Content-Type": "application/json"
+          },
+
+          body: JSON.stringify({
+
+            brand_id: MARYAM_BRAND_ID,
+
+            customer_name: name,
+
+            customer_phone: phone,
+
+            request_type: "enquiry",
+
+            request_details: [
+              "Service: " + service,
+              "Preferred date: " + formattedDate,
+              "Budget: " + formattedBudget,
+              "Customer requirements: " + details
+            ].join("\n"),
+
+            items: [],
+
+            website: ""
+
+          })
+        });
+
+
+        /* READ SERVER RESPONSE */
+
+        const result = await response.json();
+
+
+        /* CONFIRM REAL SUBMISSION */
+
+        if (
+          !response.ok ||
+          result.success !== true ||
+          !result.order_number
+        ) {
+          throw new Error(
+            result.message || "Enquiry submission failed."
+          );
         }
 
-        return;
+
+        /* ADD REFERENCE TO WHATSAPP MESSAGE */
+
+        message = [
+          "Hello Mary's Kitchen & Event Planning! ✨",
+          "",
+          "I'd like to make an enquiry.",
+          "",
+          "ENQUIRY REFERENCE",
+          result.order_number,
+          "",
+          "MY DETAILS",
+          "Name: " + name,
+          "Phone: " + phone,
+          "",
+          "SERVICE REQUEST",
+          "Service: " + service,
+          "Preferred date: " + formattedDate,
+          "Budget: " + formattedBudget,
+          "",
+          "MY REQUIREMENTS",
+          details,
+          "",
+          "Thank you!"
+        ].join("\n");
+
+
+        const whatsappURL =
+          "https://wa.me/" +
+          WHATSAPP_NUMBER +
+          "?text=" +
+          encodeURIComponent(message);
+
+
+        /* OPEN WHATSAPP */
+
+        if (whatsappWindow && !whatsappWindow.closed) {
+          whatsappWindow.location.href = whatsappURL;
+        } else {
+          window.location.href = whatsappURL;
+        }
+
+
+        if (formError) {
+          formError.textContent = "";
+        }
+
+      } catch (error) {
+
+        /* CLOSE UNUSED WHATSAPP TAB */
+
+        if (whatsappWindow && !whatsappWindow.closed) {
+          whatsappWindow.close();
+        }
+
+        console.error(
+          "Maryam's Kitchen enquiry error:",
+          error
+        );
+
+        if (formError) {
+          formError.textContent =
+            "We couldn't submit your enquiry. Please check your internet connection and try again.";
+        }
+
+      } finally {
+
+        /* RESTORE SUBMIT BUTTON */
+
+        if (submitButton) {
+          submitButton.disabled = false;
+
+          if (submitButton.tagName === "INPUT") {
+            submitButton.value = originalButtonText;
+          } else {
+            submitButton.innerHTML = originalButtonText;
+          }
+        }
+
       }
 
-      if (formError) {
-        formError.textContent = "";
-      }
     });
+
   }
 
 });
