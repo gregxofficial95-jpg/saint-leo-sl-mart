@@ -1,8 +1,10 @@
-
-
 const WHATSAPP_NUMBER = "2349133229268";
 const STORAGE_KEY = "rhEmporiumCart";
 
+const RH_BRAND_ID = "9931f3ca-40e9-4bf3-b907-226b94e31b0e";
+
+const ORDER_ENDPOINT =
+  "https://tzjckojpgamjwigxmdja.supabase.co/functions/v1/submit-brand-order";
 
 /* =====================================================
    PRODUCT DATA
@@ -1852,56 +1854,190 @@ function buildWhatsAppMessage() {
 
 
 /* =====================================================
-   ORDER ON WHATSAPP
+   EMAIL TRACKING + WHATSAPP CHECKOUT
 ===================================================== */
 
-function orderOnWhatsApp() {
+async function orderOnWhatsApp() {
 
   if (!cart.length) {
-
-    showToast(
-      "Your cart is empty."
-    );
-
+    showToast("Your cart is empty.");
     return;
-
   }
 
+  const name =
+    document.getElementById("rhCustomerName").value.trim();
 
-  if (
-    WHATSAPP_NUMBER ===
-    "WHATSAPP_NUMBER_HERE"
-  ) {
+  const phone =
+    document.getElementById("rhCustomerPhone").value.trim();
 
-    showToast(
-      "Replace WHATSAPP_NUMBER_HERE with the RH Emporium number first."
-    );
+  const address =
+    document.getElementById("rhCustomerAddress").value.trim();
 
+  // Validate customer details
+  if (!name || !phone || !address) {
+    showToast("Please complete all your details.");
     return;
-
   }
 
+  if (WHATSAPP_NUMBER === "WHATSAPP_NUMBER_HERE") {
+    showToast("Please configure the RH Emporium WhatsApp number.");
+    return;
+  }
 
-  const cleanedNumber =
-    WHATSAPP_NUMBER.replace(
-      /[^\d]/g,
-      ""
-    );
+  const orderButton =
+    document.getElementById("whatsappOrder");
 
+  // Prevent multiple submissions
+  orderButton.disabled = true;
 
-  const url =
-    `https://wa.me/${cleanedNumber}?text=${
-      encodeURIComponent(
-        buildWhatsAppMessage()
+  showToast("Submitting your order...");
+
+  // Open a temporary tab before the network request
+  // so the browser does not block WhatsApp afterwards.
+  const whatsappWindow = window.open("about:blank", "_blank");
+
+  if (whatsappWindow) {
+    whatsappWindow.opener = null;
+  }
+
+  try {
+
+    // Prepare order items for Supabase
+    const orderItems = cart.map(item => {
+
+      const product = PRODUCT_DATA.find(
+        productItem => productItem.id === item.productId
+      );
+
+      const unitPrice = getUnitPrice(
+        product,
+        item.quantity,
+        item.variations
+      );
+
+      const variationDetails = Object.entries(
+        item.variations || {}
       )
-    }`;
+        .filter(([, value]) => value)
+        .map(([key, value]) => `${capitalize(key)}: ${value}`);
 
+      if (item.fixedOption) {
+        variationDetails.push(
+          `${item.fixedOption.label}: ${item.fixedOption.value}`
+        );
+      }
 
-  window.open(
-    url,
-    "_blank",
-    "noopener"
-  );
+      return {
+        product_name: [
+          item.name,
+          ...variationDetails
+        ].join(" — "),
+
+        quantity: item.quantity,
+
+        unit_price: unitPrice
+      };
+
+    });
+
+    // Submit order to the tracking system
+    const response = await fetch(ORDER_ENDPOINT, {
+
+      method: "POST",
+
+      headers: {
+        "Content-Type": "application/json"
+      },
+
+      body: JSON.stringify({
+
+        brand_id: RH_BRAND_ID,
+
+        customer_name: name,
+
+        customer_phone: phone,
+
+        delivery_address: address,
+
+        request_type: "order",
+
+        request_details:
+          `RH Emporium website order. Subtotal: ${formatNaira(getCartSubtotal())}`,
+
+        items: orderItems,
+
+        website: ""
+
+      })
+
+    });
+
+    const result = await response.json();
+
+    // A real order number is required for confirmation
+    if (
+      !response.ok ||
+      result.success !== true ||
+      !result.order_number
+    ) {
+      throw new Error(
+        result.message || "Could not submit your order."
+      );
+    }
+
+    // Prepare WhatsApp message
+    const message = [
+
+      "RH EMPORIUM ORDER",
+
+      `Order Reference: ${result.order_number}`,
+
+      "",
+
+      `Customer Name: ${name}`,
+
+      `Phone Number: ${phone}`,
+
+      `Delivery Address: ${address}`,
+
+      "",
+
+      buildWhatsAppMessage()
+
+    ].join("\n");
+
+    const cleanedNumber =
+      WHATSAPP_NUMBER.replace(/[^\d]/g, "");
+
+    const whatsappURL =
+      `https://wa.me/${cleanedNumber}?text=${encodeURIComponent(message)}`;
+
+    showToast("Order recorded successfully!");
+
+    // Open WhatsApp
+    if (whatsappWindow) {
+      whatsappWindow.location.href = whatsappURL;
+    } else {
+      window.location.href = whatsappURL;
+    }
+
+  } catch (error) {
+
+    console.error("RH Emporium order error:", error);
+
+    if (whatsappWindow) {
+      whatsappWindow.close();
+    }
+
+    showToast(
+      error.message || "Order submission failed. Please try again."
+    );
+
+  } finally {
+
+    orderButton.disabled = false;
+
+  }
 
 }
 
