@@ -569,6 +569,52 @@
       </a>
     </section>
 
+
+    <!-- CUSTOMER ORDER DETAILS -->
+<div class="mira-order-modal" id="miraOrderModal">
+  <div class="mira-order-box">
+    <button type="button" class="mira-modal-close" id="miraModalClose">&times;</button>
+
+    <span class="mira-modal-label">MIRA'S NOVA LUXE</span>
+    <h2>Complete Your Order</h2>
+    <p class="mira-modal-subtitle">
+      Enter your details to continue with your order.
+    </p>
+
+    <form id="miraOrderForm">
+      <label for="miraCustomerName">Full Name</label>
+      <input
+        type="text"
+        id="miraCustomerName"
+        placeholder="Enter your full name"
+        required
+      >
+
+      <label for="miraCustomerPhone">Phone Number</label>
+      <input
+        type="tel"
+        id="miraCustomerPhone"
+        placeholder="Enter your phone number"
+        required
+      >
+
+      <label for="miraCustomerAddress">Hostel / Delivery Address</label>
+      <input
+        type="text"
+        id="miraCustomerAddress"
+        placeholder="Enter your hostel or delivery address"
+        required
+      >
+
+      <p id="miraOrderError" class="mira-order-error"></p>
+
+      <button type="submit" id="miraSubmitOrder">
+        Continue to WhatsApp
+      </button>
+    </form>
+  </div>
+</div>
+
   </main>
 
   <footer class="footer">
